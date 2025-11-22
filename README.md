@@ -81,6 +81,15 @@ python3 run.py agent --poll-interval 30
 - **Telegram**: python-telegram-bot
 - **Email**: Gmail API
 
+## Demo Videos
+
+
+https://github.com/user-attachments/assets/97c3da8f-53a3-40ea-b103-be73e20b46c4
+
+
+https://github.com/user-attachments/assets/c42d6a63-6e20-4cfa-af7b-88b67e21cbc9
+
+
 ## 📝 License
 
 MIT License
