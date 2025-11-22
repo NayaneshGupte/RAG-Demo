@@ -7,22 +7,31 @@ This document provides a technical deep dive into the codebase of the RAG-based 
 ```
 RAG Demo/
 ├── app/
+│   ├── api/                      # API Blueprint
+│   │   ├── __init__.py
+│   │   └── routes.py
+│   ├── web/                      # Web Blueprint
+│   │   ├── __init__.py
+│   │   └── routes.py
 │   ├── services/                 # Core business logic
-│   │   ├── agent_service.py      # Main AI agent orchestration
-│   │   ├── gmail_service.py      # Gmail API integration
-│   │   ├── database_service.py   # SQLite logging
-│   │   ├── vector_store_service.py # Pinecone & Embeddings
-│   │   └── ingestion_service.py  # Knowledge base ingestion
-│   ├── templates/                # HTML templates for Dashboard
-│   │   └── dashboard.html
+│   │   ├── agent_service.py
+│   │   ├── gmail_service.py
+│   │   ├── database_service.py
+│   │   ├── vector_store_service.py
+│   │   └── ingestion_service.py
+│   ├── static/                   # Static assets
+│   │   ├── css/
+│   │   └── js/
+│   ├── templates/                # HTML templates
+│   │   ├── dashboard.html
+│   │   └── knowledge_base.html
 │   ├── utils/                    # Helper utilities
-│   │   └── logger.py
 │   ├── config/                   # Configuration
-│   │   └── __init__.py
-│   └── dashboard.py              # Flask application entry point
+│   └── __init__.py               # App Factory
+├── wsgi.py                       # Production entry point
 ├── run.py                        # CLI entry point
 ├── requirements.txt              # Dependencies
-└── email_logs.db                 # SQLite database (auto-created)
+└── email_logs.db                 # SQLite database
 ```
 
 ## 🧩 Key Components
@@ -56,14 +65,15 @@ Manages the Knowledge Base.
 -   **`add_documents()`**: Embeds text using Gemini and upserts vectors to Pinecone.
 -   **`similarity_search()`**: Finds relevant documents for a given query.
 
-### 5. Dashboard (`app/dashboard.py` & `app/templates/dashboard.html`)
-A Flask-based web interface.
--   **Backend**: Serves API endpoints (`/api/logs`) to fetch data from `DatabaseService`.
--   **Frontend**: HTML/JS/CSS interface that polls the API every 5 seconds to update the UI.
+### 5. Dashboard (Blueprints: `app/web` & `app/api`)
+A Flask-based web interface organized into Blueprints.
+-   **`app/web`**: Serves HTML pages (`/`, `/knowledge-base`).
+-   **`app/api`**: Serves JSON endpoints (`/api/logs`, `/api/upload`).
+-   **Frontend**: Uses centralized static assets (`style.css`, `main.js`).
 
 ## 🔄 Data Flow
 
-1.  **Ingestion**: PDF -> Telegram Bot -> `IngestionService` -> Text Splitter -> Embeddings -> Pinecone.
+1.  **Ingestion**: PDF Upload (Dashboard) -> `IngestionService` -> Text Splitter -> Embeddings -> Pinecone.
 2.  **Trigger**: `run.py agent` starts the polling loop.
 3.  **Detection**: `GmailService` finds a new email.
 4.  **Classification**: `AgentService` asks LLM: "Is this a support query?"

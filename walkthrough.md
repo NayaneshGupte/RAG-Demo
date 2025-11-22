@@ -36,7 +36,8 @@ This guide provides a complete walkthrough for setting up, running, and using th
     ```
 
 2.  **Gmail Authentication**:
-    - Place your `credentials.json` (OAuth 2.0 Client ID) in the root directory.
+    - Follow the [Gmail Setup Guide](gmail_setup_guide.md) to generate your `credentials.json`.
+    - Place `credentials.json` in the root directory.
     - The first time you run the agent, a browser window will open to authenticate with your Gmail account.
     - A `token.json` file will be created automatically to store the session.
 
@@ -58,25 +59,24 @@ The dashboard provides a real-time view of email processing, logs, and statistic
 
 ```bash
 source venv/bin/activate
-python -m app.dashboard
+python wsgi.py
 ```
 *Access the dashboard at: [http://127.0.0.1:5000](http://127.0.0.1:5000)*
 
-### 3. Start Ingestion (Optional)
-To add new knowledge to the system via Telegram:
+### 3. Knowledge Base Ingestion
+To add new knowledge to the system, use the **Web Dashboard**:
 
-```bash
-source venv/bin/activate
-python run.py ingest
-```
-*Send PDF documents to your Telegram bot to update the knowledge base.*
+1.  Open the Dashboard: [http://127.0.0.1:5000](http://127.0.0.1:5000)
+2.  Locate the **Knowledge Base Ingestion** card.
+3.  Click **Select PDF** to choose a file.
+4.  Click **Upload & Ingest** to process it.
 
 ## 💡 Usage Walkthrough
 
 ### Scenario: Customer Support Auto-Response
 
 1.  **Knowledge Base Update**:
-    - Send a PDF (e.g., "Product Manual.pdf") to your Telegram Bot.
+    - Upload a PDF (e.g., "Product Manual.pdf") via the Dashboard.
     - The system ingests the content and stores it in the Vector Database.
 
 2.  **Customer Inquiry**:

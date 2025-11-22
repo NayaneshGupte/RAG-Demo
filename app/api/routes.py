@@ -1,30 +1,20 @@
-"""
-Flask dashboard for monitoring email agent activity.
-"""
-from flask import Flask, render_template, jsonify, request
-from flask_cors import CORS
-from werkzeug.utils import secure_filename
-import tempfile
+from flask import jsonify, request
+from app.api import api_bp
 from app.services.database_service import DatabaseService
 from app.services.gmail_service import GmailService
 from app.services.ingestion_service import IngestionService
 from app.services.vector_store_service import VectorStoreService
+import tempfile
 import os
 
-app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "*"}})
+# Initialize services
+# Note: In a larger app, we might use current_app or dependency injection
 db_service = DatabaseService()
 gmail_service = GmailService()
 ingestion_service = IngestionService()
 vector_store_service = VectorStoreService()
 
-@app.route('/')
-def index():
-    """Render dashboard home."""
-    current_user = gmail_service.get_current_email()
-    return render_template('dashboard.html', current_user=current_user)
-
-@app.route('/api/logs')
+@api_bp.route('/logs')
 def get_logs():
     """Get recent logs as JSON."""
     current_user = gmail_service.get_current_email()
@@ -43,13 +33,7 @@ def get_logs():
         "current_user": current_user
     })
 
-@app.route('/knowledge-base')
-def knowledge_base():
-    """Render knowledge base viewer."""
-    current_user = gmail_service.get_current_email()
-    return render_template('knowledge_base.html', current_user=current_user)
-
-@app.route('/api/knowledge-base')
+@api_bp.route('/knowledge-base')
 def get_knowledge_base():
     """Get paginated knowledge base documents."""
     limit = request.args.get('limit', 3, type=int)
@@ -59,7 +43,7 @@ def get_knowledge_base():
     
     return jsonify(result)
 
-@app.route('/api/upload', methods=['POST'])
+@api_bp.route('/upload', methods=['POST'])
 def upload_file():
     """Handle PDF file upload and ingestion."""
     if 'file' not in request.files:
@@ -91,6 +75,3 @@ def upload_file():
             return jsonify({'error': str(e)}), 500
     else:
         return jsonify({'error': 'Invalid file type. Only PDF allowed.'}), 400
-
-if __name__ == '__main__':
-    app.run(debug=True, port=5000)

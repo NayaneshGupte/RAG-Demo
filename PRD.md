@@ -39,7 +39,8 @@ The system aims to reduce manual support workload by automatically handling rout
 - **New Email Filtering**: The system must strictly process only emails received *after* the agent's start time.
 - **Classification**:
     - Use an LLM to classify emails as "Customer Support Inquiry" or "Other".
-    - Ignore emails from specific domains (e.g., `@phonepe.com`) or non-support categories (spam, promotions).
+    - **Include**: Explicitly handle follow-up emails and replies (starting with "Re:") as valid inquiries.
+    - **Exclude**: Ignore emails from specific domains (e.g., `@phonepe.com`) or non-support categories (spam, promotions).
 - **RAG Response Generation**:
     - Retrieve relevant context from the Pinecone vector database based on the email query.
     - Generate a response using **Google Gemini** (primary model).
@@ -62,7 +63,11 @@ The system aims to reduce manual support workload by automatically handling rout
 - **Real-Time Monitoring**:
     - Display a table of logs with columns: Email Time, Response Time, Status, Customer, Subject, Category, Details.
     - **Tabs**: Filter logs by status: `Responded`, `Ignored`, `Failed`.
-- **Statistics**: Show cards for Total Processed, Responded, and Ignored counts.
+- **Knowledge Base Viewer**:
+    - Dedicated page (`/knowledge-base`) to browse ingested chunks.
+    - **Pagination**: Load 3 chunks at a time with infinite scroll.
+    - **Stats**: Live counter of "Total Knowledge Chunks" on the dashboard.
+- **Statistics**: Show cards for Total Processed, Responded, Ignored, and Total Chunks.
 - **Auto-Refresh**:
     - Refresh data automatically every **30 minutes**.
     - Display a live "Updated: X time ago" timer (updates every minute).

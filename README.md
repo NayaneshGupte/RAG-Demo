@@ -4,73 +4,31 @@ An intelligent customer support automation system using Retrieval-Augmented Gene
 
 ## 🎯 Features
 
-- **📄 PDF Knowledge Ingestion**: Upload documents via Telegram bot
+- **📄 Knowledge Base**: Web-based PDF upload and ingestion
 - **🤖 AI-Powered Responses**: Automated email replies using RAG
 - **🔍 Semantic Search**: Pinecone vector database for accurate retrieval
 - **📧 Gmail Integration**: Automatic email monitoring and responses
 - **🔐 Secure**: OAuth 2.0 authentication for Gmail
 
-## 📁 Project Structure
+## 📚 Documentation Index
 
-```
-RAG Demo/
-├── app/
-│   ├── config/          # Configuration management
-│   ├── services/        # Business logic services
-│   │   ├── agent_service.py
-│   │   ├── gmail_service.py
-│   │   ├── ingestion_service.py
-│   │   └── vector_store_service.py
-│   └── utils/           # Utility functions
-│       └── logger.py
-├── logs/                # Application logs
-├── tests/               # Unit tests
-├── .env                 # Environment variables
-├── credentials.json     # Gmail OAuth credentials
-├── requirements.txt     # Python dependencies
-└── run.py              # Main entry point
-```
+| Document | Description | Target Audience |
+|----------|-------------|-----------------|
+| **[User Guide (Walkthrough)](walkthrough.md)** | **Start Here!** Complete setup, installation, and usage guide. | Users |
+| **[Code Walkthrough](code_walkthrough.md)** | Technical deep dive into the codebase and architecture. | Developers |
+| **[Gmail Setup Guide](gmail_setup_guide.md)** | Step-by-step guide to get your `credentials.json`. | Users |
+| **[PRD](PRD.md)** | Product Requirements Document. | Stakeholders |
+| **[Prompts Guide](prompts/README.md)** | Documentation for system prompts and classification rules. | Developers |
+| **[Trigger-Based Arch](TRIGGER_BASED_ARCHITECTURE.md)** | Design doc for future real-time implementation. | Architects |
 
 ## 🚀 Quick Start
 
-### 1. Install Dependencies
-```bash
-pip3 install -r requirements.txt
-```
+1.  **Install Dependencies**: `pip install -r requirements.txt`
+2.  **Setup**: Follow the **[User Guide](walkthrough.md)** to configure `.env` and Gmail.
+3.  **Run Agent**: `python run.py agent`
+4.  **Run Dashboard**: `python wsgi.py`
 
-### 2. Configure Environment
-Copy `.env.example` to `.env` and fill in your credentials:
-- `GOOGLE_API_KEY`: Google Gemini API key
-- `PINECONE_API_KEY`: Pinecone API key
-- `TELEGRAM_BOT_TOKEN`: Telegram bot token
-- `PINECONE_INDEX_NAME`: Your Pinecone index name
-
-- Note : You may have to create .env file.
-
-### 3. Setup Gmail
-Place your `credentials.json` file (from Google Cloud Console) in the project root.
-
-### 4. Run the Application
-
-**Start Telegram Ingestion Bot:**
-```bash
-python3 run.py ingest
-```
-
-**Start Email Support Agent:**
-```bash
-python3 run.py agent
-```
-
-**Custom polling interval:**
-```bash
-python3 run.py agent --poll-interval 30
-```
-
-## 📚 Documentation
-
-- **QUICKSTART.md**: Detailed setup instructions
-- **gmail_setup_guide.md**: Gmail OAuth setup guide
+## 🛠️ Tech Stack
 
 ## 🛠️ Tech Stack
 
@@ -78,7 +36,7 @@ python3 run.py agent --poll-interval 30
 - **Embeddings**: Google Gemini Embeddings (models/embedding-001)
 - **Vector DB**: Pinecone
 - **Framework**: LangChain
-- **Telegram**: python-telegram-bot
+
 - **Email**: Gmail API
 
 ## Demo Videos

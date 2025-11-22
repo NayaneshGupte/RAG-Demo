@@ -55,14 +55,24 @@ Examples:
     
     # Execute command
     if args.command == "ingest":
-        service = IngestionService()
-        service.run()
+        # Ingestion Bot
+        ingestion_service = IngestionService()
+        print("Starting Telegram Ingestion Bot...")
+        ingestion_service.run_telegram_bot()
+        
     elif args.command == "agent":
-        service = AgentService()
-        service.run(poll_interval=args.poll_interval)
+        # Email Support Agent
+        # Create app context to ensure services are initialized correctly if they depend on app config
+        from app import create_app
+        app = create_app()
+        
+        with app.app_context():
+            agent = AgentService()
+            print(f"Starting AI Support Agent (Poll Interval: {args.poll_interval}s)...")
+            agent.run(poll_interval=args.poll_interval)
+            
     else:
         parser.print_help()
-        sys.exit(1)
 
 if __name__ == "__main__":
     main()
