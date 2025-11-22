@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Base - AI Support Agent</title>
+    <style>
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
+            --accent-color: #3b82f6;
+            --border-color: #e5e7eb;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .back-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .back-link:hover {
+            color: var(--accent-color);
+        }
+
+        .doc-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            padding: 20px;
+            transition: transform 0.2s;
+        }
+
+        .doc-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .doc-id {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-family: monospace;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .doc-text {
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--text-primary);
+            white-space: pre-wrap;
+        }
+
+        .doc-meta {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color);
+            font-size: 12px;
+            color: var(--text-secondary);
+            display: flex;
+            gap: 15px;
+        }
+
+        .load-more-container {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+
+        .load-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .load-btn:hover {
+            background: #2563eb;
+        }
+
+        .load-btn:disabled {
+            background: var(--text-secondary);
+            cursor: not-allowed;
+        }
+
+        .loading {
+            text-align: center;
+            color: var(--text-secondary);
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <a href="/" class="back-link">← Back to Dashboard</a>
+                <h1 style="margin-top: 10px;">📚 Knowledge Base Viewer</h1>
+            </div>
+            <div style="font-size: 14px; color: var(--text-secondary);">
+                User: <strong>{{ current_user }}</strong>
+            </div>
+        </header>
+
+        <div id="documents-container">
+            <!-- Documents will be loaded here -->
+        </div>
+
+        <div id="loading-indicator" class="loading" style="display: none;">
+            Loading content...
+        </div>
+
+        <div class="load-more-container">
+            <button id="load-more-btn" class="load-btn" onclick="loadDocuments()">Load More</button>
+        </div>
+    </div>
+
+    <script>
+        let nextToken = null;
+        let isLoading = false;
+        let isFirstLoad = true;
+
+        async function loadDocuments() {
+            if (isLoading) return;
+
+            isLoading = true;
+            document.getElementById('loading-indicator').style.display = 'block';
+            document.getElementById('load-more-btn').style.display = 'none';
+
+            try {
+                let url = '/api/knowledge-base?limit=3';
+                if (nextToken) {
+                    url += `&token=${encodeURIComponent(nextToken)}`;
+                }
+
+                const response = await fetch(url);
+                const data = await response.json();
+
+                renderDocuments(data.documents);
+
+                nextToken = data.next_token;
+
+                // Update button state
+                const loadBtn = document.getElementById('load-more-btn');
+                if (nextToken) {
+                    loadBtn.style.display = 'inline-block';
+                    loadBtn.textContent = 'Load More (3 Pages)';
+                } else {
+                    loadBtn.style.display = 'none';
+                    if (data.documents.length === 0 && isFirstLoad) {
+                        document.getElementById('documents-container').innerHTML = '<div class="loading">No documents found in Knowledge Base.</div>';
+                    } else if (!isFirstLoad) {
+                        const endMsg = document.createElement('div');
+                        endMsg.className = 'loading';
+                        endMsg.textContent = 'End of content';
+                        document.getElementById('documents-container').appendChild(endMsg);
+                    }
+                }
+
+            } catch (error) {
+                console.error('Error loading documents:', error);
+                alert('Failed to load documents');
+            } finally {
+                isLoading = false;
+                isFirstLoad = false;
+                document.getElementById('loading-indicator').style.display = 'none';
+            }
+        }
+
+        function renderDocuments(docs) {
+            const container = document.getElementById('documents-container');
+
+            docs.forEach(doc => {
+                const card = document.createElement('div');
+                card.className = 'doc-card';
+
+                // Format metadata
+                const metaHtml = Object.entries(doc.metadata)
+                    .filter(([key]) => key !== 'text')
+                    .map(([key, value]) => `<span><strong>${key}:</strong> ${value}</span>`)
+                    .join('');
+
+                card.innerHTML = `
+                    <span class="doc-id">ID: ${doc.id}</span>
+                    <div class="doc-text">${doc.text}</div>
+                    <div class="doc-meta">
+                        ${metaHtml}
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        // Infinite scroll handler
+        window.onscroll = function () {
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
+                if (!isLoading && nextToken) {
+                    loadDocuments();
+                }
+            }
+        };
+
+        // Initial load
+        loadDocuments();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Support Agent Dashboard</title>
+    <style>
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
+            --accent-color: #3b82f6;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+            --border-color: #e5e7eb;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .logs-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-title {
+            font-weight: 600;
+            margin: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: #f9fafb;
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background-color: #f9fafb;
+        }
+
+        .status-badge {
+            padding: 4px 8px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-responded {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-ignored {
+            background-color: #f3f4f6;
+            color: #374151;
+        }
+
+        .status-error {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        .refresh-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .refresh-btn:hover {
+            background: #2563eb;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            color: var(--accent-color);
+            border-bottom-color: var(--accent-color);
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <h1>🤖 AI Support Agent Dashboard</h1>
+                <div style="color: var(--text-secondary); font-size: 14px; margin-top: 5px;">
+                    Operating as: <strong>{{ current_user }}</strong>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <div style="text-align: right; font-size: 12px; color: var(--text-secondary);">
+                    <div>Auto-refresh: <strong>30m</strong></div>
+                    <div id="time-elapsed">Updated: Just now</div>
+                </div>
+                <button class="refresh-btn" onclick="fetchData()">Refresh Data</button>
+            </div>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="total-emails">0</div>
+                <div class="stat-label">Total Processed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="responded-emails" style="color: var(--success-color)">0</div>
+                <div class="stat-label">Responded</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="ignored-emails" style="color: var(--text-secondary)">0</div>
+                <div class="stat-label">Ignored</div>
+            </div>
+        </div>
+
+        <div class="logs-card" style="margin-bottom: 30px;">
+            <div class="card-header">
+                <h2 class="card-title">📚 Knowledge Base Ingestion</h2>
+                <div style="font-size: 14px; color: var(--text-secondary);">
+                    Chunks: <strong id="kb-count" style="color: var(--text-primary);">0</strong> |
+                    <a href="/knowledge-base" style="color: var(--accent-color); text-decoration: none;">View Knowledge
+                        Base ↗</a>
+                </div>
+            </div>
+            <div style="padding: 20px;">
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <input type="file" id="pdf-upload" accept=".pdf" style="display: none;" onchange="updateFileName()">
+                    <button class="refresh-btn" onclick="document.getElementById('pdf-upload').click()"
+                        style="background: var(--text-secondary);">Select PDF</button>
+                    <span id="file-name" style="color: var(--text-secondary); font-size: 14px;">No file selected</span>
+                    <button class="refresh-btn" onclick="uploadFile()" id="upload-btn" style="margin-left: auto;"
+                        disabled>Upload & Ingest</button>
+                </div>
+                <div id="upload-status" style="margin-top: 10px; font-size: 14px;"></div>
+            </div>
+        </div>
+
+        <div class="logs-card">
+            <div class="card-header">
+                <h2 class="card-title">Recent Activity</h2>
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="setTab('responded')">Responded</button>
+                    <button class="tab-btn" onclick="setTab('ignored')">Ignored</button>
+                    <button class="tab-btn" onclick="setTab('failed')">Failed</button>
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Email Time</th>
+                        <th>Response Time</th>
+                        <th>Status</th>
+                        <th>Customer (Replied To)</th>
+                        <th>Subject</th>
+                        <th>Category</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody id="logs-table-body">
+                    <!-- Rows will be populated here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let currentTab = 'responded';
+        let allLogs = [];
+
+        function setTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase() === tab) btn.classList.add('active');
+            });
+            renderLogs();
+        }
+
+        function renderLogs() {
+            const tbody = document.getElementById('logs-table-body');
+            tbody.innerHTML = '';
+
+            const filteredLogs = allLogs.filter(log => {
+                if (currentTab === 'responded') {
+                    return log.status === 'RESPONDED';
+                } else if (currentTab === 'failed') {
+                    return log.status === 'ERROR';
+                } else {
+                    return log.status === 'IGNORED';
+                }
+            });
+
+            if (filteredLogs.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color: var(--text-secondary);">No records found</td></tr>';
+                return;
+            }
+
+            filteredLogs.forEach(log => {
+                const row = document.createElement('tr');
+
+                let statusClass = 'status-ignored';
+                if (log.status === 'RESPONDED') statusClass = 'status-responded';
+                if (log.status === 'ERROR') statusClass = 'status-error';
+
+                const responseDate = new Date(log.timestamp).toLocaleString();
+                const emailDate = log.email_timestamp ? new Date(log.email_timestamp).toLocaleString() : '-';
+
+                // Truncate details if too long
+                const details = log.details || '-';
+                const truncatedDetails = details.length > 60 ? details.substring(0, 60) + '...' : details;
+                const detailsTitle = details.length > 60 ? details : '';
+
+                row.innerHTML = `
+                    <td style="color: var(--text-secondary); font-size: 14px;">${emailDate}</td>
+                    <td style="color: var(--text-secondary); font-size: 14px;">${responseDate}</td>
+                    <td><span class="status-badge ${statusClass}">${log.status}</span></td>
+                    <td>${log.sender}</td>
+                    <td style="font-weight: 500;">${log.subject}</td>
+                    <td style="color: var(--text-secondary);">${log.category || '-'}</td>
+                    <td style="color: var(--text-secondary); font-size: 13px; max-width: 250px;" title="${detailsTitle}">${truncatedDetails}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        let lastRefreshTime = new Date();
+
+        async function fetchData() {
+            try {
+                const response = await fetch('/api/logs');
+                const data = await response.json();
+
+                // Update Stats
+                document.getElementById('total-emails').textContent = data.stats.total;
+                document.getElementById('responded-emails').textContent = data.stats.responded;
+                document.getElementById('ignored-emails').textContent = data.stats.ignored;
+
+                // Update KB Stats
+                if (data.kb_stats) {
+                    document.getElementById('kb-count').textContent = data.kb_stats.total_vectors;
+                }
+
+                // Store and render
+                allLogs = data.logs;
+                renderLogs();
+
+                // Update timestamp
+                lastRefreshTime = new Date();
+                updateTimeElapsed();
+
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        function updateTimeElapsed() {
+            const now = new Date();
+            const diff = Math.floor((now - lastRefreshTime) / 1000); // seconds
+
+            let timeString = 'Just now';
+            if (diff > 0) {
+                if (diff < 60) {
+                    timeString = `${diff}s ago`;
+                } else if (diff < 3600) {
+                    const mins = Math.floor(diff / 60);
+                    timeString = `${mins}m ago`;
+                } else {
+                    const hours = Math.floor(diff / 3600);
+                    timeString = `${hours}h ago`;
+                }
+            }
+            document.getElementById('time-elapsed').textContent = `Updated: ${timeString}`;
+        }
+
+        // Initial load
+        fetchData();
+
+        // Auto-refresh every 30 minutes (1800000 ms)
+        setInterval(fetchData, 1800000);
+
+        // Update elapsed time every second
+        setInterval(updateTimeElapsed, 1000);
+
+        function updateFileName() {
+            const fileInput = document.getElementById('pdf-upload');
+            const fileNameSpan = document.getElementById('file-name');
+            const uploadBtn = document.getElementById('upload-btn');
+
+            if (fileInput.files.length > 0) {
+                fileNameSpan.textContent = fileInput.files[0].name;
+                uploadBtn.disabled = false;
+                uploadBtn.style.background = 'var(--accent-color)';
+            } else {
+                fileNameSpan.textContent = 'No file selected';
+                uploadBtn.disabled = true;
+                uploadBtn.style.background = 'var(--text-secondary)';
+            }
+        }
+
+        async function uploadFile() {
+            const fileInput = document.getElementById('pdf-upload');
+            const statusDiv = document.getElementById('upload-status');
+            const uploadBtn = document.getElementById('upload-btn');
+
+            if (fileInput.files.length === 0) return;
+
+            const file = fileInput.files[0];
+            const formData = new FormData();
+            formData.append('file', file);
+
+            statusDiv.textContent = '⏳ Uploading and processing...';
+            statusDiv.style.color = 'var(--text-secondary)';
+            uploadBtn.disabled = true;
+
+            try {
+                const response = await fetch('/api/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    statusDiv.textContent = result.message;
+                    statusDiv.style.color = 'var(--success-color)';
+                    fileInput.value = ''; // Clear input
+                    setTimeout(() => {
+                        document.getElementById('file-name').textContent = 'No file selected';
+                        uploadBtn.style.background = 'var(--text-secondary)';
+                    }, 3000);
+                } else {
+                    statusDiv.textContent = '❌ Error: ' + result.error;
+                    statusDiv.style.color = 'var(--error-color)';
+                    uploadBtn.disabled = false;
+                }
+            } catch (error) {
+                statusDiv.textContent = '❌ Network error: ' + error.message;
+                statusDiv.style.color = 'var(--error-color)';
+                uploadBtn.disabled = false;
+            }
+        }
+    </script>
+</body>
+
+</html>

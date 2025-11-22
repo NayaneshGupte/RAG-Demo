@@ -1,0 +1,13 @@
+langchain
+langchain-community
+google-generativeai
+pinecone
+python-telegram-bot
+google-api-python-client
+google-auth-oauthlib
+google-auth-httplib2
+pypdf
+python-dotenv
+tiktoken
+flask
+anthropic
