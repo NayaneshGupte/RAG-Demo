@@ -18,7 +18,7 @@ An intelligent customer support automation system using Retrieval-Augmented Gene
 | **[Code Walkthrough](code_walkthrough.md)** | Technical deep dive into the codebase and architecture. | Developers |
 | **[Gmail Setup Guide](gmail_setup_guide.md)** | Step-by-step guide to get your `credentials.json`. | Users |
 | **[PRD](PRD.md)** | Product Requirements Document. | Stakeholders |
-| **[Prompts Guide](prompts/README.md)** | Documentation for system prompts and classification rules. | Developers |
+| **[Prompts Guide](prompts/README.md)** | System prompts, including the **Master Prompt** to rebuild the app. | Developers |
 | **[Trigger-Based Arch](TRIGGER_BASED_ARCHITECTURE.md)** | Design doc for future real-time implementation. | Architects |
 
 ## 🚀 Quick Start

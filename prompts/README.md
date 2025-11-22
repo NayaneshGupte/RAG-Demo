@@ -19,6 +19,11 @@ Prompt used to classify incoming emails and determine if they should be processe
 
 **Usage**: Loaded by `AgentService` to filter emails before processing. The agent will only respond to emails classified as customer support inquiries.
 
+### `comprehensive_prompt.md`
+A single, all-encompassing prompt to rebuild this entire application from scratch.
+
+**Usage**: Not directly loaded by `AgentService`. This prompt is for development and understanding the full system context.
+
 ## Experimenting with Prompts
 
 You can freely edit these files to experiment with different prompts without modifying the code. Changes will take effect the next time the agent is started.
