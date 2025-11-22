@@ -28,7 +28,6 @@ An intelligent customer support automation system using Retrieval-Augmented Gene
 3.  **Run Agent**: `python run.py agent`
 4.  **Run Dashboard**: `python wsgi.py`
 
-## 🛠️ Tech Stack
 
 ## 🛠️ Tech Stack
 
