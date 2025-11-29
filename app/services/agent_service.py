@@ -1,16 +1,16 @@
 """
 AI Agent service for automated email responses.
 Simplified version compatible with Python 3.14.
+Uses pluggable LLM providers for maximum flexibility.
 """
 import time
 import logging
 import json
 from datetime import datetime
-import google.generativeai as genai
 import os
-from anthropic import Anthropic
 from langchain_core.prompts import PromptTemplate
 from app.config import Config
+from app.services.llm_providers.factory import LLMFactory
 from app.services.vector_store_service import VectorStoreService
 from app.services.gmail_service import GmailService
 from app.services.database_service import DatabaseService
@@ -30,48 +30,21 @@ class AgentService:
         logger.info(f"Agent initialized for user: {self.current_email}")
         logger.info(f"Agent start time: {self.start_time} (Filter active for older emails)")
         
-        self._configure_genai()
-        self.model = self._initialize_model()
-        self.use_alternative = False  # Flag to track fallback usage
+        # Initialize LLM factory with configured primary and fallback providers
+        self.llm_factory = LLMFactory(
+            primary_provider=Config.LLM_PRIMARY_PROVIDER,
+            fallback_providers=Config.LLM_FALLBACK_PROVIDERS
+        )
+        
+        # Log LLM provider status
+        provider_status = self.llm_factory.get_provider_status()
+        logger.info(f"LLM Provider Status: {provider_status}")
+        
+        if self.llm_factory.get_current_provider() is None:
+            raise ValueError("No LLM providers available. Please configure at least one LLM provider.")
+        
         self.classification_prompt = self._load_classification_prompt()
         self.response_prompt = self._load_response_prompt()
-    
-    def _configure_genai(self):
-        """Configure Google Generative AI."""
-        if not Config.GOOGLE_API_KEY:
-            raise ValueError("GOOGLE_API_KEY not set.")
-        genai.configure(api_key=Config.GOOGLE_API_KEY)
-
-    def _initialize_model(self):
-        """Initialize the Gemini model."""
-        # Use the model name directly from config
-        return genai.GenerativeModel(Config.CHAT_MODEL)
-
-    def _initialize_alternative_model(self):
-        """Initialize the Claude Sonnet model as a fallback."""
-        # Assumes ANTHROPIC_API_KEY is set in environment
-        client = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
-        # Return a callable that mimics the generate_content interface
-        class ClaudeWrapper:
-            def __init__(self, client):
-                self.client = client
-                self.model_name = "claude-3-sonnet-20240229"
-            def generate_content(self, prompt):
-                # Use the messages API format
-                response = self.client.messages.create(
-                    model=self.model_name,
-                    max_tokens=1024,
-                    temperature=0.0,
-                    messages=[
-                        {"role": "user", "content": prompt}
-                    ]
-                )
-                # Wrap response to have .text attribute similar to Gemini
-                class Resp:
-                    def __init__(self, text):
-                        self.text = text
-                return Resp(response.content[0].text)
-        return ClaudeWrapper(client)
     
     def _load_classification_prompt(self):
         """Load email classification prompt."""
@@ -100,34 +73,8 @@ Body: {{body}}
             template=template,
             input_variables=["context", "subject", "body"]
         )
-    
-    def _retry_with_backoff(self, func, *args, **kwargs):
-        """Execute function with exponential backoff retry logic and fallback model on quota errors."""
-        max_retries = 5
-        base_delay = 5
-        
-        for attempt in range(max_retries):
-            try:
-                return func(*args, **kwargs)
-            except Exception as e:
-                # Detect rate limit / quota errors
-                if "429" in str(e) or "Quota exceeded" in str(e):
-                    # If we haven't switched yet, switch to alternative model
-                    if not getattr(self, "use_alternative", False):
-                        logger.warning("Gemini quota exceeded. Switching to Claude Sonnet fallback model.")
-                        self.model = self._initialize_alternative_model()
-                        self.use_alternative = True
-                        # Reset retries for the new model
-                        continue
-                    # If already using alternative, apply backoff
-                    delay = base_delay * (2 ** attempt)
-                    logger.warning(f"Rate limit hit on fallback model. Retrying in {delay} seconds... (Attempt {attempt + 1}/{max_retries})")
-                    time.sleep(delay)
-                else:
-                    raise e
-        
-        raise Exception("Max retries exceeded for rate limit")
 
+    
     def should_process_email(self, email):
         """Determine if an email should be processed by the agent."""
         try:
@@ -136,8 +83,14 @@ Body: {{body}}
                 body=email['body'][:500]
             )
             
-            # Use retry logic
-            response = self._retry_with_backoff(self.model.generate_content, formatted_prompt)
+            # Use LLM factory to generate content with automatic retry and fallback
+            response = self.llm_factory.generate_content(
+                prompt=formatted_prompt,
+                temperature=Config.LLM_TEMPERATURE,
+                max_tokens=Config.LLM_MAX_TOKENS,
+                max_retries=Config.LLM_RETRY_MAX_ATTEMPTS,
+                retry_delay=Config.LLM_RETRY_DELAY_SECONDS
+            )
             decision_text = response.text.strip()
             
             # Try to parse JSON response
@@ -200,15 +153,20 @@ Body: {{body}}
             
             logger.info(f"Retrieved {len(docs)} relevant documents from knowledge base")
             
-            # Generate response using LLM
+            # Generate response using LLM factory with automatic retry and fallback
             formatted_prompt = self.response_prompt.format(
                 context=context,
                 subject=email['subject'],
                 body=email['body']
             )
             
-            # Use retry logic
-            response = self._retry_with_backoff(self.model.generate_content, formatted_prompt)
+            response = self.llm_factory.generate_content(
+                prompt=formatted_prompt,
+                temperature=Config.LLM_TEMPERATURE,
+                max_tokens=Config.LLM_MAX_TOKENS,
+                max_retries=Config.LLM_RETRY_MAX_ATTEMPTS,
+                retry_delay=Config.LLM_RETRY_DELAY_SECONDS
+            )
             return response.text.strip()
             
         except Exception as e:
@@ -327,11 +285,10 @@ Body: {{body}}
     
     def run(self, poll_interval=60):
         """Run the agent in continuous polling mode."""
-        if not Config.GOOGLE_API_KEY:
-            raise ValueError("GOOGLE_API_KEY not set.")
-
-        logger.info("🤖 AI Support Agent started (Direct SDK Mode)")
+        logger.info("🤖 AI Support Agent started with LLM Provider Factory")
         print(f"🤖 AI Support Agent is running. Checking emails every {poll_interval} seconds...")
+        provider_status = self.llm_factory.get_provider_status()
+        print(f"   Current LLM Provider: {provider_status['current_provider']}")
         
         while True:
             self.process_emails()

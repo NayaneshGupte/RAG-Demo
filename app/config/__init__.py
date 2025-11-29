@@ -41,6 +41,17 @@ class Config:
     RETRIEVER_TOOL_DESC_FILE = os.getenv("RETRIEVER_TOOL_DESC_FILE", "prompts/retriever_tool_description.txt")
     EMAIL_CLASSIFICATION_PROMPT_FILE = os.getenv("EMAIL_CLASSIFICATION_PROMPT_FILE", "prompts/email_classification_prompt.txt")
     
+    # LLM Provider Settings
+    LLM_PRIMARY_PROVIDER = os.getenv("LLM_PRIMARY_PROVIDER", "gemini").lower()
+    LLM_FALLBACK_PROVIDERS = [
+        provider.strip().lower()
+        for provider in os.getenv("LLM_FALLBACK_PROVIDERS", "claude").split(",")
+    ]
+    LLM_RETRY_MAX_ATTEMPTS = int(os.getenv("LLM_RETRY_MAX_ATTEMPTS", "5"))
+    LLM_RETRY_DELAY_SECONDS = int(os.getenv("LLM_RETRY_DELAY_SECONDS", "5"))
+    LLM_TEMPERATURE = float(os.getenv("LLM_TEMPERATURE", "0.0"))
+    LLM_MAX_TOKENS = int(os.getenv("LLM_MAX_TOKENS", "1024"))
+    
     # Logging
     LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
     LOG_FILE = os.getenv("LOG_FILE", "logs/app.log")
