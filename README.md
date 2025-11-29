@@ -14,20 +14,21 @@ An intelligent customer support automation system using Retrieval-Augmented Gene
 
 | Document | Description | Target Audience |
 |----------|-------------|-----------------|
-| **[User Guide (Walkthrough)](walkthrough.md)** | **Start Here!** Complete setup, installation, and usage guide. | Users |
-| **[Code Walkthrough](code_walkthrough.md)** | Technical deep dive into the codebase and architecture. | Developers |
-| **[Gmail Setup Guide](gmail_setup_guide.md)** | Step-by-step guide to get your `credentials.json`. | Users |
-| **[PRD](PRD.md)** | Product Requirements Document. | Stakeholders |
-| **[Prompts Guide](prompts/README.md)** | System prompts, including the **Master Prompt** to rebuild the app. | Developers |
-| **[Trigger-Based Arch](TRIGGER_BASED_ARCHITECTURE.md)** | Design doc for future real-time implementation. | Architects |
+| **[Setup Guide](docs/walkthroughs/setup/README.md)** | **Start Here!** Project setup and installation. | Users |
+| **[Usage Guide](docs/walkthroughs/usage/README.md)** | How to use the system for ingestion/search/email. | Users |
+| **[Troubleshooting](docs/walkthroughs/troubleshooting.md)** | Common issues and solutions. | Users |
+| **[Architecture Overview](docs/architecture/README.md)** | High-level and component architecture. | Developers |
+| **[Vector DB Architecture](docs/architecture/vector_db/README.md)** | Pluggable vector DB provider design. | Developers |
+| **[LLM Architecture](docs/architecture/llm/README.md)** | LLM provider design. | Developers |
+| **[Prompts Guide](docs/prompts/README.md)** | System prompts and templates. | Developers |
+| **[Trigger-Based Arch](docs/architecture/trigger_based/README.md)** | Real-time event design. | Architects |
 
 ## 🚀 Quick Start
 
 1.  **Install Dependencies**: `pip install -r requirements.txt`
-2.  **Setup**: Follow the **[User Guide](walkthrough.md)** to configure `.env` and Gmail.
+2.  **Setup**: Follow the **[Setup Guide](docs/walkthroughs/setup/README.md)** to configure `.env` and Gmail.
 3.  **Run Agent**: `python run.py agent`
 4.  **Run Dashboard**: `python wsgi.py`
-
 
 ## 🛠️ Tech Stack
 
@@ -35,17 +36,13 @@ An intelligent customer support automation system using Retrieval-Augmented Gene
 - **Embeddings**: Google Gemini Embeddings (models/embedding-001)
 - **Vector DB**: Pinecone
 - **Framework**: LangChain
-
 - **Email**: Gmail API
 
 ## Demo Videos
 
-
 https://github.com/user-attachments/assets/97c3da8f-53a3-40ea-b103-be73e20b46c4
 
-
 https://github.com/user-attachments/assets/c42d6a63-6e20-4cfa-af7b-88b67e21cbc9
-
 
 ## 📝 License
 

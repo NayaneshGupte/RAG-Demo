@@ -4,11 +4,6 @@ This guide provides a complete walkthrough for setting up, running, and using th
 
 ## 📋 Prerequisites
 
-- **Python 3.12** (Recommended)
-- **Google Cloud Project** with Gmail API enabled
-- **Google Gemini API Key**
-- **Pinecone API Key**
-- **Telegram Bot Token**
 
 ## 🚀 Installation
 
@@ -36,10 +31,11 @@ This guide provides a complete walkthrough for setting up, running, and using th
     ```
 
 2.  **Gmail Authentication**:
-    - Follow the [Gmail Setup Guide](gmail_setup_guide.md) to generate your `credentials.json`.
+    - Follow the [Gmail Setup Guide](../guides/gmail_setup_guide.md) to generate your `credentials.json`.
     - Place `credentials.json` in the root directory.
     - The first time you run the agent, a browser window will open to authenticate with your Gmail account.
     - A `token.json` file will be created automatically to store the session.
+
 
 ## 🏃‍♂️ Running the System
 
@@ -103,14 +99,9 @@ To add new knowledge to the system, use the **Web Dashboard**:
 
 ## 🛡️ Features
 
-- **Smart Filtering**: Only processes new emails received *after* the agent started.
-- **Rate Limit Handling**: Automatically switches to Claude Sonnet if Gemini API quota is exceeded.
-- **Data Isolation**: Dashboard shows data only for the currently authenticated user.
-- **Detailed Logging**: Tracks every action, including ignored emails and errors.
 
 ## 🧹 Maintenance
 
-- **Clear Data**: To reset the dashboard, stop the services and run:
   ```bash
   rm email_logs.db
   ```

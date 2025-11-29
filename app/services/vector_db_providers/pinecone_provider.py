@@ -9,8 +9,10 @@ import google.generativeai as genai
 from langchain_core.embeddings import Embeddings
 from langchain_core.documents import Document
 from pinecone import Pinecone, ServerlessSpec
+from app.services.vector_db_providers.pinecone_index_manager import PineconeIndexManager
 from app.config import Config
 from app.services.vector_db_providers.base import VectorDBProvider, VectorDBResponse
+from app.services.vector_db_providers.pinecone_document_manager import PineconeDocumentManager
 
 logger = logging.getLogger(__name__)
 
@@ -66,12 +68,13 @@ class PineconeProvider(VectorDBProvider):
         self.cloud = Config.PINECONE_CLOUD
         self.region = Config.PINECONE_REGION
         self.embedding_model = Config.EMBEDDING_MODEL
-        
+
         self.pc_client = None
         self.embeddings = None
-        self._initialized = False
-        
-        logger.info("PineconeProvider initialized")
+        self.index_manager = None
+    self.document_manager = None
+    self._initialized = False
+    logger.info("PineconeProvider initialized")
     
     def validate_credentials(self) -> bool:
         """Validate Pinecone credentials."""
@@ -106,20 +109,35 @@ class PineconeProvider(VectorDBProvider):
         try:
             if not self.validate_credentials():
                 return False
-            
+
             # Initialize embeddings
             if not Config.GOOGLE_API_KEY:
                 logger.error("GOOGLE_API_KEY not set for embeddings")
                 return False
-            
+
             self.embeddings = GoogleGenAIEmbeddings(
                 api_key=Config.GOOGLE_API_KEY,
                 model_name=self.embedding_model
             )
-            
+
             # Initialize Pinecone client
             self.pc_client = Pinecone(api_key=self.api_key)
-            
+
+            # Initialize index manager
+            self.index_manager = PineconeIndexManager(
+                pc_client=self.pc_client,
+                default_dimension=self.dimension,
+                metric=self.metric,
+                cloud=self.cloud,
+                region=self.region
+            )
+
+            # Initialize document manager
+            self.document_manager = PineconeDocumentManager(
+                pc_client=self.pc_client,
+                embeddings=self.embeddings,
+                index_name=self.index_name
+            )
             logger.info("PineconeProvider initialized successfully")
             self._initialized = True
             return True
@@ -128,132 +146,23 @@ class PineconeProvider(VectorDBProvider):
             return False
     
     def get_or_create_index(self, index_name: str, dimension: Optional[int] = None) -> bool:
-        """Get existing index or create new one."""
-        try:
-            if not self._initialized or not self.pc_client:
-                logger.error("PineconeProvider not initialized")
-                return False
-            
-            existing_indexes = [idx.name for idx in self.pc_client.list_indexes()]
-            
-            if index_name not in existing_indexes:
-                logger.info(f"Creating new Pinecone index: {index_name}")
-                if not dimension:
-                    dimension = self.dimension
-                
-                self.pc_client.create_index(
-                    name=index_name,
-                    dimension=dimension,
-                    metric=self.metric,
-                    spec=ServerlessSpec(
-                        cloud=self.cloud,
-                        region=self.region
-                    )
-                )
-                logger.info(f"Index {index_name} created successfully")
-            else:
-                logger.info(f"Using existing Pinecone index: {index_name}")
-            
-            return True
-        except Exception as e:
-            logger.error(f"Error creating/getting index {index_name}: {e}")
+        """Get existing index or create new one (delegated to PineconeIndexManager)."""
+        if not self._initialized or not self.index_manager:
+            logger.error("PineconeProvider not initialized")
             return False
+        return self.index_manager.get_or_create_index(index_name, dimension)
     
     def add_documents(self, documents: List[Dict], index_name: str) -> VectorDBResponse:
-        """Add documents to Pinecone."""
-        try:
-            if not self._initialized or not self.pc_client:
-                return VectorDBResponse(
-                    success=False,
-                    error="PineconeProvider not initialized"
-                )
-            
-            index = self.pc_client.Index(index_name)
-            vectors = []
-            
-            for i, doc in enumerate(documents):
-                # Extract content and metadata
-                if isinstance(doc, Document):
-                    content = doc.page_content
-                    metadata = doc.metadata or {}
-                else:
-                    content = doc.get('page_content', '')
-                    metadata = doc.get('metadata', {})
-                
-                # Generate embedding
-                embedding = self.embeddings.embed_documents([content])[0]
-                
-                # Check for zero vectors
-                if all(v == 0.0 for v in embedding):
-                    logger.warning(f"Skipping document {i} due to zero-vector embedding")
-                    continue
-                
-                vectors.append({
-                    'id': f'doc_{i}_{hash(content)}',
-                    'values': embedding,
-                    'metadata': {
-                        'text': content,
-                        **metadata
-                    }
-                })
-            
-            # Upsert in batches
-            batch_size = 100
-            for i in range(0, len(vectors), batch_size):
-                batch = vectors[i:i+batch_size]
-                index.upsert(vectors=batch)
-                logger.debug(f"Upserted batch {i//batch_size + 1} ({len(batch)} vectors)")
-            
-            logger.info(f"Successfully added {len(vectors)} documents to {index_name}")
-            return VectorDBResponse(
-                success=True,
-                data=len(vectors),
-                metadata={'index': index_name, 'vectors_added': len(vectors)}
-            )
-        except Exception as e:
-            logger.error(f"Error adding documents to Pinecone: {e}")
-            return VectorDBResponse(success=False, error=str(e))
+        """Add documents to Pinecone (delegated to PineconeDocumentManager)."""
+        if not self._initialized or not self.document_manager:
+            return VectorDBResponse(success=False, error="PineconeProvider not initialized")
+        return self.document_manager.add_documents(documents, index_name)
     
     def similarity_search(self, query: str, k: int = 3, index_name: Optional[str] = None) -> VectorDBResponse:
-        """Search for similar documents in Pinecone."""
-        try:
-            if not self._initialized or not self.pc_client:
-                return VectorDBResponse(
-                    success=False,
-                    error="PineconeProvider not initialized"
-                )
-            
-            if not index_name:
-                index_name = self.index_name
-            
-            index = self.pc_client.Index(index_name)
-            
-            # Generate query embedding
-            query_embedding = self.embeddings.embed_query(query)
-            
-            # Query Pinecone
-            results = index.query(
-                vector=query_embedding,
-                top_k=k,
-                include_metadata=True
-            )
-            
-            # Convert to Document format
-            docs = []
-            for match in results.get('matches', []):
-                metadata = match.get('metadata', {})
-                text = metadata.get('text', '')
-                docs.append(Document(page_content=text, metadata=metadata))
-            
-            logger.debug(f"Similarity search found {len(docs)} documents")
-            return VectorDBResponse(
-                success=True,
-                data=docs,
-                metadata={'index': index_name, 'query': query, 'results_count': len(docs)}
-            )
-        except Exception as e:
-            logger.error(f"Error in similarity search: {e}")
-            return VectorDBResponse(success=False, error=str(e))
+        """Search for similar documents in Pinecone (delegated to PineconeDocumentManager)."""
+        if not self._initialized or not self.document_manager:
+            return VectorDBResponse(success=False, error="PineconeProvider not initialized")
+        return self.document_manager.similarity_search(query, k, index_name)
     
     def get_index_stats(self, index_name: Optional[str] = None) -> VectorDBResponse:
         """Get Pinecone index statistics."""
@@ -280,92 +189,17 @@ class PineconeProvider(VectorDBProvider):
             logger.error(f"Error getting index stats: {e}")
             return VectorDBResponse(success=False, error=str(e))
     
-    def list_documents(self, index_name: Optional[str] = None, limit: int = 10,
-                      pagination_token: Optional[str] = None) -> VectorDBResponse:
-        """List documents in Pinecone index."""
-        try:
-            if not self._initialized or not self.pc_client:
-                return VectorDBResponse(
-                    success=False,
-                    error="PineconeProvider not initialized"
-                )
-            
-            if not index_name:
-                index_name = self.index_name
-            
-            index = self.pc_client.Index(index_name)
-            
-            # Build list arguments
-            list_args = {'limit': limit}
-            if pagination_token:
-                list_args['pagination_token'] = pagination_token
-            
-            results = index.list(**list_args)
-            
-            # Extract IDs and fetch documents
-            ids = []
-            next_token = None
-            
-            try:
-                for batch in results:
-                    ids.extend(batch)
-                    break
-            except TypeError:
-                if hasattr(results, 'vectors'):
-                    ids = [v.id for v in results.vectors]
-                if hasattr(results, 'pagination'):
-                    next_token = results.pagination.next
-            
-            # Fetch document metadata
-            documents = []
-            if ids:
-                fetch_response = index.fetch(ids)
-                for vector_id, vector_data in fetch_response.vectors.items():
-                    metadata = vector_data.metadata or {}
-                    text = metadata.get('text', '')
-                    documents.append({
-                        'id': vector_id,
-                        'text': text,
-                        'metadata': metadata
-                    })
-            
-            logger.debug(f"Listed {len(documents)} documents from {index_name}")
-            return VectorDBResponse(
-                success=True,
-                data=documents,
-                metadata={
-                    'index': index_name,
-                    'count': len(documents),
-                    'next_token': next_token
-                }
-            )
-        except Exception as e:
-            logger.error(f"Error listing documents: {e}")
-            return VectorDBResponse(success=False, error=str(e))
+    def list_documents(self, index_name: Optional[str] = None, limit: int = 10, pagination_token: Optional[str] = None) -> VectorDBResponse:
+        """List documents in Pinecone index (delegated to PineconeDocumentManager)."""
+        if not self._initialized or not self.document_manager:
+            return VectorDBResponse(success=False, error="PineconeProvider not initialized")
+        return self.document_manager.list_documents(index_name, limit, pagination_token)
     
     def delete_document(self, document_id: str, index_name: Optional[str] = None) -> VectorDBResponse:
-        """Delete a document from Pinecone."""
-        try:
-            if not self._initialized or not self.pc_client:
-                return VectorDBResponse(
-                    success=False,
-                    error="PineconeProvider not initialized"
-                )
-            
-            if not index_name:
-                index_name = self.index_name
-            
-            index = self.pc_client.Index(index_name)
-            index.delete(ids=[document_id])
-            
-            logger.info(f"Deleted document {document_id} from {index_name}")
-            return VectorDBResponse(
-                success=True,
-                metadata={'index': index_name, 'document_id': document_id}
-            )
-        except Exception as e:
-            logger.error(f"Error deleting document: {e}")
-            return VectorDBResponse(success=False, error=str(e))
+        """Delete a document from Pinecone (delegated to PineconeDocumentManager)."""
+        if not self._initialized or not self.document_manager:
+            return VectorDBResponse(success=False, error="PineconeProvider not initialized")
+        return self.document_manager.delete_document(document_id, index_name)
     
     def get_provider_name(self) -> str:
         """Get provider name."""
