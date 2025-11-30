@@ -1,8 +1,8 @@
 # Product Requirements Document (PRD)
 ## AI Customer Support Agent & Dashboard
 
-**Version:** 1.0
-**Date:** November 22, 2025
+**Version:** 2.0  
+**Date:** November 30, 2025  
 **Status:** Implemented
 
 ---
@@ -59,18 +59,34 @@ The system aims to reduce manual support workload by automatically handling rout
     - **Zero-Vector Guard**: Skip chunks that generate invalid (zero) embeddings.
 - **Storage**: Generate embeddings using Gemini and upsert them to the Pinecone vector database.
 
-### 3.3 Web Dashboard
-- **Real-Time Monitoring**:
-    - Display a table of logs with columns: Email Time, Response Time, Status, Customer, Subject, Category, Details.
-    - **Tabs**: Filter logs by status: `Responded`, `Ignored`, `Failed`.
-- **Knowledge Base Viewer**:
-    - Dedicated page (`/knowledge-base`) to browse ingested chunks.
-    - **Pagination**: Load 3 chunks at a time with infinite scroll.
-    - **Stats**: Live counter of "Total Knowledge Chunks" on the dashboard.
-- **Statistics**: Show cards for Total Processed, Responded, Ignored, and Total Chunks.
-- **Auto-Refresh**:
-    - Refresh data automatically every **30 minutes**.
-    - Display a live "Updated: X time ago" timer (updates every minute).
+### 3.3 Web Application & Dashboard
+- **Separated Architecture**:
+    - **Landing Page** (`/`): Unauthenticated landing page with features showcase and "Connect Gmail" button.
+    - **Dashboard** (`/dashboard`): Protected dashboard requiring authentication.
+    - **Client-Side Routing**: `auth.js` handles automatic redirects based on session status.
+    - **How It Works Page** (`/how-it-works`): Public page explaining system workflow.
+- **Authentication**:
+    - Gmail OAuth 2.0 with session-based auth.
+    - Demo mode support for testing (`/auth/demo/login`).
+    - Secure logout with session cleanup.
+- **Real-Time Analytics**:
+    - **ApexCharts Integration**: Interactive line charts for email volume, donut charts for category distribution.
+    - **Date Range Selection**: Flatpickr integration for custom date ranges (Today, 7D, 1M, 3M, 6M, 12M, Custom).
+    - **Auto-Refresh**: Dashboard updates every 30 seconds via `dashboard.js`.
+- **Dashboard Components**:
+    - Agent status indicator (running/stopped with pulse animation).
+    - Key metrics cards: Total Processed, Responded, Ignored.
+    - Email volume chart with time series data.
+    - Category distribution donut chart.
+- **Knowledge Base Management**:
+    - Dedicated page (`/knowledge-base`) to browse ingested documents.
+    - **Web Upload**: Drag-and-drop PDF upload interface.
+    - **Pagination**: Infinite scroll with 3 documents per page load.
+    - **Stats**: Live counter of "Total Knowledge Chunks" displayed on dashboard.
+- **Recent Activity**:
+    - Dedicated activity logs page (`/recent-activity`).
+    - Filter by status: All, Responded, Ignored, Failed.
+    - Pagination with date range filtering.
 - **User Isolation**: Ensure data and logs are scoped to the currently authenticated Gmail user.
 
 ---
@@ -94,29 +110,55 @@ The system aims to reduce manual support workload by automatically handling rout
 ## 5. Technical Architecture
 
 ### 5.1 Tech Stack
-- **Language**: Python 3.12
-- **Backend Framework**: Flask (for Dashboard API)
-- **Frontend**: HTML5, CSS3, Vanilla JavaScript
+- **Language**: Python 3.12+
+- **Backend Framework**: Flask with Application Factory pattern
+  - **Blueprints**: `api_bp` (REST API), `web_bp` (Web pages), `auth_bp` (Authentication)
+- **Frontend**: 
+  - HTML5, CSS3 with modern design (Glassmorphism, gradients)
+  - Vanilla JavaScript (no framework dependencies)
+  - **ApexCharts**: Interactive charts
+  - **Flatpickr**: Date range picker
 - **Database**: SQLite (for operation logs: `email_logs.db`)
 - **Vector Database**: Pinecone (Serverless)
 
 ### 5.2 External APIs
-- **Google Gemini API**: Embeddings (`embedding-001`) and Chat (`gemini-pro`).
-- **Anthropic API**: Fallback Chat (`claude-3-sonnet`).
-- **Gmail API**: Email reading and sending.
+- **Google Gemini API**: Embeddings (`embedding-004`) and Chat (`gemini-1.5-flash`).
+- **Anthropic API**: Fallback Chat (`claude-3-5-sonnet-20241022`).
+- **Gmail API**: Email reading, sending, and OAuth authentication.
 
 ### 5.3 Key Components
 | Component | Responsibility |
 |-----------|----------------|
 | `AgentService` | Orchestrates fetching, classification, RAG, and response generation. |
-| `GmailService` | Handles Gmail API interactions (listing, parsing, sending). |
-| `IngestionService` | Processes PDFs and updates the vector store. |
-| `DatabaseService` | Manages SQLite logs for the dashboard. |
-| `VectorStoreService` | Manages Pinecone interactions and embedding generation. |
+| `GmailService` | Facade for Gmail API interactions (auth, reading, sending, modifying). |
+| `LLMFactory` | Multi-provider LLM system with automatic fallback (Gemini → Claude). |
+| `VectorStoreService` | Simplified interface to vector database operations. |
+| `VectorDBFactory` | Abstraction layer for vector database providers. |
+| `IngestionService` | Processes PDFs and updates the vector store via web upload. |
+| `DatabaseService` | Manages SQLite logs with user isolation. |
+| **Frontend JavaScript** | |
+| `auth.js` | Handles authentication flow, session checks, and page redirects. |
+| `dashboard.js` | Manages dashboard data fetching and metric updates. |
+| `charts.js` | Initializes and manages ApexCharts visualizations. |
+| `date-range-manager.js` | Handles date range selection and persistence. |
 
 ---
 
-## 6. Future Roadmap (Out of Scope for v1.0)
-- Support for multiple file formats (DOCX, TXT).
+## 6. Implemented Features (v2.0)
+- ✅ Separated Landing and Dashboard pages with client-side routing
+- ✅ ApexCharts integration for real-time analytics
+- ✅ Flatpickr date range selection
+- ✅ Multi-LLM fallback system (Gemini → Claude)
+- ✅ Multi-Vector DB abstraction layer
+- ✅ Web-based PDF upload (removed Telegram dependency)
+- ✅ Demo authentication mode
+- ✅ Session-based user isolation
+- ✅ Auto-refresh dashboard (30s intervals)
+
+## 7. Future Roadmap (Out of Scope for v2.0)
+- Support for multiple file formats (DOCX, TXT, CSV).
 - User feedback mechanism (Thumbs up/down on AI responses).
 - Multi-turn conversation memory (currently handles single-turn replies).
+- Email templates and customizable response prompts.
+- Advanced analytics (sentiment analysis, response time trends).
+- Scheduled reports and email digests.

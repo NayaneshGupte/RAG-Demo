@@ -6,7 +6,7 @@ This document provides detailed sequence diagrams for all major system workflows
 
 ```mermaid
 sequenceDiagram
-    actor User  as Gmail User
+    actor User as Gmail User
     participant Gmail as Gmail API
     participant Agent as AgentService
     participant GmailSvc as GmailService
@@ -92,38 +92,122 @@ sequenceDiagram
     end
 ```
 
-## 2. PDF Ingestion Workflow (Telegram Bot)
+## 2. Web Authentication & Routing Flow
 
 ```mermaid
 sequenceDiagram
     actor User
-    participant Telegram as Telegram API
-    participant Bot as Telegram Bot
+    participant Browser
+    participant AuthJS as auth.js
+    participant Flask as Flask Routes
+    participant AuthAPI as Auth Routes
+    participant Session
+    participant Gmail as GmailService
+    
+    User->>Browser: Navigate to /
+    Browser->>Flask: GET /
+    Flask-->>Browser: Render landing.html
+    Browser->>AuthJS: DOMContentLoaded
+    AuthJS->>AuthAPI: GET /auth/status
+    AuthAPI->>Session: Check session
+    
+    alt User authenticated
+        Session-->>AuthAPI: {authenticated: true, user_email: "user@example.com"}
+        AuthAPI-->>AuthJS: User data
+        AuthJS->>Browser: Redirect to /dashboard
+        Browser->>Flask: GET /dashboard
+        Flask-->>Browser: Render dashboard.html
+        AuthJS->>AuthJS: initializeDashboard(user_email)
+    else Not authenticated
+        Session-->>AuthAPI: {authenticated: false}
+        AuthAPI-->>AuthJS: No auth
+        Note over Browser: Stay on landing page
+    end
+    
+    Note over User: User clicks "Connect Gmail"
+    User->>Browser: Click login button
+    Browser->>AuthAPI: GET /auth/gmail/login
+    AuthAPI->>Gmail: OAuth flow
+    Gmail-->>AuthAPI: Authorization code
+    AuthAPI->>Session: Set session
+    Session-->>AuthAPI: Success
+    AuthAPI-->>Browser: Redirect to /dashboard
+```
+
+## 3. Dashboard Data Fetching Flow
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant Browser
+    participant DashboardJS as dashboard.js
+    participant ChartsJS as charts.js
+    participant API as API Routes
+    participant DB as DatabaseService
+    participant Vector as VectorStoreService
+    
+    Note over Browser: User authenticated on /dashboard
+    Browser->>DashboardJS: DOMContentLoaded
+    DashboardJS->>DashboardJS: fetchData()
+    
+    par Fetch Summary Metrics
+        DashboardJS->>API: GET /api/metrics/summary
+        API->>DB: get_stats(agent_email=current_user)
+        DB-->>API: {total: 47, responded: 20, ignored: 25}
+        API-->>DashboardJS: Stats data
+        DashboardJS->>Browser: Update metric cards
+    and Fetch Chart Data
+        ChartsJS->>API: GET /api/metrics/email-volume?start_date=...&end_date=...
+        API->>DB: get_email_volume_by_day(days, start_date, interval, agent_email)
+        DB-->>API: Volume data
+        API-->>ChartsJS: {labels, total, responded, ignored, failed}
+        ChartsJS->>Browser: Render ApexCharts line chart
+    and Fetch Category Data
+        ChartsJS->>API: GET /api/metrics/categories
+        API->>DB: get_category_breakdown(agent_email)
+        DB-->>API: Category data
+        API-->>ChartsJS: {labels, values}
+        ChartsJS->>Browser: Render ApexCharts donut chart
+    end
+    
+    Note over Browser: Auto-refresh every 30 seconds
+    loop Every 30s
+        DashboardJS->>API: GET /api/metrics/summary
+        API-->>DashboardJS: Updated stats
+        DashboardJS->>Browser: Update UI
+    end
+```
+
+## 4. PDF Upload via Dashboard
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant Browser
+    participant API as API Routes
     participant Ingestion as IngestionService
     participant Loader as PyPDFLoader
     participant Splitter as TextSplitter
     participant Vector as VectorStoreService
-    participant VectorDB as VectorDBFactory
-    participant Pinecone as PineconeProvider
+    participant VectorDB as PineconeProvider
     participant Gemini as Gemini Embedding API
+    participant Temp as Temp File
     
-    User->>Telegram: Upload PDF file
-    Telegram->>Bot: Document update
-    Bot->>Ingestion: handle_document(update, context)
+    User->>Browser: Select PDF + Click Upload
+    Browser->>API: POST /api/upload (multipart/form-data)
     
-    Ingestion->>Ingestion: Validate .pdf extension
-    
-    alt Not a PDF
-        Ingestion->>Bot: ⚠️ Please upload PDF
-        Bot->>User: Error message
+    API->>API: Validate 'file' in request.files
+    alt No file
+        API-->>Browser: 400 Error: No file part
+    else Empty filename
+        API-->>Browser: 400 Error: No selected file
+    else Not PDF
+        API-->>Browser: 400 Error: Only PDF allowed
     else Valid PDF
-        Ingestion->>Bot: 📄 Processing {filename}...
-        Bot->>User: Processing notification
+        API->>Temp: Save to temp file
+        Temp-->>API: temp_path
         
-        Ingestion->>Telegram: get_file(file_id)
-        Telegram-->>Ingestion: file object
-        Ingestion->>Ingestion: Download to temp file
-        
+        API->>Ingestion: process_pdf(temp_path, filename)
         Ingestion->>Loader: PyPDFLoader(temp_path)
         Loader->>Loader: Load PDF pages
         Loader-->>Ingestion: List[Document]
@@ -135,8 +219,8 @@ sequenceDiagram
         Ingestion->>Ingestion: Filter empty chunks
         
         alt No valid chunks
-            Ingestion->>Bot: ⚠️ No valid text found
-            Bot->>User: Warning message
+            Ingestion-->>API: 0 chunks
+            API-->>Browser: Warning: No valid text found
         else Has valid chunks
             Ingestion->>Vector: get_vector_store()
             Vector-->>Ingestion: SimplifiedVectorStore
@@ -150,19 +234,19 @@ sequenceDiagram
                 VectorDB->>VectorDB: Create vector {id, values, metadata}
             end
             
-            VectorDB->>Pinecone: Upsert vectors (batch)
-            Pinecone-->>VectorDB: Success
+            VectorDB->>VectorDB: Upsert vectors to Pinecone (batch)
             VectorDB-->>Vector: VectorDBResponse(success=True, data=num_chunks)
             Vector-->>Ingestion: num_chunks
             
-            Ingestion->>Ingestion: Cleanup temp file
-            Ingestion->>Bot: ✅ Ingested X chunks
-            Bot->>User: Success message
+            Ingestion->>Temp: Delete temp file
+            Ingestion-->>API: num_chunks
+            API-->>Browser: 200 Success: Ingested X chunks
+            Browser->>Browser: Display success message
         end
     end
 ```
 
-## 3. LLM Provider Fallback Flow
+## 5. LLM Provider Fallback Flow
 
 ```mermaid
 sequenceDiagram
@@ -231,7 +315,7 @@ sequenceDiagram
     end
 ```
 
-## 4. Vector DB Search Flow
+## 6. Vector DB Search Flow
 
 ```mermaid
 sequenceDiagram
@@ -267,7 +351,7 @@ sequenceDiagram
     Agent->>Agent: Format context for LLM prompt
 ```
 
-## 5. Gmail Authentication Flow
+## 7. Gmail Authentication Flow
 
 ```mermaid
 sequenceDiagram
@@ -307,84 +391,6 @@ sequenceDiagram
         Auth->>Auth: _save_credentials(creds)
         Auth->>FS: Save token.json
         Auth-->>App: Gmail API service
-    end
-```
-
-## 6. Dashboard Data Flow
-
-```mermaid
-sequenceDiagram
-    actor User
-    participant Browser
-    participant Flask as Flask App
-    participant API as API Blueprint
-    participant DB as DatabaseService
-    participant Vector as VectorStoreService
-    participant Gmail as GmailService
-    
-    User->>Browser: Open dashboard (/)
-    Browser->>Flask: GET /
-    Flask->>Gmail: get_current_email()
-    Gmail-->>Flask: user@example.com
-    Flask-->>Browser: Render dashboard.html
-    
-    Note over Browser: Page loads, fetch data via AJAX
-    Browser->>API: GET /api/logs
-    API->>Gmail: get_current_email()
-    Gmail-->>API: current_user
-    
-    API->>DB: get_logs(limit=100, agent_email=current_user)
-    DB-->>API: List of email logs
-    
-    API->>DB: get_stats(agent_email=current_user)
-    DB-->>API: {total, responded, ignored}
-    
-    API->>Vector: get_stats()
-    Vector-->>API: {total_vector_count}
-    
-    API-->>Browser: JSON {logs, stats, kb_stats, current_user}
-    Browser->>Browser: Render tables and cards
-    
-    Note over Browser: Auto-refresh every 30 minutes
-    loop Every 30 min
-        Browser->>API: GET /api/logs
-        API-->>Browser: Updated data
-        Browser->>Browser: Update UI
-    end
-```
-
-## 7. PDF Upload via Dashboard
-
-```mermaid
-sequenceDiagram
-    actor User
-    participant Browser
-    participant API as API Routes
-    participant Ingestion as IngestionService
-    participant Temp as Temp File
-    
-    User->>Browser: Select PDF + Click Upload
-    Browser->>API: POST /api/upload (multipart/form-data)
-    
-    API->>API: Validate 'file' in request.files
-    alt No file
-        API-->>Browser: 400 Error: No file part
-    else Empty filename
-        API-->>Browser: 400 Error: No selected file
-    else Not PDF
-        API-->>Browser: 400 Error: Only PDF allowed
-    else Valid PDF
-        API->>Temp: Save to temp file
-        Temp-->>API: temp_path
-        
-        API->>Ingestion: process_pdf(temp_path, filename)
-        
-        Note over Ingestion: Process PDF (see Ingestion Workflow)
-        Ingestion-->>API: num_chunks
-        
-        API->>Temp: Delete temp file
-        API-->>Browser: 200 Success: Ingested X chunks
-        Browser->>Browser: Display success message
     end
 ```
 
@@ -472,13 +478,14 @@ sequenceDiagram
 | Workflow | Primary Components | Key Interactions |
 |----------|-------------------|------------------|
 | **Email Processing** | Agent, Gmail, LLM, Vector DB, Database | Classify → RAG → Generate → Send → Log |
-| **PDF Ingestion** | Telegram, Ingestion, Vector DB | Upload → Parse → Split → Embed → Store |
+| **Web Auth & Routing** | Browser, auth.js, Flask, Session | Check Auth → Redirect → Initialize |
+| **Dashboard Data Fetching** | dashboard.js, charts.js, API, Database | Fetch Metrics → Render Charts → Auto-refresh |
+| **PDF Upload** | Browser, API, Ingestion, Vector DB | Upload → Validate → Process → Store → Respond |
 | **LLM Fallback** | LLM Factory, Gemini, Claude | Primary → Detect Error → Switch → Retry |
 | **Vector Search** | Vector Store, Pinecone, Embedder | Query → Embed → Search → Format |
 | **Gmail Auth** | Auth Service, Google OAuth, File System | Load → Validate → Refresh/Authorize → Save |
-| **Dashboard** | Browser, Flask, API, Database | Render → Fetch → Display → Auto-refresh |
-| **PDF Upload** | Browser, API, Ingestion | Upload → Validate → Process → Respond |
 | **KB Pagination** | Browser, API, Vector DB, Pinecone | Initial → Scroll → Load More → Append |
+| **Multi-User Isolation** | Multiple Agents, Gmail APIs, Database | Concurrent Processing with User Segregation |
 
 ## Error Handling Patterns
 

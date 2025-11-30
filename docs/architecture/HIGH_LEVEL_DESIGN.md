@@ -9,15 +9,19 @@ The AI Customer Support Agent is a **microservices-style** system with clear sep
 ```mermaid
 graph TB
     subgraph "User Interfaces"
-        Dashboard[Web Dashboard<br/>Browser]
-        TelegramUser[Telegram App]
+        Browser[Web Browser<br/>Dashboard, Landing]
         Gmail[Gmail]
     end
     
     subgraph "Application Tier"
-        FlaskApp[Flask Application<br/>Port 5000]
+        FlaskApp[Flask Application<br/>Port 5001]
         AgentCLI[Agent Process<br/>Background]
-        TelegramBot[Telegram Bot<br/>Background]
+    end
+    
+    subgraph "Flask Blueprints"
+        WebBP[Web Blueprint<br/>/dashboard, /]
+        APIBP[API Blueprint<br/>/api/*]
+        AuthBP[Auth Blueprint<br/>/auth/*]
     end
     
    subgraph "Business Logic - Services"
@@ -38,7 +42,6 @@ graph TB
         ClaudeAPI[Anthropic Claude API]
         PineconeAPI[Pinecone Vector DB]
         GmailAPI[Gmail API]
-        TelegramAPI[Telegram Bot API]
     end
     
     subgraph "Data Storage"
@@ -46,16 +49,20 @@ graph TB
         Files[(File System<br/>credentials, token)]
     end
     
-    Dashboard -->|HTTP| FlaskApp
-    TelegramUser -->|Messages| TelegramAPI
+    Browser -->|HTTP| FlaskApp
     Gmail -->|OAuth| GmailAPI
     
-    FlaskApp --> AgentSvc
-    FlaskApp --> VectorSvc
-    FlaskApp --> DBSvc
+    FlaskApp --> WebBP
+    FlaskApp --> APIBP
+    FlaskApp --> AuthBP
+    
+    WebBP --> AuthSvc[Session Check]
+    APIBP --> IngestionSvc
+    APIBP --> VectorSvc
+    APIBP --> DBSvc
+    AuthBP --> GmailSvc
     
     AgentCLI --> AgentSvc
-    TelegramBot --> IngestionSvc
     
     AgentSvc --> GmailSvc
     AgentSvc --> VectorSvc
@@ -65,7 +72,6 @@ graph TB
     IngestionSvc --> VectorSvc
     
     GmailSvc --> GmailAPI
-    TelegramBot --> TelegramAPI
     
     LLMFact --> GeminiAPI
     LLMFact -.->|Fallback| ClaudeAPI
@@ -82,19 +88,20 @@ graph TB
 ### Layer 1: Entry Points
 
 #### Flask Web Application
-- **Purpose**: Serve dashboard and provide REST API
-- **Components**:
-  - **Web Blueprint** (`/`, `/knowledge-base`) - Renders HTML pages
-  - **API Blueprint** (`/api/logs`, `/api/upload`, `/api/knowledge-base`) - JSON endpoints
-- **Technology**: Flask, Flask-CORS, Jinja2
-- **Port**: 5000 (default)
+- **Purpose**: Serve web application and provide REST API
+- **Blueprints**:
+  - **Web Blueprint** (`/`, `/dashboard`, `/knowledge-base`, `/how-it-works`) - HTML pages
+  - **API Blueprint** (`/api/metrics/*`, `/api/upload`, `/api/knowledge-base`) - JSON endpoints
+  - **Auth Blueprint** (`/auth/gmail/login`, `/auth/demo/login`, `/auth/logout`) - OAuth flow
+- **Technology**: Flask, Flask-CORS, Jinja2, Session-based auth
+- **Port**: 5001 (default)
+- **Frontend**: Vanilla JS (auth.js, dashboard.js, charts.js), ApexCharts, Flatpickr
 
 #### CLI Runner (run.py)
-- **Purpose**: Command-line interface for agent and ingestion
+- **Purpose**: Command-line interface for email agent
 - **Commands**:
-  - `python run.py agent --poll-interval 60` - Start email agent
-  - `python run.py ingest` - Start Telegram bot
-- **Technology**: argparse, multiprocessing
+  - `python run.py agent --poll-interval 60` - Start email monitoring agent
+- **Technology**: argparse
 
 ### Layer 2: Service Layer (Business Logic)
 
@@ -130,9 +137,7 @@ classDiagram
     
     class IngestionService {
         +VectorStoreService vector_store
-        +process_pdf()
-        +handle_document()
-        +run()
+        +process_pdf(file_path, file_name)
     }
     
     class DatabaseService {
@@ -154,8 +159,8 @@ classDiagram
 | **AgentService** | Email processing orchestration | Gmail, VectorStore, LLMFactory, Database |
 | **GmailService** | Facade for Gmail operations | Gmail sub-services (Auth, Reader, Sender, etc.) |
 | **VectorStoreService** | Vector DB operations | VectorDBFactory |
-| **IngestionService** | PDF document ingestion | VectorStoreService, Telegram |
-| **DatabaseService** | Activity logging | SQLite |
+| **IngestionService** | PDF document ingestion via web upload | VectorStoreService |
+| **DatabaseService** | Activity logging with user isolation | SQLite |
 
 ### Layer 3: Provider Factories
 
@@ -515,30 +520,28 @@ stateDiagram-v2
 | **LLMs** | Google Gemini, Anthropic Claude |
 | **Document Processing** | LangChain (PyPDFLoader, TextSplitters) |
 | **Gmail Integration** | Google API Client |
-| **Telegram Bot** | python-telegram-bot |
+| **Frontend Libraries** | ApexCharts, Flatpickr |
 | **Environment Config** | python-dotenv |
 
 ## Deployment Options
 
 ### Development
 ```bash
-# Terminal 1: Flask Dashboard
+# Terminal 1: Flask Web Application
 python wsgi.py
 
 # Terminal 2: Email Agent
 python run.py agent --poll-interval 60
-
-# Terminal 3: Telegram Bot
-python run.py ingest
 ```
 
 ### Production (Future)
 - **Flask**: Deploy via Gunicorn + Nginx
 - **Agent**: Systemd service or Docker container
-- **Telegram Bot**: Systemd service or Docker container
 - **Database**: Migrate to PostgreSQL for scaling
+- **Session Store**: Redis for distributed sessions
 - **Logging**: Centralized logging (ELK stack, CloudWatch)
 - **Monitoring**: Prometheus + Grafana
+- **CDN**: Static assets via CDN
 
 ## Further Reading
 
@@ -546,4 +549,3 @@ python run.py ingest
 - [Sequence Diagrams](SEQUENCE_DIAGRAMS.md)
 - [Multi-LLM Architecture](llm/README.md)
 - [Multi-Vector DB Architecture](vector_db/README.md)
-- [Service Documentation](services/)

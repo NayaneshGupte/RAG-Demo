@@ -27,11 +27,23 @@ graph TB
         Flask[create_app - Flask App]
     end
     
+    subgraph "Web Layer"
+        WebBP[Web Blueprint<br/>Landing, Dashboard]
+        APIBP[API Blueprint<br/>REST Endpoints]
+        AuthBP[Auth Blueprint<br/>OAuth Flow]
+    end
+    
+    subgraph "Frontend JavaScript"
+        AuthJS[auth.js<br/>Session \u0026 Redirects]
+        DashboardJS[dashboard.js<br/>Data Fetching]
+        ChartsJS[charts.js<br/>ApexCharts]
+    end
+    
     subgraph "Service Layer"
         Agent[AgentService]
         Gmail[GmailService]
         Ingestion[IngestionService]
-        VectorStore[VectorStoreService]
+        Vector Store[VectorStoreService]
         Database[DatabaseService]
     end
     
@@ -52,13 +64,21 @@ graph TB
     
     subgraph "External Services"
         GmailAPI[Gmail API]
-        TelegramAPI[Telegram API]
     end
     
     CLI --> Agent
-    CLI --> Ingestion
-    Flask --> API[API Routes]
-    Flask --> Web[Web Routes]
+    Flask --> WebBP
+    Flask --> APIBP
+    Flask --> AuthBP
+    
+    WebBP --> AuthJS
+    APIBP --> DashboardJS
+    APIBP --> ChartsJS
+    
+    AuthBP --> Gmail
+    APIBP --> Database
+    APIBP --> VectorStore
+    APIBP --> Ingestion
     
     Agent --> Gmail
     Agent --> VectorStore
@@ -68,9 +88,6 @@ graph TB
     Ingestion --> VectorStore
     
     VectorStore --> VectorDBFactory
-    API --> Database
-    API --> VectorStore
-    API --> Ingestion
    
     LLMFactory --> Gemini
     LLMFactory --> Claude
@@ -79,7 +96,6 @@ graph TB
     VectorDBFactory --> Future
     
     Gmail --> GmailAPI
-    Ingestion --> TelegramAPI
 ```
 
 ## Core Services
@@ -139,13 +155,13 @@ graph TB
 **Purpose**: Process PDF documents and ingest into vector database
 
 **Responsibilities**:
-- Handle Telegram bot for PDF uploads
+- Handle PDF uploads via web interface (`/api/upload`)
 - Extract text from PDFs using PyPDFLoader
 - Split documents into chunks (RecursiveCharacterTextSplitter)
-- Filter empty chunks
+- Filter empty chunks and validate content
 - Generate embeddings and store in vector DB
 
-**Integration**: Telegram Bot → PDF Processing → Vector DB
+**Integration**: Web Upload → PDF Processing → Vector DB
 
 **File**: [`app/services/ingestion_service.py`](file:///Users/nayaneshgupte/AI%20Projects/RAG%20Demo/app/services/ingestion_service.py)
 
@@ -218,10 +234,13 @@ app/
 │   └── __init__.py               # Configuration management
 ├── api/
 │   ├── __init__.py               # API Blueprint
-│   └── routes.py                 # REST endpoints (/logs, /upload, /knowledge-base)
+│   └── routes.py                 # REST endpoints (/api/metrics/*, /api/upload)
 ├── web/
 │   ├── __init__.py               # Web Blueprint
-│   └── routes.py                 # Web pages (/, /knowledge-base)
+│   └── routes.py                 # Web pages (/, /dashboard, /knowledge-base)
+├── auth/
+│   ├── __init__.py               # Auth Blueprint
+│   └── routes.py                 # OAuth routes (/auth/gmail/*, /auth/demo/*)
 ├── services/
 │   ├── agent_service.py          # Email processing orchestration
 │   ├── gmail_service.py          # Gmail facade
@@ -250,11 +269,23 @@ app/
 │   ├── logger.py                 # Logging setup
 │   └── prompt_loader.py          # Load prompts from files
 ├── templates/                     # Jinja2 templates
-│   ├── dashboard.html
-│   └── knowledge_base.html
+│   ├── landing.html              # Landing page (unauthenticated)
+│   ├── dashboard.html            # Dashboard (authenticated)
+│   ├── knowledge_base.html       # Knowledge base viewer
+│   ├── recent_activity.html      # Activity logs
+│   └── how-it-works.html        # How it works page
 └── static/                        # Static assets
     ├── css/
-    └── js/
+    │   ├── design-system.css     # Design tokens
+    │   ├── base/base.css         # Base styles
+    │   ├── components.css        # Reusable components
+    │   └── pages/               # Page-specific styles
+    ├── js/
+    │   ├── auth.js              # Auth flow & redirects
+    │   ├── dashboard.js         # Dashboard data fetching
+    │   ├── charts.js            # ApexCharts integration
+    │   └── date-range-manager.js # Date range selection
+    └── images/                   # Static images
 ```
 
 ## Data Flow
@@ -298,18 +329,22 @@ sequenceDiagram
     end
 ```
 
-### Document Ingestion Flow
+### Document Ingestion Flow (Web Upload)
 ```mermaid
 sequenceDiagram
     participant User
-    participant Telegram as TelegramBot
+    participant Browser
+    participant API as API Routes
     participant Ingestion as IngestionService
     participant Vector as VectorStoreService
     participant VDB as VectorDBFactory
     participant Pinecone
     
-    User->>Telegram: Upload PDF
-    Telegram->>Ingestion: handle_document(pdf_file)
+    User->>Browser: Upload PDF via Dashboard
+    Browser->>API: POST /api/upload (multipart/form-data)
+    
+    API->>API: Save to temp file
+    API->>Ingestion: process_pdf(temp_path, filename)
     
     Ingestion->>Ingestion: Load PDF (PyPDFLoader)
     Ingestion->>Ingestion: Split into chunks
@@ -323,8 +358,10 @@ sequenceDiagram
     VDB-->>Vector: Success response
     Vector-->>Ingestion: Num chunks added
     
-    Ingestion->>Telegram: Success message
-    Telegram->>User: ✅ Ingested X chunks
+    Ingestion-->>API: num_chunks
+    API->>API: Cleanup temp file
+    API-->>Browser: 200 Success: Ingested X chunks
+    Browser->>User: ✅ Success message displayed
 ```
 
 ## Key Design Decisions
@@ -365,8 +402,8 @@ PINECONE_ENV=...
 GMAIL_CREDENTIALS_FILE=credentials.json
 GMAIL_TOKEN_FILE=token.json
 
-# Telegram
-TELEGRAM_BOT_TOKEN=...
+# Web Application
+SECRET_KEY=...                       # Flask session secret
 
 # RAG Settings
 CHUNK_SIZE=1000
@@ -379,5 +416,3 @@ CHUNK_OVERLAP=150
 - [Sequence Diagrams](SEQUENCE_DIAGRAMS.md) - Detailed interaction flows
 - [Multi-LLM Architecture](llm/README.md) - LLM provider system
 - [Multi-Vector DB Architecture](vector_db/README.md) - Vector database provider system
-- [Service Documentation](services/) - Individual service details
-- [API Documentation](api/API_ROUTES.md) - REST API reference

@@ -17,18 +17,15 @@ Welcome to the AI Customer Support Agent documentation. This directory contains 
 
 Step-by-step setup and configuration guides:
 
-- **[LLM Quick Start Guide](guides/LLM_QUICK_START.md)** - Set up LLM providers and configuration
 - **[Gmail Setup Guide](guides/gmail_setup_guide.md)** - Configure Gmail API authentication
-- **[Vector DB Provider Guide](guides/vector_db_provider_guide.md)** - Set up vector database providers
 
 ## 🚶 Walkthroughs
 
 ### For Developers
-- **[Code Walkthrough](walkthroughs/code_walkthrough.md)** - Comprehensive code tour: project structure, services, design patterns, and flow examples
+- **[Code Walkthrough](walkthroughs/code_walkthrough.md)** - Critical flows: auth, routing, data fetching, and knowledge base management
 
 ### For Users
 - **[Main Walkthrough](walkthroughs/main_walkthrough.md)** - Installation, configuration, and usage guide
-- **[Troubleshooting Guide](walkthroughs/troubleshooting.md)** - Common issues and solutions
 
 ## 💬 AI Prompts
 
@@ -63,8 +60,6 @@ graph TB
     
     Setup --> Guides[Setup Guides<br/>guides/]
     Guides --> Gmail[Gmail Setup<br/>guides/gmail_setup_guide.md]
-    Guides --> LLMGuide[LLM Quick Start<br/>guides/LLM_QUICK_START.md]
-    Guides --> VDBGuide[Vector DB Setup<br/>guides/vector_db_provider_guide.md]
 ```
 
 ## 🎯 Quick Navigation
@@ -80,7 +75,7 @@ graph TB
 
 **Set up the system**
 → Follow [Main Walkthrough](walkthroughs/main_walkthrough.md)  
-→ Reference specific [Guides](guides/) as needed
+→ Reference [Gmail Setup Guide](guides/gmail_setup_guide.md) as needed
 
 **Understand multi-LLM support**
 → Read [Multi-LLM Architecture](architecture/llm/README.md)  
@@ -90,17 +85,8 @@ graph TB
 → Read [Multi-Vector DB Architecture](architecture/vector_db/README.md)  
 → Check [Sequence Diagrams - Vector Search](architecture/SEQUENCE_DIAGRAMS.md#4-vector-db-search-flow)
 
-**Add a new LLM provider**
-→ Follow guide in [Multi-LLM Architecture - Adding a New Provider](architecture/llm/README.md#adding-a-new-provider)
-
-**Add a new Vector DB provider**
-→ Follow guide in [Multi-Vector DB Architecture - Adding a New Provider](architecture/vector_db/README.md#adding-a-new-provider)
-
 **See how emails are processed**
 → Check [Sequence Diagrams - Email Processing](architecture/SEQUENCE_DIAGRAMS.md#1-email-processing-workflow-complete-flow)
-
-**Debug an issue**
-→ Check [Troubleshooting Guide](walkthroughs/troubleshooting.md)
 
 ## 📖 Documentation Standards
 
@@ -157,6 +143,6 @@ This documentation was generated from the codebase on **2025-11-29** and should 
 
 ---
 
-**Last Updated**: November 29, 2025  
+**Last Updated**: November 30, 2025  
 **Codebase Version**: Python 3.12+  
-**Architecture Status**: Multi-LLM ✅ | Multi-Vector DB ✅ | Gmail Integration ✅
+**Architecture Status**: Multi-LLM ✅ | Multi-Vector DB ✅ | Gmail Integration ✅ | Separated Auth/Dashboard ✅

@@ -1,3 +1,15 @@
-# Guides
+# Setup Guides
 
-This directory contains implementation guides, provider integration instructions, and setup/configuration help for developers.
+This directory contains step-by-step setup and configuration guides for getting the system running.
+
+## Available Guides
+
+### Authentication & OAuth
+- **[OAuth Setup Guide](OAUTH_SETUP.md)** - Complete Gmail OAuth 2.0 configuration walkthrough
+- **[Gmail Setup Guide](gmail_setup_guide.md)** - Gmail API setup and credential management
+
+## Quick Links
+
+- [Back to Documentation Index](../README.md)
+- [Architecture Documentation](../architecture/README.md)
+- [Walkthroughs](../walkthroughs/README.md)
