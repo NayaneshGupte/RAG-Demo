@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How It Works - Flux</title>
+    <!-- Design System -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/design-system.css') }}?v={{ version }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base/base.css') }}?v={{ version }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components.css') }}?v={{ version }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/landing.css') }}?v={{ version }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .how-it-works-container {
+            background: var(--flux-bg-primary);
+            min-height: 100vh;
+            color: var(--flux-text-primary);
+        }
+
+        .how-nav {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--flux-glass-border);
+        }
+
+        .how-nav .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--flux-text-primary);
+        }
+
+        .how-nav .logo-bolt {
+            color: var(--flux-warning);
+        }
+
+        .how-nav a {
+            color: var(--flux-text-secondary);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: var(--flux-radius-md);
+            transition: all var(--flux-transition-fast);
+        }
+
+        .how-nav a:hover {
+            color: var(--flux-text-primary);
+            background: var(--flux-glass-bg);
+        }
+
+        .how-hero {
+            text-align: center;
+            padding: 80px 40px 60px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .how-hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: var(--flux-gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .how-hero p {
+            font-size: 20px;
+            color: var(--flux-text-secondary);
+            line-height: 1.6;
+        }
+
+        .workflow-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        .workflow-step {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            margin-bottom: 100px;
+        }
+
+        .workflow-step:nth-child(even) {
+            direction: rtl;
+        }
+
+        .workflow-step:nth-child(even)>* {
+            direction: ltr;
+        }
+
+        .step-content h2 {
+            font-size: 14px;
+            color: var(--flux-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .step-content h3 {
+            font-size: 32px;
+            color: var(--flux-text-primary);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .step-content p {
+            font-size: 16px;
+            color: var(--flux-text-secondary);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .step-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .step-content li {
+            color: var(--flux-text-secondary);
+            padding: 8px 0;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .step-content li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--flux-success);
+            font-weight: bold;
+        }
+
+        .step-image {
+            background: var(--flux-glass-bg);
+            border: var(--flux-border-width) solid var(--flux-glass-border);
+            border-radius: var(--flux-radius-lg);
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .step-image img {
+            width: 100%;
+            border-radius: var(--flux-radius-md);
+            display: block;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 40px 80px;
+        }
+
+        .feature-highlight {
+            background: var(--flux-glass-bg);
+            border: var(--flux-border-width) solid var(--flux-glass-border);
+            padding: 30px;
+            border-radius: var(--flux-radius-lg);
+            backdrop-filter: blur(10px);
+            transition: all var(--flux-transition-base);
+        }
+
+        .feature-highlight:hover {
+            background: var(--flux-glass-hover);
+            transform: translateY(-4px);
+        }
+
+        .feature-highlight .icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+
+        .feature-highlight h4 {
+            font-size: 18px;
+            color: var(--flux-text-primary);
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .feature-highlight p {
+            font-size: 14px;
+            color: var(--flux-text-secondary);
+            line-height: 1.6;
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 80px 40px;
+            background: var(--flux-gradient);
+            margin: 40px;
+            border-radius: var(--flux-radius-lg);
+        }
+
+        .cta-section h2 {
+            font-size: 36px;
+            color: white;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .cta-section p {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 968px) {
+            .workflow-step {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .workflow-step:nth-child(even) {
+                direction: ltr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="how-it-works-container">
+        <!-- Navigation -->
+        <nav class="how-nav">
+            <div class="logo">Flux <span class="logo-bolt">⚡</span></div>
+            <a href="/">← Back to Home</a>
+        </nav>
+
+        <!-- Hero Section -->
+        <div class="how-hero">
+            <h1>How Flux Works</h1>
+            <p>Discover how Flux transforms your inbox into an AI-powered automation engine that handles support
+                tickets, inquiries, and workflows with sub-second latency.</p>
+        </div>
+
+        <!-- Workflow Steps -->
+        <div class="workflow-section">
+            <!-- Step 1: Connect Gmail -->
+            <div class="workflow-step">
+                <div class="step-content">
+                    <h2>Step 1</h2>
+                    <h3>Connect Your Gmail</h3>
+                    <p>Start by securely connecting your Gmail account using OAuth 2.0 authentication. Flux never stores
+                        your password and uses bank-grade encryption to protect your data.</p>
+                    <ul>
+                        <li>One-click OAuth connection</li>
+                        <li>Enterprise-grade security</li>
+                        <li>Instant agent activation</li>
+                        <li>No password required</li>
+                    </ul>
+                </div>
+                <div class="step-image">
+                    <img src="{{ url_for('static', filename='images/oauth-connect-placeholder.png') }}"
+                        alt="Gmail OAuth Connection"
+                        onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22400%22%3E%3Crect width=%22600%22 height=%22400%22 fill=%22%23818cf8%22/%3E%3Ctext x=%2250%%22 y=%2250%%22 font-family=%22Arial%22 font-size=%2224%22 fill=%22white%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3EOAuth Connection%3C/text%3E%3C/svg%3E'">
+                </div>
+            </div>
+
+            <!-- Step 2: Dashboard Overview -->
+            <div class="workflow-step">
+                <div class="step-content">
+                    <h2>Step 2</h2>
+                    <h3>Monitor Your Dashboard</h3>
+                    <p>Get real-time insights into your email processing with beautiful charts and metrics. Track
+                        performance, analyze trends, and understand your email patterns at a glance.</p>
+                    <ul>
+                        <li>Real-time email volume charts</li>
+                        <li>Category distribution analytics</li>
+                        <li>Response rate tracking</li>
+                        <li>Custom date range filtering</li>
+                    </ul>
+                </div>
+                <div class="step-image">
+                    <img src="/artifacts/flux_dashboard_mockup_1764490594570.png" alt="Flux Dashboard">
+                </div>
+            </div>
+
+            <!-- Step 3: Recent Activity -->
+            <div class="workflow-step">
+                <div class="step-content">
+                    <h2>Step 3</h2>
+                    <h3>Track Every Email</h3>
+                    <p>View detailed logs of every email processed by Flux. Filter by status, search by sender, and
+                        understand exactly how your agent is handling each message.</p>
+                    <ul>
+                        <li>Comprehensive activity logs</li>
+                        <li>Status filtering (Responded, Ignored, Failed)</li>
+                        <li>Pagination for easy navigation</li>
+                        <li>Detailed processing information</li>
+                    </ul>
+                </div>
+                <div class="step-image">
+                    <img src="/artifacts/flux_activity_logs_mockup_1764490616374.png" alt="Activity Logs">
+                </div>
+            </div>
+
+            <!-- Step 4: Knowledge Base -->
+            <div class="workflow-step">
+                <div class="step-content">
+                    <h2>Step 4</h2>
+                    <h3>Build Your Knowledge Base</h3>
+                    <p>Upload PDF documents to create a powerful RAG (Retrieval Augmented Generation) system. Flux uses
+                        your knowledge base to generate accurate, contextual responses.</p>
+                    <ul>
+                        <li>Drag-and-drop PDF uploads</li>
+                        <li>Automatic text chunking</li>
+                        <li>Vector database storage</li>
+                        <li>Semantic search capabilities</li>
+                    </ul>
+                </div>
+                <div class="step-image">
+                    <img src="/artifacts/flux_knowledge_base_mockup_1764490641833.png" alt="Knowledge Base">
+                </div>
+            </div>
+
+            <!-- Step 5: AI Agent -->
+            <div class="workflow-step">
+                <div class="step-content">
+                    <h2>Step 5</h2>
+                    <h3>Let AI Handle the Rest</h3>
+                    <p>The Flux AI agent continuously monitors your inbox, processes new emails, and drafts intelligent
+                        responses using your knowledge base. All on autopilot.</p>
+                    <ul>
+                        <li>Real-time email monitoring</li>
+                        <li>AI-powered response generation</li>
+                        <li>Context-aware replies</li>
+                        <li>Automatic categorization</li>
+                    </ul>
+                </div>
+                <div class="step-image">
+                    <img src="{{ url_for('static', filename='images/ai-agent-placeholder.png') }}" alt="AI Agent"
+                        onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22600%22 height=%22400%22%3E%3Crect width=%22600%22 height=%22400%22 fill=%22%2334d399%22/%3E%3Ctext x=%2250%%22 y=%2250%%22 font-family=%22Arial%22 font-size=%2224%22 fill=%22white%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3EAI Agent Processing%3C/text%3E%3C/svg%3E'">
+                </div>
+            </div>
+        </div>
+
+        <!-- Feature Highlights -->
+        <div class="features-grid">
+            <div class="feature-highlight">
+                <div class="icon">⚡</div>
+                <h4>Sub-Second Latency</h4>
+                <p>Process emails with lightning-fast response times, ensuring your customers never wait.</p>
+            </div>
+            <div class="feature-highlight">
+                <div class="icon">🤖</div>
+                <h4>Advanced AI</h4>
+                <p>Powered by state-of-the-art language models with RAG for accurate, contextual responses.</p>
+            </div>
+            <div class="feature-highlight">
+                <div class="icon">🛡️</div>
+                <h4>Enterprise Security</h4>
+                <p>Bank-grade encryption and OAuth 2.0 ensure your data is always protected.</p>
+            </div>
+            <div class="feature-highlight">
+                <div class="icon">📊</div>
+                <h4>Real-Time Analytics</h4>
+                <p>Monitor performance with beautiful charts and actionable insights.</p>
+            </div>
+            <div class="feature-highlight">
+                <div class="icon">🔄</div>
+                <h4>Auto-Sync</h4>
+                <p>Continuously monitors your inbox and processes new emails automatically.</p>
+            </div>
+            <div class="feature-highlight">
+                <div class="icon">📚</div>
+                <h4>Knowledge Base</h4>
+                <p>Upload documents to create a powerful RAG system for accurate responses.</p>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="cta-section">
+            <h2>Ready to Experience Flux?</h2>
+            <p>See how Flux transforms your email workflow with our interactive demo</p>
+            <button class="btn-primary btn-lg pulse-animation" onclick="window.location.href='/auth/demo/login'">
+                Take Free Demo Tour
+            </button>
+            <p style="margin-top: 20px; font-size: 14px; opacity: 0.8;">
+                No signup required • Full feature access • Reset anytime
+            </p>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/auth.js') }}?v={{ version }}"></script>
+</body>
+
+</html>

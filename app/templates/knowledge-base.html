@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Base - Flux</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/design-system.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/knowledge-base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="kb-container">
+        <!-- Header with Hamburger Menu -->
+        <div class="kb-header">
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <button class="hamburger-btn" onclick="toggleSidebar()" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="kb-title-group">
+                    <h1>Knowledge Base <span style="color: var(--flux-accent);">📚</span></h1>
+                    <p class="kb-subtitle">Manage your AI agent's knowledge repository</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="kb-stats">
+            <div class="flux-metric-card">
+                <div class="flux-metric-label">Total Chunks</div>
+                <div class="flux-metric-value" id="total-chunks">0</div>
+            </div>
+            <div class="flux-metric-card">
+                <div class="flux-metric-label">Documents</div>
+                <div class="flux-metric-value" id="total-docs">0</div>
+            </div>
+            <div class="flux-metric-card">
+                <div class="flux-metric-label">Last Updated</div>
+                <div class="flux-metric-value" style="font-size: var(--flux-font-size-lg);" id="last-updated">--</div>
+            </div>
+        </div>
+
+        <!-- Upload Section -->
+        <div class="flux-card kb-upload-section">
+            <div class="flux-card-header">
+                <h2 style="font-size: var(--flux-font-size-xl); font-weight: var(--flux-font-weight-semibold);">Upload
+                    PDF</h2>
+            </div>
+            <div class="flux-card-body">
+                <div class="kb-upload-area">
+                    <input type="file" id="pdf-upload" class="kb-file-input" accept=".pdf" onchange="updateFileName()">
+                    <button class="flux-btn flux-btn-secondary" onclick="document.getElementById('pdf-upload').click()">
+                        Select PDF
+                    </button>
+                    <span id="file-name" style="color: var(--flux-text-secondary);">No file selected</span>
+                    <button class="flux-btn flux-btn-primary" onclick="uploadFile()" id="upload-btn" disabled>
+                        Upload & Ingest
+                    </button>
+                </div>
+                <div id="upload-status" style="margin-top: var(--flux-space-md); font-size: var(--flux-font-size-sm);">
+                </div>
+            </div>
+        </div>
+
+        <!-- Documents Grid -->
+
+    </div>
+
+    <!-- Sidebar Menu (same as dashboard) -->
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>Menu</h2>
+            <button class="sidebar-close" onclick="toggleSidebar()" aria-label="Close menu">×</button>
+        </div>
+
+        <!-- Dashboard Link -->
+        <div class="sidebar-section">
+            <a href="/" class="sidebar-link">
+                <span>📈 Dashboard</span>
+                <span>→</span>
+            </a>
+        </div>
+
+        <!-- Recent Activity Link -->
+        <div class="sidebar-section">
+            <a href="/recent-activity" class="sidebar-link">
+                <span>📊 Recent Activity</span>
+                <span>→</span>
+            </a>
+        </div>
+
+        <!-- Knowledge Base Link -->
+        <div class="sidebar-section">
+            <a href="/knowledge-base" class="sidebar-link">
+                <span>📚 Knowledge Base</span>
+                <span>→</span>
+            </a>
+        </div>
+
+        <!-- Settings -->
+        <div class="sidebar-section">
+            <h3 class="sidebar-section-title">Settings</h3>
+            <div class="theme-toggle">
+                <label for="theme-select">Theme</label>
+                <select id="theme-select" onchange="switchTheme(this.value)">
+                    <option value="dark">Dark</option>
+                    <option value="light">Light</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- User Info (Moved to bottom) -->
+        <div class="sidebar-footer">
+            <div class="user-info-sidebar">
+                <span class="user-email" id="user-email-sidebar">user@example.com</span>
+                <button class="btn-logout-sidebar" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/sidebar.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/knowledge-base.js') }}"></script>
+</body>
+
+</html>

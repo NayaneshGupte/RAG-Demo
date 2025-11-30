@@ -1,0 +1,235 @@
+/**
+ * Flux Components Library
+ * Reusable UI components following Flux design system
+ */
+
+/* ===== CARDS ===== */
+.flux-card {
+    background: var(--flux-glass-bg);
+    border: var(--flux-border-width) solid var(--flux-glass-border);
+    border-radius: var(--flux-radius-lg);
+    backdrop-filter: blur(10px);
+    transition: all var(--flux-transition-base);
+}
+
+.flux-card:hover {
+    background: var(--flux-glass-hover);
+    border-color: rgba(99, 102, 241, 0.3);
+    transform: translateY(-2px);
+}
+
+.flux-card-header {
+    padding: var(--flux-space-lg);
+    border-bottom: var(--flux-border-width) solid var(--flux-glass-border);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.flux-card-body {
+    padding: var(--flux-space-lg);
+}
+
+/* ===== BUTTONS ===== */
+.flux-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--flux-space-sm);
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--flux-radius-md);
+    font-size: var(--flux-font-size-base);
+    font-weight: var(--flux-font-weight-medium);
+    cursor: pointer;
+    transition: all var(--flux-transition-base);
+}
+
+.flux-btn-primary {
+    background: var(--flux-gradient);
+    color: var(--flux-text-primary);
+    box-shadow: var(--flux-shadow-glow);
+}
+
+.flux-btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 40px rgba(99, 102, 241, 0.4);
+}
+
+.flux-btn-secondary {
+    background: var(--flux-glass-bg);
+    border: var(--flux-border-width) solid var(--flux-glass-border);
+    color: var(--flux-text-secondary);
+}
+
+.flux-btn-secondary:hover {
+    background: var(--flux-glass-hover);
+    color: var(--flux-text-primary);
+}
+
+/* ===== BADGES ===== */
+.flux-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: var(--flux-radius-full);
+    font-size: var(--flux-font-size-xs);
+    font-weight: var(--flux-font-weight-semibold);
+}
+
+.flux-badge-success {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--flux-success);
+}
+
+.flux-badge-warning {
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--flux-warning);
+}
+
+.flux-badge-error {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--flux-error);
+}
+
+.flux-badge-info {
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--flux-primary);
+}
+
+/* ===== METRICS CARD ===== */
+.flux-metric-card {
+    background: var(--flux-glass-bg);
+    border: var(--flux-border-width) solid var(--flux-glass-border);
+    border-radius: var(--flux-radius-lg);
+    padding: var(--flux-space-lg);
+    backdrop-filter: blur(10px);
+    transition: all var(--flux-transition-base);
+}
+
+.flux-metric-card:hover {
+    background: var(--flux-glass-hover);
+    transform: translateY(-2px);
+}
+
+.flux-metric-label {
+    color: var(--flux-text-secondary);
+    font-size: var(--flux-font-size-sm);
+    font-weight: var(--flux-font-weight-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: var(--flux-space-sm);
+}
+
+.flux-metric-value {
+    color: var(--flux-text-primary);
+    font-size: var(--flux-font-size-4xl);
+    font-weight: var(--flux-font-weight-bold);
+    line-height: 1;
+}
+
+.flux-metric-trend {
+    display: flex;
+    align-items: center;
+    gap: var(--flux-space-xs);
+    margin-top: var(--flux-space-sm);
+    font-size: var(--flux-font-size-sm);
+}
+
+.flux-metric-trend.positive {
+    color: var(--flux-success);
+}
+
+.flux-metric-trend.negative {
+    color: var(--flux-error);
+}
+
+/* ===== NAVIGATION ===== */
+.flux-nav {
+    display: flex;
+    gap: var(--flux-space-md);
+    padding: var(--flux-space-lg) 0;
+}
+
+.flux-nav-link {
+    color: var(--flux-text-secondary);
+    text-decoration: none;
+    padding: var(--flux-space-sm) var(--flux-space-md);
+    border-radius: var(--flux-radius-md);
+    font-weight: var(--flux-font-weight-medium);
+    transition: all var(--flux-transition-fast);
+}
+
+.flux-nav-link:hover {
+    color: var(--flux-text-primary);
+    background: var(--flux-glass-bg);
+}
+
+.flux-nav-link.active {
+    color: var(--flux-primary);
+    background: rgba(99, 102, 241, 0.1);
+}
+
+/* ===== CHART CONTAINER ===== */
+.flux-chart-container {
+    background: var(--flux-glass-bg);
+    border: var(--flux-border-width) solid var(--flux-glass-border);
+    border-radius: var(--flux-radius-lg);
+    padding: var(--flux-space-lg);
+    backdrop-filter: blur(10px);
+    min-height: 300px;
+    height: auto;
+    position: relative;
+}
+
+/* ===== UTILITY CLASSES ===== */
+.flux-text-primary {
+    color: var(--flux-text-primary);
+}
+
+.flux-text-secondary {
+    color: var(--flux-text-secondary);
+}
+
+.flux-text-muted {
+    color: var(--flux-text-muted);
+}
+
+.flux-gradient-text {
+    background: var(--flux-gradient-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.flux-grid {
+    display: grid;
+    gap: var(--flux-space-lg);
+}
+
+.flux-grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.flux-grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.flux-grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 1024px) {
+
+    .flux-grid-2,
+    .flux-grid-3,
+    .flux-grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+
+    .flux-grid-2,
+    .flux-grid-3,
+    .flux-grid-4 {
+        grid-template-columns: 1fr;
+    }
+}

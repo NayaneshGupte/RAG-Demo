@@ -2,7 +2,6 @@ langchain
 langchain-community
 google-generativeai
 pinecone
-python-telegram-bot
 google-api-python-client
 google-auth-oauthlib
 google-auth-httplib2
@@ -12,3 +11,10 @@ tiktoken
 flask
 flask-cors
 anthropic
+
+# Testing dependencies
+pytest>=7.4.0
+pytest-flask>=1.2.0
+pytest-mock>=3.11.0
+pytest-cov>=4.1.0
+faker>=19.0.0

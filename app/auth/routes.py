@@ -127,29 +127,12 @@ def auth_status():
     """
     Get current authentication status.
     Returns JSON with auth state and user email.
+    
+    SECURITY: Only checks session. Does NOT auto-login from token.json.
+    This prevents unauthorized access from different browsers/sessions.
     """
     authenticated = session.get('authenticated', False)
     user_email = session.get('user_email', None)
-    
-    # Also check if token file exists and is valid (but don't trigger OAuth)
-    if not authenticated and os.path.exists(Config.GMAIL_TOKEN_FILE):
-        try:
-            creds = Credentials.from_authorized_user_file(Config.GMAIL_TOKEN_FILE, SCOPES)
-            if creds and creds.valid:
-                # Get user email without triggering full service init
-                from googleapiclient.discovery import build
-                service = build('gmail', 'v1', credentials=creds)
-                profile = service.users().getProfile(userId='me').execute()
-                user_email = profile.get('emailAddress')
-                
-                session['authenticated'] = True
-                session['user_email'] = user_email
-                authenticated = True
-        except Exception as e:
-            # Token invalid or expired - user needs to re-authenticate
-            logger.debug(f"Could not load credentials from file: {e}")
-            authenticated = False
-            user_email = None
     
     return jsonify({
         'authenticated': authenticated,
@@ -179,16 +162,99 @@ def logout():
         # Clear session
         session.clear()
         
-        # Optionally delete token file (uncomment if desired)
-        # if os.path.exists(Config.GMAIL_TOKEN_FILE):
-        #     os.remove(Config.GMAIL_TOKEN_FILE)
+        # Delete token file to prevent auto-login after logout
+        if os.path.exists(Config.GMAIL_TOKEN_FILE):
+            os.remove(Config.GMAIL_TOKEN_FILE)
+            logger.info("Token file deleted on logout")
         
         logger.info(f"User logged out: {user_email}")
         return jsonify({'success': True})
         
     except Exception as e:
         logger.error(f"Error during logout: {e}")
-        return jsonify({'error': str(e)}), 500
+        return jsonify({'error': 'Logout failed'}), 500
+
+
+@auth_bp.route('/demo/login')
+def demo_login():
+    """
+    Demo mode login - bypasses OAuth and creates a demo session.
+    For demonstration purposes only.
+    """
+    try:
+        # Clear any existing session
+        session.clear()
+        
+        # Auto-clear and reseed demo data for fresh start
+        demo_email = 'demo@example.com'
+        logger.info(f"Clearing old data for {demo_email}...")
+        
+        from app.services.database_service import DatabaseService
+        db = DatabaseService()
+        
+        # Delete all existing demo user data
+        try:
+            with db._get_connection() as conn:
+                conn.execute("DELETE FROM email_logs WHERE agent_email = ? OR agent_email IS NULL", (demo_email,))
+                conn.commit()
+                logger.info("Deleted old demo data")
+        except Exception as e:
+            logger.error(f"Error clearing demo data: {e}")
+        
+        # Reseed with fresh 12-month dataset
+        logger.info("Reseeding demo data from demo.json...")
+        try:
+            import sys
+            import os
+            # Add project root to path to import seed function
+            project_root = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+            if project_root not in sys.path:
+                sys.path.insert(0, project_root)
+            
+            from seed_demo_data import seed_demo_data
+            seed_demo_data()
+            logger.info("Demo data reseeded successfully")
+        except Exception as e:
+            logger.error(f"Error reseeding demo data: {e}")
+        
+        # Create demo session
+        session['user_email'] = demo_email
+        session['is_demo'] = True
+        session['authenticated'] = True
+        session.permanent = False  # Session expires when browser closes
+        
+        # Prevent caching
+        response = redirect(url_for('web.index'))
+        response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+        response.headers['Pragma'] = 'no-cache'
+        response.headers['Expires'] = '0'
+        
+        logger.info("Demo session created for demo@example.com")
+        return response
+        
+    except Exception as e:
+        logger.error(f"Error creating demo session: {e}")
+        return jsonify({'error': 'Failed to create demo session'}), 500
+
+
+@auth_bp.route('/demo/logout', methods=['POST'])
+def demo_logout():
+    """
+    Demo mode logout - clears demo session.
+    """
+    try:
+        # Check if it's actually a demo session
+        is_demo = session.get('is_demo', False)
+        
+        # Clear session
+        session.clear()
+        
+        logger.info("Demo session cleared")
+        return jsonify({'success': True, 'is_demo': is_demo})
+        
+    except Exception as e:
+        logger.error(f"Error during demo logout: {e}")
+        return jsonify({'error': 'Demo logout failed'}), 500
 
 
 def _save_credentials(credentials: Credentials):

@@ -1,4 +1,4 @@
-from flask import jsonify, request, session
+from flask import jsonify, request, session, make_response
 from app.api import api_bp
 from app.services.database_service import DatabaseService
 from app.services.gmail_service import GmailService
@@ -6,34 +6,65 @@ from app.services.ingestion_service import IngestionService
 from app.services.vector_store_service import VectorStoreService
 import tempfile
 import os
+from functools import wraps
+
+# Security decorator to prevent caching
+def no_cache(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        resp = make_response(f(*args, **kwargs))
+        resp.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate, private'
+        resp.headers['Pragma'] = 'no-cache'
+        resp.headers['Expires'] = '0'
+        return resp
+    return decorated_function
 
 # Don't initialize services globally - they'll be initialized in each route
 # This avoids requiring auth before the user can access the dashboard
 
+
 @api_bp.route('/logs')
+@no_cache
 def get_logs():
-    """Get recent logs as JSON."""
+    """Get recent logs as JSON with user isolation and optional date filtering."""
     try:
-        # Initialize services only when needed
-        # If no valid auth, this will raise PermissionError
-        try:
-            gmail_service = GmailService()
-            current_user = gmail_service.get_current_email()
-        except PermissionError:
-            # No valid auth - return empty data
-            return jsonify({
-                "logs": [],
-                "stats": {"total": 0, "responded": 0, "ignored": 0, "failed": 0},
-                "kb_stats": {"total_vectors": 0},
-                "current_user": None,
-                "auth_required": True
-            })
+        # Check for session-based auth (demo mode or OAuth)
+        current_user = session.get('user_email')
+        is_demo = session.get('is_demo', False)
+        
+        if not current_user:
+            # Try Gmail OAuth if no session
+            try:
+                gmail_service = GmailService()
+                current_user = gmail_service.get_current_email()
+                # Store in session for subsequent requests
+                session['user_email'] = current_user
+                session['is_demo'] = False
+            except PermissionError:
+                # No valid auth - return empty data
+                return jsonify({
+                    "logs": [],
+                    "stats": {"total": 0, "responded": 0, "ignored": 0, "failed": 0},
+                    "kb_stats": {"total_vectors": 0},
+                    "current_user": None,
+                    "auth_required": True
+                })
         
         db_service = DatabaseService()
         vector_store_service = VectorStoreService()
         
-        # Return all logs, frontend will handle filtering
-        logs = db_service.get_logs(limit=100, exclude_ignored=False, agent_email=current_user)
+        # Get optional date range parameters
+        start_date = request.args.get('start_date')
+        end_date = request.args.get('end_date')
+        
+        # CRITICAL: Filter all data by agent_email to prevent data leakage
+        logs = db_service.get_logs(
+            limit=100, 
+            exclude_ignored=False, 
+            agent_email=current_user,
+            start_date=start_date,
+            end_date=end_date
+        )
         stats = db_service.get_stats(agent_email=current_user)
         
         # Get KB stats
@@ -45,7 +76,8 @@ def get_logs():
             "stats": stats,
             "kb_stats": {"total_vectors": total_vectors},
             "current_user": current_user,
-            "auth_required": False
+            "auth_required": False,
+            "is_demo": is_demo
         })
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -97,3 +129,96 @@ def upload_file():
             return jsonify({'error': str(e)}), 500
     else:
         return jsonify({'error': 'Invalid file type. Only PDF allowed.'}), 400
+
+
+@api_bp.route('/metrics/email-volume')
+def get_email_volume_metrics():
+    """Get email volume data for charts with optional date range."""
+    try:
+        from datetime import datetime, timedelta
+        
+        db_service = DatabaseService()
+        
+        # Get date range from query parameters
+        start_date_str = request.args.get('start_date')
+        end_date_str = request.args.get('end_date')
+        interval = request.args.get('interval', 'day')
+        
+        # Default to last 7 days if not provided
+        if not start_date_str or not end_date_str:
+            end_date = datetime.now().date()
+            start_date = end_date - timedelta(days=7)
+            days = 7
+        else:
+            try:
+                start_date = datetime.strptime(start_date_str, '%Y-%m-%d').date()
+                end_date = datetime.strptime(end_date_str, '%Y-%m-%d').date()
+                days = (end_date - start_date).days + 1
+            except ValueError:
+                return jsonify({'error': 'Invalid date format. Use YYYY-MM-DD'}), 400
+        
+        # Get current user from session for isolation
+        current_user = session.get('user_email')
+        
+        # Get data for the specified date range
+        volume_data = db_service.get_email_volume_by_day(
+            days=days, 
+            start_date=start_date.isoformat(), 
+            interval=interval,
+            agent_email=current_user
+        )
+        
+        labels = [item['date'] for item in volume_data]
+        total = [item['total'] for item in volume_data]
+        responded = [item['responded'] for item in volume_data]
+        ignored = [item['ignored'] for item in volume_data]
+        failed = [item['failed'] for item in volume_data]
+        
+        return jsonify({
+            'labels': labels,
+            'total': total,
+            'responded': responded,
+            'ignored': ignored,
+            'failed': failed
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@api_bp.route('/metrics/categories')
+def get_category_metrics():
+    """Get category breakdown for pie/donut chart."""
+    try:
+        db_service = DatabaseService()
+        
+        # Get current user from session for isolation
+        current_user = session.get('user_email')
+        
+        # Get category counts
+        categories = db_service.get_category_breakdown(agent_email=current_user)
+        
+        labels = [item['category'] for item in categories]
+        values = [item['count'] for item in categories]
+        
+        return jsonify({
+            'labels': labels,
+            'values': values
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@api_bp.route('/knowledge-base/stats')
+def get_kb_stats():
+    """Get knowledge base statistics."""
+    try:
+        vector_store_service = VectorStoreService()
+        stats = vector_store_service.get_stats()
+        
+        return jsonify({
+            'total_chunks': stats.get('total_vector_count', 0),
+            'total_documents': stats.get('total_documents', 0),
+            'last_updated': stats.get('last_updated', '--')
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500

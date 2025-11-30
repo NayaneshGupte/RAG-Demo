@@ -5,7 +5,6 @@ import argparse
 import sys
 from app.config import Config
 from app.utils.logger import setup_logging
-from app.services.ingestion_service import IngestionService
 from app.services.agent_service import AgentService
 
 def main():
@@ -15,18 +14,11 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  python run.py ingest    # Start Telegram bot for PDF ingestion
   python run.py agent     # Start email support agent
         """
     )
     
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
-    
-    # Ingestion command
-    ingest_parser = subparsers.add_parser(
-        "ingest",
-        help="Start the Telegram bot for document ingestion"
-    )
     
     # Agent command
     agent_parser = subparsers.add_parser(
@@ -54,13 +46,7 @@ Examples:
         sys.exit(1)
     
     # Execute command
-    if args.command == "ingest":
-        # Ingestion Bot
-        ingestion_service = IngestionService()
-        print("Starting Telegram Ingestion Bot...")
-        ingestion_service.run_telegram_bot()
-        
-    elif args.command == "agent":
+    if args.command == "agent":
         # Email Support Agent
         # Create app context to ensure services are initialized correctly if they depend on app config
         from app import create_app

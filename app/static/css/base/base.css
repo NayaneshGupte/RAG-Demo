@@ -1,0 +1,72 @@
+/**
+ * Flux Base Styles
+ * Reset, Typography, and Utilities
+ */
+
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--flux-font-family);
+    background-color: var(--flux-bg-primary);
+    color: var(--flux-text-primary);
+    line-height: 1.6;
+    font-size: var(--flux-font-size-base);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--flux-space-xl) var(--flux-space-lg);
+}
+
+/* Typography */
+h1 {
+    font-size: var(--flux-font-size-3xl);
+    font-weight: var(--flux-font-weight-bold);
+    margin: 0;
+    color: var(--flux-text-primary);
+}
+
+h2 {
+    font-size: var(--flux-font-size-xl);
+    font-weight: var(--flux-font-weight-semibold);
+    color: var(--flux-text-primary);
+}
+
+h3 {
+    font-size: var(--flux-font-size-lg);
+    font-weight: var(--flux-font-weight-semibold);
+    color: var(--flux-text-secondary);
+}
+
+/* Utility Classes */
+.hidden {
+    display: none !important;
+}
+
+.text-muted {
+    color: var(--flux-text-muted);
+}
+
+.text-success {
+    color: var(--flux-success);
+}
+
+.text-error {
+    color: var(--flux-error);
+}
+
+.mt-4 {
+    margin-top: 16px;
+}
+
+.mb-4 {
+    margin-bottom: 16px;
+}

@@ -38,30 +38,38 @@ async function checkAuthStatus() {
 /**
  * Show dashboard for authenticated user
  */
+/**
+ * Show dashboard for authenticated user
+ */
 function showDashboard(userEmail) {
-    const authSection = document.getElementById('auth-required');
+    const landingPage = document.getElementById('landing-page');
     const dashboardSection = document.getElementById('dashboard-content');
 
-    if (authSection) authSection.style.display = 'none';
+    if (landingPage) landingPage.style.display = 'none';
     if (dashboardSection) {
         dashboardSection.style.display = 'block';
 
         // Update user email display
-        const userEmailEl = document.getElementById('user-email-display');
+        const userEmailEl = document.getElementById('user-email-sidebar');
         if (userEmailEl) {
             userEmailEl.textContent = userEmail;
+        }
+
+        // Store demo flag if it's a demo user
+        if (userEmail === 'demo@example.com') {
+            sessionStorage.setItem('is_demo', 'true');
         }
     }
 }
 
 /**
- * Show auth required screen
+ * Show auth required screen (Landing Page)
  */
 function showAuthRequired() {
-    const authSection = document.getElementById('auth-required');
+    const landingPage = document.getElementById('landing-page');
     const dashboardSection = document.getElementById('dashboard-content');
 
-    if (authSection) authSection.style.display = 'flex';
+    if (landingPage) landingPage.style.display = 'block';
     if (dashboardSection) dashboardSection.style.display = 'none';
 }
 
@@ -76,15 +84,43 @@ function loginWithGmail() {
 /**
  * Logout user
  */
+/**
+ * Logout user (handles both regular and demo users)
+ */
 async function logout() {
     try {
-        const response = await fetch('/auth/logout', {
+        // Check if demo mode (check session first)
+        const isDemo = sessionStorage.getItem('is_demo') === 'true';
+        const logoutEndpoint = isDemo ? '/auth/demo/logout' : '/auth/logout';
+
+        const response = await fetch(logoutEndpoint, {
             method: 'POST'
         });
 
         if (response.ok) {
-            // Reload page to show auth screen
+            // Close sidebar if it's open
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            if (sidebar) sidebar.classList.remove('active');
+            if (overlay) overlay.classList.remove('active');
+
+            // Clear session storage
+            sessionStorage.clear();
+
+            // Prevent back navigation by replacing history
+            if (window.history && window.history.replaceState) {
+                // Replace current state to prevent going back
+                window.history.replaceState(null, '', '/');
+            }
+
+            // Force reload to ensure clean state and proper auth check
             window.location.reload();
+
+            // Add extra protection: listen for popstate to prevent back
+            window.addEventListener('popstate', function preventBack(e) {
+                window.history.pushState(null, '', '/');
+                window.removeEventListener('popstate', preventBack);
+            });
         } else {
             console.error('Logout failed');
         }

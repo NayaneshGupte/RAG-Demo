@@ -73,6 +73,29 @@ def agent_status():
     Returns JSON with agent state and metrics.
     """
     try:
+        # Check if this is a demo user
+        is_demo = session.get('is_demo', False)
+        
+        if is_demo:
+            # Return realistic mock values for demo mode
+            from datetime import datetime, timedelta
+            import random
+            
+            # Simulate agent running with realistic values
+            mock_start_time = datetime.now() - timedelta(hours=3, minutes=27)
+            last_poll_time = datetime.now() - timedelta(minutes=random.randint(1, 5))
+            
+            return jsonify({
+                'running': True,
+                'user_email': 'demo@example.com',
+                'started_at': mock_start_time.isoformat(),
+                'last_poll': last_poll_time.isoformat(),
+                'processed_count': 325,  # Match the dashboard total
+                'uptime': int((datetime.now() - mock_start_time).total_seconds()),
+                'uptime_formatted': '3h 27m'
+            })
+        
+        # For real users, get actual agent status
         agent_manager = AgentManager()
         status = agent_manager.get_status()
         

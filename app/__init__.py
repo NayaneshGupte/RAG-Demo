@@ -39,5 +39,19 @@ def create_app(config_class=Config):
             agent_manager.auto_resume_if_authenticated()
         except Exception as e:
             logger.error(f"Error auto-resuming agent: {e}")
+            
+    # Context processor to inject version for cache busting
+    @app.context_processor
+    def inject_version():
+        import time
+        return dict(version=int(time.time()))
+        
+    # Add no-cache headers to all responses (for development)
+    @app.after_request
+    def add_header(response):
+        response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        response.headers["Pragma"] = "no-cache"
+        response.headers["Expires"] = "0"
+        return response
     
     return app

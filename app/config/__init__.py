@@ -17,8 +17,7 @@ class Config:
     PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
     PINECONE_INDEX_NAME = os.getenv("PINECONE_INDEX_NAME", "customer-support-index")
     
-    # Telegram
-    TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+
     
     # Gmail
     GMAIL_CREDENTIALS_FILE = os.getenv("GMAIL_CREDENTIALS_FILE", "credentials.json")
@@ -79,8 +78,6 @@ class Config:
             missing.append("GOOGLE_API_KEY")
         if not Config.PINECONE_API_KEY:
             missing.append("PINECONE_API_KEY")
-        if not Config.TELEGRAM_BOT_TOKEN:
-            missing.append("TELEGRAM_BOT_TOKEN")
         
         if missing:
             raise ValueError(f"Missing environment variables: {', '.join(missing)}")

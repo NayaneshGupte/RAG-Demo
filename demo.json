@@ -1,0 +1,2927 @@
+[
+  {
+    "sender": "user7489@example.com",
+    "subject": "Demo Subject 600",
+    "status": "IGNORED",
+    "category": "Product Inquiry",
+    "details": "Generated demo data",
+    "days_ago": 0,
+    "hours": 10
+  },
+  {
+    "sender": "user4067@example.com",
+    "subject": "Demo Subject 42",
+    "status": "IGNORED",
+    "category": "Recruitment",
+    "details": "Generated demo data",
+    "days_ago": 0,
+    "hours": 12
+  },
+  {
+    "sender": "user1901@example.com",
+    "subject": "Demo Subject 927",
+    "status": "IGNORED",
+    "category": "Product Inquiry",
+    "details": "Generated demo data",
+    "days_ago": 1,
+    "hours": 10
+  },
+  {
+    "sender": "user3275@example.com",
+    "subject": "Demo Subject 944",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 1,
+    "hours": 13
+  },
+  {
+    "sender": "user1072@example.com",
+    "subject": "Demo Subject 74",
+    "status": "RESPONDED",
+    "category": "Survey",
+    "details": "Generated demo data",
+    "days_ago": 1,
+    "hours": 9
+  },
+  {
+    "sender": "user7009@example.com",
+    "subject": "Demo Subject 651",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 1,
+    "hours": 17
+  },
+  {
+    "sender": "user6891@example.com",
+    "subject": "Demo Subject 763",
+    "status": "RESPONDED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 1,
+    "hours": 15
+  },
+  {
+    "sender": "user7958@example.com",
+    "subject": "Demo Subject 677",
+    "status": "RESPONDED",
+    "category": "Migration",
+    "details": "Generated demo data",
+    "days_ago": 2,
+    "hours": 12
+  },
+  {
+    "sender": "user9272@example.com",
+    "subject": "Demo Subject 205",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 2,
+    "hours": 9
+  },
+  {
+    "sender": "user6779@example.com",
+    "subject": "Demo Subject 655",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 2,
+    "hours": 11
+  },
+  {
+    "sender": "user9996@example.com",
+    "subject": "Demo Subject 109",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 3,
+    "hours": 15
+  },
+  {
+    "sender": "user2707@example.com",
+    "subject": "Demo Subject 171",
+    "status": "RESPONDED",
+    "category": "Security",
+    "details": "Generated demo data",
+    "days_ago": 3,
+    "hours": 9
+  },
+  {
+    "sender": "user3469@example.com",
+    "subject": "Demo Subject 511",
+    "status": "ERROR",
+    "category": "Integration",
+    "details": "Generated demo data",
+    "days_ago": 3,
+    "hours": 16
+  },
+  {
+    "sender": "user8426@example.com",
+    "subject": "Demo Subject 582",
+    "status": "RESPONDED",
+    "category": "Notification",
+    "details": "Generated demo data",
+    "days_ago": 3,
+    "hours": 10
+  },
+  {
+    "sender": "user2121@example.com",
+    "subject": "Demo Subject 359",
+    "status": "RESPONDED",
+    "category": "Pricing",
+    "details": "Generated demo data",
+    "days_ago": 3,
+    "hours": 10
+  },
+  {
+    "sender": "user6402@example.com",
+    "subject": "Demo Subject 977",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 4,
+    "hours": 9
+  },
+  {
+    "sender": "user4641@example.com",
+    "subject": "Demo Subject 419",
+    "status": "RESPONDED",
+    "category": "Integration",
+    "details": "Generated demo data",
+    "days_ago": 4,
+    "hours": 11
+  },
+  {
+    "sender": "user3138@example.com",
+    "subject": "Demo Subject 699",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 4,
+    "hours": 15
+  },
+  {
+    "sender": "user7349@example.com",
+    "subject": "Demo Subject 836",
+    "status": "IGNORED",
+    "category": "Billing",
+    "details": "Generated demo data",
+    "days_ago": 4,
+    "hours": 9
+  },
+  {
+    "sender": "user1168@example.com",
+    "subject": "Demo Subject 156",
+    "status": "RESPONDED",
+    "category": "Feature Request",
+    "details": "Generated demo data",
+    "days_ago": 4,
+    "hours": 15
+  },
+  {
+    "sender": "user6775@example.com",
+    "subject": "Demo Subject 963",
+    "status": "RESPONDED",
+    "category": "Billing",
+    "details": "Generated demo data",
+    "days_ago": 5,
+    "hours": 14
+  },
+  {
+    "sender": "user8314@example.com",
+    "subject": "Demo Subject 282",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 5,
+    "hours": 10
+  },
+  {
+    "sender": "user3989@example.com",
+    "subject": "Demo Subject 392",
+    "status": "RESPONDED",
+    "category": "Security",
+    "details": "Generated demo data",
+    "days_ago": 5,
+    "hours": 9
+  },
+  {
+    "sender": "user5833@example.com",
+    "subject": "Demo Subject 811",
+    "status": "RESPONDED",
+    "category": "Cold Outreach",
+    "details": "Generated demo data",
+    "days_ago": 5,
+    "hours": 13
+  },
+  {
+    "sender": "user8240@example.com",
+    "subject": "Demo Subject 258",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 6,
+    "hours": 10
+  },
+  {
+    "sender": "user9397@example.com",
+    "subject": "Demo Subject 851",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 6,
+    "hours": 9
+  },
+  {
+    "sender": "user7306@example.com",
+    "subject": "Demo Subject 207",
+    "status": "RESPONDED",
+    "category": "Account",
+    "details": "Generated demo data",
+    "days_ago": 6,
+    "hours": 17
+  },
+  {
+    "sender": "user3755@example.com",
+    "subject": "Demo Subject 462",
+    "status": "RESPONDED",
+    "category": "Event",
+    "details": "Generated demo data",
+    "days_ago": 6,
+    "hours": 10
+  },
+  {
+    "sender": "user2043@example.com",
+    "subject": "Demo Subject 57",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 7,
+    "hours": 15
+  },
+  {
+    "sender": "user8508@example.com",
+    "subject": "Demo Subject 808",
+    "status": "IGNORED",
+    "category": "Account",
+    "details": "Generated demo data",
+    "days_ago": 7,
+    "hours": 16
+  },
+  {
+    "sender": "user4839@example.com",
+    "subject": "Demo Subject 23",
+    "status": "IGNORED",
+    "category": "Migration",
+    "details": "Generated demo data",
+    "days_ago": 7,
+    "hours": 16
+  },
+  {
+    "sender": "user8185@example.com",
+    "subject": "Demo Subject 926",
+    "status": "RESPONDED",
+    "category": "Notification",
+    "details": "Generated demo data",
+    "days_ago": 8,
+    "hours": 16
+  },
+  {
+    "sender": "user6256@example.com",
+    "subject": "Demo Subject 771",
+    "status": "RESPONDED",
+    "category": "Migration",
+    "details": "Generated demo data",
+    "days_ago": 8,
+    "hours": 11
+  },
+  {
+    "sender": "user8722@example.com",
+    "subject": "Demo Subject 589",
+    "status": "RESPONDED",
+    "category": "Newsletter",
+    "details": "Generated demo data",
+    "days_ago": 8,
+    "hours": 11
+  },
+  {
+    "sender": "user3409@example.com",
+    "subject": "Demo Subject 518",
+    "status": "ERROR",
+    "category": "Newsletter",
+    "details": "Generated demo data",
+    "days_ago": 8,
+    "hours": 16
+  },
+  {
+    "sender": "user3724@example.com",
+    "subject": "Demo Subject 406",
+    "status": "IGNORED",
+    "category": "Feature Request",
+    "details": "Generated demo data",
+    "days_ago": 9,
+    "hours": 11
+  },
+  {
+    "sender": "user1631@example.com",
+    "subject": "Demo Subject 859",
+    "status": "RESPONDED",
+    "category": "Pricing",
+    "details": "Generated demo data",
+    "days_ago": 9,
+    "hours": 12
+  },
+  {
+    "sender": "user5706@example.com",
+    "subject": "Demo Subject 186",
+    "status": "RESPONDED",
+    "category": "Pricing",
+    "details": "Generated demo data",
+    "days_ago": 9,
+    "hours": 15
+  },
+  {
+    "sender": "user8628@example.com",
+    "subject": "Demo Subject 244",
+    "status": "RESPONDED",
+    "category": "Pricing",
+    "details": "Generated demo data",
+    "days_ago": 9,
+    "hours": 10
+  },
+  {
+    "sender": "user5184@example.com",
+    "subject": "Demo Subject 542",
+    "status": "RESPONDED",
+    "category": "Promotional",
+    "details": "Generated demo data",
+    "days_ago": 10,
+    "hours": 14
+  },
+  {
+    "sender": "user5182@example.com",
+    "subject": "Demo Subject 976",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 10,
+    "hours": 15
+  },
+  {
+    "sender": "user1791@example.com",
+    "subject": "Demo Subject 84",
+    "status": "RESPONDED",
+    "category": "Security",
+    "details": "Generated demo data",
+    "days_ago": 10,
+    "hours": 10
+  },
+  {
+    "sender": "user3436@example.com",
+    "subject": "Demo Subject 947",
+    "status": "RESPONDED",
+    "category": "Technical Support",
+    "details": "Generated demo data",
+    "days_ago": 11,
+    "hours": 12
+  },
+  {
+    "sender": "user1648@example.com",
+    "subject": "Demo Subject 914",
+    "status": "IGNORED",
+    "category": "Billing",
+    "details": "Generated demo data",
+    "days_ago": 11,
+    "hours": 9
+  },
+  {
+    "sender": "user2607@example.com",
+    "subject": "Demo Subject 320",
+    "status": "RESPONDED",
+    "category": "Survey",
+    "details": "Generated demo data",
+    "days_ago": 11,
+    "hours": 17
+  },
+  {
+    "sender": "user1695@example.com",
+    "subject": "Demo Subject 353",
+    "status": "RESPONDED",
+    "category": "Migration",
+    "details": "Generated demo data",
+    "days_ago": 12,
+    "hours": 16
+  },
+  {
+    "sender": "user1881@example.com",
+    "subject": "Demo Subject 860",
+    "status": "RESPONDED",
+    "category": "Promotional",
+    "details": "Generated demo data",
+    "days_ago": 12,
+    "hours": 10
+  },
+  {
+    "sender": "user5036@example.com",
+    "subject": "Demo Subject 790",
+    "status": "IGNORED",
+    "category": "Technical Support",
+    "details": "Generated demo data",
+    "days_ago": 12,
+    "hours": 13
+  },
+  {
+    "sender": "user6055@example.com",
+    "subject": "Demo Subject 257",
+    "status": "RESPONDED",
+    "category": "Integration",
+    "details": "Generated demo data",
+    "days_ago": 12,
+    "hours": 13
+  },
+  {
+    "sender": "user2142@example.com",
+    "subject": "Demo Subject 869",
+    "status": "RESPONDED",
+    "category": "Billing",
+    "details": "Generated demo data",
+    "days_ago": 12,
+    "hours": 16
+  },
+  {
+    "sender": "user2405@example.com",
+    "subject": "Demo Subject 234",
+    "status": "RESPONDED",
+    "category": "Account",
+    "details": "Generated demo data",
+    "days_ago": 13,
+    "hours": 11
+  },
+  {
+    "sender": "user8837@example.com",
+    "subject": "Demo Subject 925",
+    "status": "RESPONDED",
+    "category": "Feature Request",
+    "details": "Generated demo data",
+    "days_ago": 13,
+    "hours": 13
+  },
+  {
+    "sender": "user9148@example.com",
+    "subject": "Demo Subject 436",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 14,
+    "hours": 14
+  },
+  {
+    "sender": "user7825@example.com",
+    "subject": "Demo Subject 956",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 14,
+    "hours": 14
+  },
+  {
+    "sender": "user7250@example.com",
+    "subject": "Demo Subject 518",
+    "status": "IGNORED",
+    "category": "Survey",
+    "details": "Generated demo data",
+    "days_ago": 15,
+    "hours": 11
+  },
+  {
+    "sender": "user1821@example.com",
+    "subject": "Demo Subject 463",
+    "status": "RESPONDED",
+    "category": "Billing",
+    "details": "Generated demo data",
+    "days_ago": 15,
+    "hours": 16
+  },
+  {
+    "sender": "user7127@example.com",
+    "subject": "Demo Subject 649",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 16,
+    "hours": 13
+  },
+  {
+    "sender": "user8306@example.com",
+    "subject": "Demo Subject 884",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 16,
+    "hours": 13
+  },
+  {
+    "sender": "user4008@example.com",
+    "subject": "Demo Subject 560",
+    "status": "RESPONDED",
+    "category": "Migration",
+    "details": "Generated demo data",
+    "days_ago": 17,
+    "hours": 13
+  },
+  {
+    "sender": "user9217@example.com",
+    "subject": "Demo Subject 315",
+    "status": "RESPONDED",
+    "category": "Migration",
+    "details": "Generated demo data",
+    "days_ago": 17,
+    "hours": 14
+  },
+  {
+    "sender": "user6913@example.com",
+    "subject": "Demo Subject 315",
+    "status": "RESPONDED",
+    "category": "Newsletter",
+    "details": "Generated demo data",
+    "days_ago": 17,
+    "hours": 9
+  },
+  {
+    "sender": "user6795@example.com",
+    "subject": "Demo Subject 915",
+    "status": "ERROR",
+    "category": "Promotional",
+    "details": "Generated demo data",
+    "days_ago": 17,
+    "hours": 16
+  },
+  {
+    "sender": "user5814@example.com",
+    "subject": "Demo Subject 712",
+    "status": "RESPONDED",
+    "category": "Notification",
+    "details": "Generated demo data",
+    "days_ago": 17,
+    "hours": 11
+  },
+  {
+    "sender": "user1593@example.com",
+    "subject": "Demo Subject 710",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 18,
+    "hours": 16
+  },
+  {
+    "sender": "user9998@example.com",
+    "subject": "Demo Subject 730",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 18,
+    "hours": 9
+  },
+  {
+    "sender": "user4370@example.com",
+    "subject": "Demo Subject 619",
+    "status": "ERROR",
+    "category": "Survey",
+    "details": "Generated demo data",
+    "days_ago": 18,
+    "hours": 13
+  },
+  {
+    "sender": "user6288@example.com",
+    "subject": "Demo Subject 665",
+    "status": "IGNORED",
+    "category": "Technical Support",
+    "details": "Generated demo data",
+    "days_ago": 18,
+    "hours": 13
+  },
+  {
+    "sender": "user7281@example.com",
+    "subject": "Demo Subject 255",
+    "status": "ERROR",
+    "category": "Event",
+    "details": "Generated demo data",
+    "days_ago": 18,
+    "hours": 14
+  },
+  {
+    "sender": "user2505@example.com",
+    "subject": "Demo Subject 275",
+    "status": "RESPONDED",
+    "category": "Pricing",
+    "details": "Generated demo data",
+    "days_ago": 19,
+    "hours": 17
+  },
+  {
+    "sender": "user7670@example.com",
+    "subject": "Demo Subject 109",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 19,
+    "hours": 14
+  },
+  {
+    "sender": "user8034@example.com",
+    "subject": "Demo Subject 475",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 19,
+    "hours": 11
+  },
+  {
+    "sender": "user5918@example.com",
+    "subject": "Demo Subject 768",
+    "status": "RESPONDED",
+    "category": "Feature Request",
+    "details": "Generated demo data",
+    "days_ago": 20,
+    "hours": 11
+  },
+  {
+    "sender": "user8700@example.com",
+    "subject": "Demo Subject 845",
+    "status": "RESPONDED",
+    "category": "Newsletter",
+    "details": "Generated demo data",
+    "days_ago": 20,
+    "hours": 14
+  },
+  {
+    "sender": "user7999@example.com",
+    "subject": "Demo Subject 792",
+    "status": "RESPONDED",
+    "category": "Product Inquiry",
+    "details": "Generated demo data",
+    "days_ago": 21,
+    "hours": 16
+  },
+  {
+    "sender": "user1471@example.com",
+    "subject": "Demo Subject 768",
+    "status": "RESPONDED",
+    "category": "Technical Support",
+    "details": "Generated demo data",
+    "days_ago": 21,
+    "hours": 9
+  },
+  {
+    "sender": "user7786@example.com",
+    "subject": "Demo Subject 559",
+    "status": "RESPONDED",
+    "category": "Recruitment",
+    "details": "Generated demo data",
+    "days_ago": 21,
+    "hours": 12
+  },
+  {
+    "sender": "user1024@example.com",
+    "subject": "Demo Subject 180",
+    "status": "IGNORED",
+    "category": "Partnership",
+    "details": "Generated demo data",
+    "days_ago": 22,
+    "hours": 9
+  },
+  {
+    "sender": "user1632@example.com",
+    "subject": "Demo Subject 793",
+    "status": "RESPONDED",
+    "category": "Newsletter",
+    "details": "Generated demo data",
+    "days_ago": 22,
+    "hours": 16
+  },
+  {
+    "sender": "user9984@example.com",
+    "subject": "Demo Subject 68",
+    "status": "RESPONDED",
+    "category": "Event",
+    "details": "Generated demo data",
+    "days_ago": 22,
+    "hours": 16
+  },
+  {
+    "sender": "user5524@example.com",
+    "subject": "Demo Subject 442",
+    "status": "IGNORED",
+    "category": "Billing",
+    "details": "Generated demo data",
+    "days_ago": 23,
+    "hours": 12
+  },
+  {
+    "sender": "user4664@example.com",
+    "subject": "Demo Subject 99",
+    "status": "IGNORED",
+    "category": "Integration",
+    "details": "Generated demo data",
+    "days_ago": 23,
+    "hours": 17
+  },
+  {
+    "sender": "user2164@example.com",
+    "subject": "Demo Subject 446",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 24,
+    "hours": 13
+  },
+  {
+    "sender": "user7800@example.com",
+    "subject": "Demo Subject 9",
+    "status": "RESPONDED",
+    "category": "Product Inquiry",
+    "details": "Generated demo data",
+    "days_ago": 24,
+    "hours": 15
+  },
+  {
+    "sender": "user8524@example.com",
+    "subject": "Demo Subject 594",
+    "status": "RESPONDED",
+    "category": "Partnership",
+    "details": "Generated demo data",
+    "days_ago": 25,
+    "hours": 14
+  },
+  {
+    "sender": "user2861@example.com",
+    "subject": "Demo Subject 446",
+    "status": "RESPONDED",
+    "category": "Event",
+    "details": "Generated demo data",
+    "days_ago": 25,
+    "hours": 12
+  },
+  {
+    "sender": "user7868@example.com",
+    "subject": "Demo Subject 673",
+    "status": "IGNORED",
+    "category": "Pricing",
+    "details": "Generated demo data",
+    "days_ago": 25,
+    "hours": 9
+  },
+  {
+    "sender": "user8562@example.com",
+    "subject": "Demo Subject 431",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 25,
+    "hours": 17
+  },
+  {
+    "sender": "user5935@example.com",
+    "subject": "Demo Subject 74",
+    "status": "RESPONDED",
+    "category": "Recruitment",
+    "details": "Generated demo data",
+    "days_ago": 26,
+    "hours": 13
+  },
+  {
+    "sender": "user1701@example.com",
+    "subject": "Demo Subject 598",
+    "status": "RESPONDED",
+    "category": "Survey",
+    "details": "Generated demo data",
+    "days_ago": 26,
+    "hours": 16
+  },
+  {
+    "sender": "user7900@example.com",
+    "subject": "Demo Subject 527",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 26,
+    "hours": 14
+  },
+  {
+    "sender": "user9090@example.com",
+    "subject": "Demo Subject 427",
+    "status": "ERROR",
+    "category": "Feature Request",
+    "details": "Generated demo data",
+    "days_ago": 26,
+    "hours": 17
+  },
+  {
+    "sender": "user5475@example.com",
+    "subject": "Demo Subject 945",
+    "status": "IGNORED",
+    "category": "Integration",
+    "details": "Generated demo data",
+    "days_ago": 26,
+    "hours": 11
+  },
+  {
+    "sender": "user8534@example.com",
+    "subject": "Demo Subject 540",
+    "status": "IGNORED",
+    "category": "Migration",
+    "details": "Generated demo data",
+    "days_ago": 27,
+    "hours": 16
+  },
+  {
+    "sender": "user9412@example.com",
+    "subject": "Demo Subject 58",
+    "status": "RESPONDED",
+    "category": "Event",
+    "details": "Generated demo data",
+    "days_ago": 27,
+    "hours": 12
+  },
+  {
+    "sender": "user3808@example.com",
+    "subject": "Demo Subject 516",
+    "status": "RESPONDED",
+    "category": "Notification",
+    "details": "Generated demo data",
+    "days_ago": 27,
+    "hours": 10
+  },
+  {
+    "sender": "user8437@example.com",
+    "subject": "Demo Subject 807",
+    "status": "RESPONDED",
+    "category": "Billing",
+    "details": "Generated demo data",
+    "days_ago": 28,
+    "hours": 12
+  },
+  {
+    "sender": "user5857@example.com",
+    "subject": "Demo Subject 865",
+    "status": "RESPONDED",
+    "category": "Notification",
+    "details": "Generated demo data",
+    "days_ago": 28,
+    "hours": 14
+  },
+  {
+    "sender": "user7137@example.com",
+    "subject": "Demo Subject 147",
+    "status": "RESPONDED",
+    "category": "Survey",
+    "details": "Generated demo data",
+    "days_ago": 29,
+    "hours": 10
+  },
+  {
+    "sender": "user1151@example.com",
+    "subject": "Demo Subject 250",
+    "status": "RESPONDED",
+    "category": "Product Inquiry",
+    "details": "Generated demo data",
+    "days_ago": 29,
+    "hours": 13
+  },
+  {
+    "sender": "user3405@example.com",
+    "subject": "Demo Subject 671",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 29,
+    "hours": 13
+  },
+  {
+    "sender": "user9152@example.com",
+    "subject": "Demo Subject 324",
+    "status": "RESPONDED",
+    "category": "Cold Outreach",
+    "details": "Generated demo data",
+    "days_ago": 30,
+    "hours": 13
+  },
+  {
+    "sender": "user4567@example.com",
+    "subject": "Demo Subject 855",
+    "status": "IGNORED",
+    "category": "Cold Outreach",
+    "details": "Generated demo data",
+    "days_ago": 30,
+    "hours": 12
+  },
+  {
+    "sender": "user3522@example.com",
+    "subject": "Demo Subject 516",
+    "status": "RESPONDED",
+    "category": "Event",
+    "details": "Generated demo data",
+    "days_ago": 31,
+    "hours": 13
+  },
+  {
+    "sender": "user8079@example.com",
+    "subject": "Demo Subject 317",
+    "status": "RESPONDED",
+    "category": "Partnership",
+    "details": "Generated demo data",
+    "days_ago": 31,
+    "hours": 10
+  },
+  {
+    "sender": "user2137@example.com",
+    "subject": "Demo Subject 688",
+    "status": "IGNORED",
+    "category": "Integration",
+    "details": "Generated demo data",
+    "days_ago": 32,
+    "hours": 10
+  },
+  {
+    "sender": "user4629@example.com",
+    "subject": "Demo Subject 787",
+    "status": "RESPONDED",
+    "category": "Pricing",
+    "details": "Generated demo data",
+    "days_ago": 32,
+    "hours": 11
+  },
+  {
+    "sender": "user7136@example.com",
+    "subject": "Demo Subject 485",
+    "status": "IGNORED",
+    "category": "Feature Request",
+    "details": "Generated demo data",
+    "days_ago": 34,
+    "hours": 17
+  },
+  {
+    "sender": "user8379@example.com",
+    "subject": "Demo Subject 768",
+    "status": "RESPONDED",
+    "category": "Feature Request",
+    "details": "Generated demo data",
+    "days_ago": 37,
+    "hours": 16
+  },
+  {
+    "sender": "user2186@example.com",
+    "subject": "Demo Subject 878",
+    "status": "RESPONDED",
+    "category": "Cold Outreach",
+    "details": "Generated demo data",
+    "days_ago": 37,
+    "hours": 12
+  },
+  {
+    "sender": "user2966@example.com",
+    "subject": "Demo Subject 723",
+    "status": "RESPONDED",
+    "category": "Account",
+    "details": "Generated demo data",
+    "days_ago": 38,
+    "hours": 14
+  },
+  {
+    "sender": "user4648@example.com",
+    "subject": "Demo Subject 498",
+    "status": "RESPONDED",
+    "category": "Technical Support",
+    "details": "Generated demo data",
+    "days_ago": 38,
+    "hours": 13
+  },
+  {
+    "sender": "user6811@example.com",
+    "subject": "Demo Subject 745",
+    "status": "RESPONDED",
+    "category": "Survey",
+    "details": "Generated demo data",
+    "days_ago": 39,
+    "hours": 9
+  },
+  {
+    "sender": "user4692@example.com",
+    "subject": "Demo Subject 865",
+    "status": "IGNORED",
+    "category": "Recruitment",
+    "details": "Generated demo data",
+    "days_ago": 40,
+    "hours": 15
+  },
+  {
+    "sender": "user2130@example.com",
+    "subject": "Demo Subject 796",
+    "status": "RESPONDED",
+    "category": "Notification",
+    "details": "Generated demo data",
+    "days_ago": 41,
+    "hours": 11
+  },
+  {
+    "sender": "user9201@example.com",
+    "subject": "Demo Subject 601",
+    "status": "RESPONDED",
+    "category": "Promotional",
+    "details": "Generated demo data",
+    "days_ago": 43,
+    "hours": 14
+  },
+  {
+    "sender": "user1068@example.com",
+    "subject": "Demo Subject 187",
+    "status": "RESPONDED",
+    "category": "Integration",
+    "details": "Generated demo data",
+    "days_ago": 43,
+    "hours": 15
+  },
+  {
+    "sender": "user7905@example.com",
+    "subject": "Demo Subject 536",
+    "status": "RESPONDED",
+    "category": "Security",
+    "details": "Generated demo data",
+    "days_ago": 44,
+    "hours": 12
+  },
+  {
+    "sender": "user2242@example.com",
+    "subject": "Demo Subject 124",
+    "status": "RESPONDED",
+    "category": "Account",
+    "details": "Generated demo data",
+    "days_ago": 44,
+    "hours": 12
+  },
+  {
+    "sender": "user8152@example.com",
+    "subject": "Demo Subject 727",
+    "status": "RESPONDED",
+    "category": "Product Inquiry",
+    "details": "Generated demo data",
+    "days_ago": 45,
+    "hours": 16
+  },
+  {
+    "sender": "user9197@example.com",
+    "subject": "Demo Subject 384",
+    "status": "RESPONDED",
+    "category": "Migration",
+    "details": "Generated demo data",
+    "days_ago": 45,
+    "hours": 13
+  },
+  {
+    "sender": "user2953@example.com",
+    "subject": "Demo Subject 64",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 48,
+    "hours": 17
+  },
+  {
+    "sender": "user6780@example.com",
+    "subject": "Demo Subject 459",
+    "status": "RESPONDED",
+    "category": "Feature Request",
+    "details": "Generated demo data",
+    "days_ago": 48,
+    "hours": 10
+  },
+  {
+    "sender": "user7940@example.com",
+    "subject": "Demo Subject 206",
+    "status": "RESPONDED",
+    "category": "Partnership",
+    "details": "Generated demo data",
+    "days_ago": 49,
+    "hours": 15
+  },
+  {
+    "sender": "user5958@example.com",
+    "subject": "Demo Subject 428",
+    "status": "RESPONDED",
+    "category": "Migration",
+    "details": "Generated demo data",
+    "days_ago": 50,
+    "hours": 13
+  },
+  {
+    "sender": "user1228@example.com",
+    "subject": "Demo Subject 341",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 50,
+    "hours": 10
+  },
+  {
+    "sender": "user1182@example.com",
+    "subject": "Demo Subject 917",
+    "status": "IGNORED",
+    "category": "Cold Outreach",
+    "details": "Generated demo data",
+    "days_ago": 51,
+    "hours": 15
+  },
+  {
+    "sender": "user6302@example.com",
+    "subject": "Demo Subject 964",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 53,
+    "hours": 17
+  },
+  {
+    "sender": "user2032@example.com",
+    "subject": "Demo Subject 758",
+    "status": "RESPONDED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 53,
+    "hours": 14
+  },
+  {
+    "sender": "user7583@example.com",
+    "subject": "Demo Subject 704",
+    "status": "RESPONDED",
+    "category": "Cold Outreach",
+    "details": "Generated demo data",
+    "days_ago": 54,
+    "hours": 15
+  },
+  {
+    "sender": "user8206@example.com",
+    "subject": "Demo Subject 403",
+    "status": "RESPONDED",
+    "category": "Recruitment",
+    "details": "Generated demo data",
+    "days_ago": 54,
+    "hours": 17
+  },
+  {
+    "sender": "user1027@example.com",
+    "subject": "Demo Subject 148",
+    "status": "RESPONDED",
+    "category": "Feature Request",
+    "details": "Generated demo data",
+    "days_ago": 55,
+    "hours": 14
+  },
+  {
+    "sender": "user6827@example.com",
+    "subject": "Demo Subject 270",
+    "status": "RESPONDED",
+    "category": "Migration",
+    "details": "Generated demo data",
+    "days_ago": 56,
+    "hours": 13
+  },
+  {
+    "sender": "user8142@example.com",
+    "subject": "Demo Subject 694",
+    "status": "RESPONDED",
+    "category": "Notification",
+    "details": "Generated demo data",
+    "days_ago": 56,
+    "hours": 9
+  },
+  {
+    "sender": "user3310@example.com",
+    "subject": "Demo Subject 241",
+    "status": "RESPONDED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 57,
+    "hours": 12
+  },
+  {
+    "sender": "user7325@example.com",
+    "subject": "Demo Subject 36",
+    "status": "RESPONDED",
+    "category": "Notification",
+    "details": "Generated demo data",
+    "days_ago": 57,
+    "hours": 14
+  },
+  {
+    "sender": "user5830@example.com",
+    "subject": "Demo Subject 859",
+    "status": "RESPONDED",
+    "category": "Security",
+    "details": "Generated demo data",
+    "days_ago": 58,
+    "hours": 13
+  },
+  {
+    "sender": "user3718@example.com",
+    "subject": "Demo Subject 883",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 61,
+    "hours": 14
+  },
+  {
+    "sender": "user7078@example.com",
+    "subject": "Demo Subject 947",
+    "status": "RESPONDED",
+    "category": "Partnership",
+    "details": "Generated demo data",
+    "days_ago": 61,
+    "hours": 16
+  },
+  {
+    "sender": "user9075@example.com",
+    "subject": "Demo Subject 315",
+    "status": "RESPONDED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 62,
+    "hours": 12
+  },
+  {
+    "sender": "user2287@example.com",
+    "subject": "Demo Subject 62",
+    "status": "RESPONDED",
+    "category": "Promotional",
+    "details": "Generated demo data",
+    "days_ago": 64,
+    "hours": 10
+  },
+  {
+    "sender": "user7072@example.com",
+    "subject": "Demo Subject 206",
+    "status": "RESPONDED",
+    "category": "Notification",
+    "details": "Generated demo data",
+    "days_ago": 64,
+    "hours": 9
+  },
+  {
+    "sender": "user5193@example.com",
+    "subject": "Demo Subject 668",
+    "status": "RESPONDED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 66,
+    "hours": 11
+  },
+  {
+    "sender": "user9869@example.com",
+    "subject": "Demo Subject 398",
+    "status": "IGNORED",
+    "category": "Account",
+    "details": "Generated demo data",
+    "days_ago": 66,
+    "hours": 13
+  },
+  {
+    "sender": "user7922@example.com",
+    "subject": "Demo Subject 235",
+    "status": "IGNORED",
+    "category": "Newsletter",
+    "details": "Generated demo data",
+    "days_ago": 67,
+    "hours": 11
+  },
+  {
+    "sender": "user7514@example.com",
+    "subject": "Demo Subject 495",
+    "status": "RESPONDED",
+    "category": "Pricing",
+    "details": "Generated demo data",
+    "days_ago": 68,
+    "hours": 15
+  },
+  {
+    "sender": "user6473@example.com",
+    "subject": "Demo Subject 838",
+    "status": "RESPONDED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 70,
+    "hours": 11
+  },
+  {
+    "sender": "user4208@example.com",
+    "subject": "Demo Subject 421",
+    "status": "ERROR",
+    "category": "Survey",
+    "details": "Generated demo data",
+    "days_ago": 70,
+    "hours": 12
+  },
+  {
+    "sender": "user9712@example.com",
+    "subject": "Demo Subject 701",
+    "status": "RESPONDED",
+    "category": "Product Inquiry",
+    "details": "Generated demo data",
+    "days_ago": 75,
+    "hours": 14
+  },
+  {
+    "sender": "user1186@example.com",
+    "subject": "Demo Subject 839",
+    "status": "RESPONDED",
+    "category": "Notification",
+    "details": "Generated demo data",
+    "days_ago": 76,
+    "hours": 12
+  },
+  {
+    "sender": "user9385@example.com",
+    "subject": "Demo Subject 654",
+    "status": "RESPONDED",
+    "category": "Pricing",
+    "details": "Generated demo data",
+    "days_ago": 77,
+    "hours": 13
+  },
+  {
+    "sender": "user6628@example.com",
+    "subject": "Demo Subject 752",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 77,
+    "hours": 9
+  },
+  {
+    "sender": "user1575@example.com",
+    "subject": "Demo Subject 324",
+    "status": "RESPONDED",
+    "category": "Newsletter",
+    "details": "Generated demo data",
+    "days_ago": 78,
+    "hours": 10
+  },
+  {
+    "sender": "user1225@example.com",
+    "subject": "Demo Subject 909",
+    "status": "RESPONDED",
+    "category": "Cold Outreach",
+    "details": "Generated demo data",
+    "days_ago": 80,
+    "hours": 11
+  },
+  {
+    "sender": "user9794@example.com",
+    "subject": "Demo Subject 1000",
+    "status": "RESPONDED",
+    "category": "Event",
+    "details": "Generated demo data",
+    "days_ago": 80,
+    "hours": 9
+  },
+  {
+    "sender": "user1662@example.com",
+    "subject": "Demo Subject 71",
+    "status": "RESPONDED",
+    "category": "Billing",
+    "details": "Generated demo data",
+    "days_ago": 82,
+    "hours": 10
+  },
+  {
+    "sender": "user6073@example.com",
+    "subject": "Demo Subject 771",
+    "status": "RESPONDED",
+    "category": "Survey",
+    "details": "Generated demo data",
+    "days_ago": 84,
+    "hours": 14
+  },
+  {
+    "sender": "user7215@example.com",
+    "subject": "Demo Subject 287",
+    "status": "RESPONDED",
+    "category": "Pricing",
+    "details": "Generated demo data",
+    "days_ago": 85,
+    "hours": 16
+  },
+  {
+    "sender": "user8807@example.com",
+    "subject": "Demo Subject 547",
+    "status": "IGNORED",
+    "category": "Pricing",
+    "details": "Generated demo data",
+    "days_ago": 86,
+    "hours": 12
+  },
+  {
+    "sender": "user7023@example.com",
+    "subject": "Demo Subject 893",
+    "status": "RESPONDED",
+    "category": "Notification",
+    "details": "Generated demo data",
+    "days_ago": 87,
+    "hours": 13
+  },
+  {
+    "sender": "user1926@example.com",
+    "subject": "Demo Subject 456",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 87,
+    "hours": 10
+  },
+  {
+    "sender": "user8956@example.com",
+    "subject": "Demo Subject 391",
+    "status": "RESPONDED",
+    "category": "Promotional",
+    "details": "Generated demo data",
+    "days_ago": 88,
+    "hours": 12
+  },
+  {
+    "sender": "user6581@example.com",
+    "subject": "Demo Subject 248",
+    "status": "IGNORED",
+    "category": "Feature Request",
+    "details": "Generated demo data",
+    "days_ago": 89,
+    "hours": 15
+  },
+  {
+    "sender": "user6071@example.com",
+    "subject": "Demo Subject 233",
+    "status": "RESPONDED",
+    "category": "Partnership",
+    "details": "Generated demo data",
+    "days_ago": 90,
+    "hours": 10
+  },
+  {
+    "sender": "user2592@example.com",
+    "subject": "Demo Subject 983",
+    "status": "RESPONDED",
+    "category": "Integration",
+    "details": "Generated demo data",
+    "days_ago": 90,
+    "hours": 9
+  },
+  {
+    "sender": "user3857@example.com",
+    "subject": "Demo Subject 183",
+    "status": "RESPONDED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 91,
+    "hours": 15
+  },
+  {
+    "sender": "user3354@example.com",
+    "subject": "Demo Subject 674",
+    "status": "RESPONDED",
+    "category": "Partnership",
+    "details": "Generated demo data",
+    "days_ago": 91,
+    "hours": 15
+  },
+  {
+    "sender": "user7424@example.com",
+    "subject": "Demo Subject 108",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 92,
+    "hours": 15
+  },
+  {
+    "sender": "user8998@example.com",
+    "subject": "Demo Subject 559",
+    "status": "IGNORED",
+    "category": "Security",
+    "details": "Generated demo data",
+    "days_ago": 92,
+    "hours": 13
+  },
+  {
+    "sender": "user4463@example.com",
+    "subject": "Demo Subject 233",
+    "status": "RESPONDED",
+    "category": "Feature Request",
+    "details": "Generated demo data",
+    "days_ago": 93,
+    "hours": 14
+  },
+  {
+    "sender": "user8962@example.com",
+    "subject": "Demo Subject 628",
+    "status": "RESPONDED",
+    "category": "Newsletter",
+    "details": "Generated demo data",
+    "days_ago": 95,
+    "hours": 10
+  },
+  {
+    "sender": "user3516@example.com",
+    "subject": "Demo Subject 235",
+    "status": "RESPONDED",
+    "category": "Recruitment",
+    "details": "Generated demo data",
+    "days_ago": 96,
+    "hours": 17
+  },
+  {
+    "sender": "user6237@example.com",
+    "subject": "Demo Subject 379",
+    "status": "RESPONDED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 99,
+    "hours": 10
+  },
+  {
+    "sender": "user7418@example.com",
+    "subject": "Demo Subject 980",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 99,
+    "hours": 9
+  },
+  {
+    "sender": "user7458@example.com",
+    "subject": "Demo Subject 450",
+    "status": "RESPONDED",
+    "category": "Recruitment",
+    "details": "Generated demo data",
+    "days_ago": 100,
+    "hours": 14
+  },
+  {
+    "sender": "user7704@example.com",
+    "subject": "Demo Subject 847",
+    "status": "RESPONDED",
+    "category": "Integration",
+    "details": "Generated demo data",
+    "days_ago": 101,
+    "hours": 17
+  },
+  {
+    "sender": "user9724@example.com",
+    "subject": "Demo Subject 272",
+    "status": "RESPONDED",
+    "category": "Recruitment",
+    "details": "Generated demo data",
+    "days_ago": 101,
+    "hours": 17
+  },
+  {
+    "sender": "user5727@example.com",
+    "subject": "Demo Subject 424",
+    "status": "RESPONDED",
+    "category": "Pricing",
+    "details": "Generated demo data",
+    "days_ago": 103,
+    "hours": 16
+  },
+  {
+    "sender": "user4727@example.com",
+    "subject": "Demo Subject 185",
+    "status": "RESPONDED",
+    "category": "Promotional",
+    "details": "Generated demo data",
+    "days_ago": 103,
+    "hours": 11
+  },
+  {
+    "sender": "user7977@example.com",
+    "subject": "Demo Subject 928",
+    "status": "IGNORED",
+    "category": "Cold Outreach",
+    "details": "Generated demo data",
+    "days_ago": 104,
+    "hours": 14
+  },
+  {
+    "sender": "user7588@example.com",
+    "subject": "Demo Subject 3",
+    "status": "RESPONDED",
+    "category": "Billing",
+    "details": "Generated demo data",
+    "days_ago": 106,
+    "hours": 16
+  },
+  {
+    "sender": "user3305@example.com",
+    "subject": "Demo Subject 8",
+    "status": "IGNORED",
+    "category": "Billing",
+    "details": "Generated demo data",
+    "days_ago": 106,
+    "hours": 12
+  },
+  {
+    "sender": "user7782@example.com",
+    "subject": "Demo Subject 498",
+    "status": "RESPONDED",
+    "category": "Billing",
+    "details": "Generated demo data",
+    "days_ago": 107,
+    "hours": 15
+  },
+  {
+    "sender": "user2149@example.com",
+    "subject": "Demo Subject 34",
+    "status": "RESPONDED",
+    "category": "Migration",
+    "details": "Generated demo data",
+    "days_ago": 109,
+    "hours": 17
+  },
+  {
+    "sender": "user5250@example.com",
+    "subject": "Demo Subject 223",
+    "status": "RESPONDED",
+    "category": "Account",
+    "details": "Generated demo data",
+    "days_ago": 110,
+    "hours": 9
+  },
+  {
+    "sender": "user9242@example.com",
+    "subject": "Demo Subject 426",
+    "status": "RESPONDED",
+    "category": "Newsletter",
+    "details": "Generated demo data",
+    "days_ago": 111,
+    "hours": 12
+  },
+  {
+    "sender": "user7764@example.com",
+    "subject": "Demo Subject 510",
+    "status": "IGNORED",
+    "category": "Survey",
+    "details": "Generated demo data",
+    "days_ago": 111,
+    "hours": 10
+  },
+  {
+    "sender": "user3106@example.com",
+    "subject": "Demo Subject 516",
+    "status": "RESPONDED",
+    "category": "Notification",
+    "details": "Generated demo data",
+    "days_ago": 112,
+    "hours": 10
+  },
+  {
+    "sender": "user1541@example.com",
+    "subject": "Demo Subject 626",
+    "status": "RESPONDED",
+    "category": "Migration",
+    "details": "Generated demo data",
+    "days_ago": 112,
+    "hours": 13
+  },
+  {
+    "sender": "user7247@example.com",
+    "subject": "Demo Subject 97",
+    "status": "RESPONDED",
+    "category": "Integration",
+    "details": "Generated demo data",
+    "days_ago": 113,
+    "hours": 14
+  },
+  {
+    "sender": "user9366@example.com",
+    "subject": "Demo Subject 705",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 114,
+    "hours": 11
+  },
+  {
+    "sender": "user9879@example.com",
+    "subject": "Demo Subject 290",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 114,
+    "hours": 10
+  },
+  {
+    "sender": "user8811@example.com",
+    "subject": "Demo Subject 333",
+    "status": "RESPONDED",
+    "category": "Cold Outreach",
+    "details": "Generated demo data",
+    "days_ago": 115,
+    "hours": 11
+  },
+  {
+    "sender": "user3508@example.com",
+    "subject": "Demo Subject 91",
+    "status": "IGNORED",
+    "category": "Feature Request",
+    "details": "Generated demo data",
+    "days_ago": 116,
+    "hours": 11
+  },
+  {
+    "sender": "user6268@example.com",
+    "subject": "Demo Subject 918",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 116,
+    "hours": 10
+  },
+  {
+    "sender": "user7708@example.com",
+    "subject": "Demo Subject 478",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 117,
+    "hours": 17
+  },
+  {
+    "sender": "user8157@example.com",
+    "subject": "Demo Subject 758",
+    "status": "RESPONDED",
+    "category": "Account",
+    "details": "Generated demo data",
+    "days_ago": 117,
+    "hours": 15
+  },
+  {
+    "sender": "user8980@example.com",
+    "subject": "Demo Subject 269",
+    "status": "RESPONDED",
+    "category": "Notification",
+    "details": "Generated demo data",
+    "days_ago": 119,
+    "hours": 17
+  },
+  {
+    "sender": "user5066@example.com",
+    "subject": "Demo Subject 268",
+    "status": "RESPONDED",
+    "category": "Migration",
+    "details": "Generated demo data",
+    "days_ago": 120,
+    "hours": 11
+  },
+  {
+    "sender": "user9984@example.com",
+    "subject": "Demo Subject 584",
+    "status": "RESPONDED",
+    "category": "Migration",
+    "details": "Generated demo data",
+    "days_ago": 122,
+    "hours": 15
+  },
+  {
+    "sender": "user2342@example.com",
+    "subject": "Demo Subject 428",
+    "status": "RESPONDED",
+    "category": "Pricing",
+    "details": "Generated demo data",
+    "days_ago": 123,
+    "hours": 12
+  },
+  {
+    "sender": "user9301@example.com",
+    "subject": "Demo Subject 145",
+    "status": "RESPONDED",
+    "category": "Recruitment",
+    "details": "Generated demo data",
+    "days_ago": 123,
+    "hours": 13
+  },
+  {
+    "sender": "user4650@example.com",
+    "subject": "Demo Subject 387",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 125,
+    "hours": 10
+  },
+  {
+    "sender": "user1779@example.com",
+    "subject": "Demo Subject 655",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 126,
+    "hours": 10
+  },
+  {
+    "sender": "user6434@example.com",
+    "subject": "Demo Subject 201",
+    "status": "RESPONDED",
+    "category": "Billing",
+    "details": "Generated demo data",
+    "days_ago": 126,
+    "hours": 10
+  },
+  {
+    "sender": "user3213@example.com",
+    "subject": "Demo Subject 343",
+    "status": "RESPONDED",
+    "category": "Technical Support",
+    "details": "Generated demo data",
+    "days_ago": 128,
+    "hours": 11
+  },
+  {
+    "sender": "user5276@example.com",
+    "subject": "Demo Subject 190",
+    "status": "RESPONDED",
+    "category": "Billing",
+    "details": "Generated demo data",
+    "days_ago": 128,
+    "hours": 15
+  },
+  {
+    "sender": "user9837@example.com",
+    "subject": "Demo Subject 118",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 129,
+    "hours": 9
+  },
+  {
+    "sender": "user9584@example.com",
+    "subject": "Demo Subject 454",
+    "status": "IGNORED",
+    "category": "Feature Request",
+    "details": "Generated demo data",
+    "days_ago": 129,
+    "hours": 13
+  },
+  {
+    "sender": "user7403@example.com",
+    "subject": "Demo Subject 668",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 130,
+    "hours": 10
+  },
+  {
+    "sender": "user3810@example.com",
+    "subject": "Demo Subject 458",
+    "status": "RESPONDED",
+    "category": "Event",
+    "details": "Generated demo data",
+    "days_ago": 130,
+    "hours": 9
+  },
+  {
+    "sender": "user1796@example.com",
+    "subject": "Demo Subject 565",
+    "status": "RESPONDED",
+    "category": "Technical Support",
+    "details": "Generated demo data",
+    "days_ago": 131,
+    "hours": 14
+  },
+  {
+    "sender": "user6500@example.com",
+    "subject": "Demo Subject 340",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 134,
+    "hours": 16
+  },
+  {
+    "sender": "user8133@example.com",
+    "subject": "Demo Subject 109",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 135,
+    "hours": 14
+  },
+  {
+    "sender": "user5182@example.com",
+    "subject": "Demo Subject 536",
+    "status": "IGNORED",
+    "category": "Account",
+    "details": "Generated demo data",
+    "days_ago": 136,
+    "hours": 10
+  },
+  {
+    "sender": "user3163@example.com",
+    "subject": "Demo Subject 735",
+    "status": "RESPONDED",
+    "category": "Recruitment",
+    "details": "Generated demo data",
+    "days_ago": 136,
+    "hours": 13
+  },
+  {
+    "sender": "user2853@example.com",
+    "subject": "Demo Subject 759",
+    "status": "RESPONDED",
+    "category": "Pricing",
+    "details": "Generated demo data",
+    "days_ago": 138,
+    "hours": 17
+  },
+  {
+    "sender": "user7871@example.com",
+    "subject": "Demo Subject 89",
+    "status": "RESPONDED",
+    "category": "Event",
+    "details": "Generated demo data",
+    "days_ago": 138,
+    "hours": 11
+  },
+  {
+    "sender": "user9582@example.com",
+    "subject": "Demo Subject 365",
+    "status": "RESPONDED",
+    "category": "Technical Support",
+    "details": "Generated demo data",
+    "days_ago": 139,
+    "hours": 13
+  },
+  {
+    "sender": "user9150@example.com",
+    "subject": "Demo Subject 788",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 139,
+    "hours": 12
+  },
+  {
+    "sender": "user9318@example.com",
+    "subject": "Demo Subject 928",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 140,
+    "hours": 14
+  },
+  {
+    "sender": "user9994@example.com",
+    "subject": "Demo Subject 972",
+    "status": "ERROR",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 140,
+    "hours": 15
+  },
+  {
+    "sender": "user2797@example.com",
+    "subject": "Demo Subject 660",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 143,
+    "hours": 11
+  },
+  {
+    "sender": "user3680@example.com",
+    "subject": "Demo Subject 666",
+    "status": "ERROR",
+    "category": "Promotional",
+    "details": "Generated demo data",
+    "days_ago": 143,
+    "hours": 14
+  },
+  {
+    "sender": "user3962@example.com",
+    "subject": "Demo Subject 453",
+    "status": "RESPONDED",
+    "category": "Newsletter",
+    "details": "Generated demo data",
+    "days_ago": 144,
+    "hours": 15
+  },
+  {
+    "sender": "user7012@example.com",
+    "subject": "Demo Subject 398",
+    "status": "RESPONDED",
+    "category": "Partnership",
+    "details": "Generated demo data",
+    "days_ago": 144,
+    "hours": 12
+  },
+  {
+    "sender": "user9225@example.com",
+    "subject": "Demo Subject 324",
+    "status": "RESPONDED",
+    "category": "Newsletter",
+    "details": "Generated demo data",
+    "days_ago": 146,
+    "hours": 12
+  },
+  {
+    "sender": "user1597@example.com",
+    "subject": "Demo Subject 493",
+    "status": "IGNORED",
+    "category": "Billing",
+    "details": "Generated demo data",
+    "days_ago": 147,
+    "hours": 13
+  },
+  {
+    "sender": "user6049@example.com",
+    "subject": "Demo Subject 538",
+    "status": "RESPONDED",
+    "category": "Promotional",
+    "details": "Generated demo data",
+    "days_ago": 147,
+    "hours": 15
+  },
+  {
+    "sender": "user8646@example.com",
+    "subject": "Demo Subject 920",
+    "status": "IGNORED",
+    "category": "Promotional",
+    "details": "Generated demo data",
+    "days_ago": 148,
+    "hours": 16
+  },
+  {
+    "sender": "user3684@example.com",
+    "subject": "Demo Subject 430",
+    "status": "RESPONDED",
+    "category": "Product Inquiry",
+    "details": "Generated demo data",
+    "days_ago": 148,
+    "hours": 17
+  },
+  {
+    "sender": "user1029@example.com",
+    "subject": "Demo Subject 721",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 150,
+    "hours": 11
+  },
+  {
+    "sender": "user6228@example.com",
+    "subject": "Demo Subject 164",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 150,
+    "hours": 17
+  },
+  {
+    "sender": "user8566@example.com",
+    "subject": "Demo Subject 965",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 151,
+    "hours": 16
+  },
+  {
+    "sender": "user1132@example.com",
+    "subject": "Demo Subject 136",
+    "status": "RESPONDED",
+    "category": "Survey",
+    "details": "Generated demo data",
+    "days_ago": 152,
+    "hours": 14
+  },
+  {
+    "sender": "user4338@example.com",
+    "subject": "Demo Subject 608",
+    "status": "RESPONDED",
+    "category": "Cold Outreach",
+    "details": "Generated demo data",
+    "days_ago": 154,
+    "hours": 10
+  },
+  {
+    "sender": "user7006@example.com",
+    "subject": "Demo Subject 754",
+    "status": "RESPONDED",
+    "category": "Promotional",
+    "details": "Generated demo data",
+    "days_ago": 154,
+    "hours": 16
+  },
+  {
+    "sender": "user2526@example.com",
+    "subject": "Demo Subject 836",
+    "status": "RESPONDED",
+    "category": "Security",
+    "details": "Generated demo data",
+    "days_ago": 155,
+    "hours": 10
+  },
+  {
+    "sender": "user5471@example.com",
+    "subject": "Demo Subject 393",
+    "status": "RESPONDED",
+    "category": "Event",
+    "details": "Generated demo data",
+    "days_ago": 155,
+    "hours": 15
+  },
+  {
+    "sender": "user1651@example.com",
+    "subject": "Demo Subject 953",
+    "status": "IGNORED",
+    "category": "Security",
+    "details": "Generated demo data",
+    "days_ago": 157,
+    "hours": 10
+  },
+  {
+    "sender": "user5707@example.com",
+    "subject": "Demo Subject 222",
+    "status": "RESPONDED",
+    "category": "Security",
+    "details": "Generated demo data",
+    "days_ago": 158,
+    "hours": 15
+  },
+  {
+    "sender": "user1179@example.com",
+    "subject": "Demo Subject 530",
+    "status": "IGNORED",
+    "category": "Cold Outreach",
+    "details": "Generated demo data",
+    "days_ago": 159,
+    "hours": 11
+  },
+  {
+    "sender": "user6219@example.com",
+    "subject": "Demo Subject 844",
+    "status": "RESPONDED",
+    "category": "Migration",
+    "details": "Generated demo data",
+    "days_ago": 160,
+    "hours": 17
+  },
+  {
+    "sender": "user9800@example.com",
+    "subject": "Demo Subject 964",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 160,
+    "hours": 16
+  },
+  {
+    "sender": "user7391@example.com",
+    "subject": "Demo Subject 500",
+    "status": "RESPONDED",
+    "category": "Event",
+    "details": "Generated demo data",
+    "days_ago": 162,
+    "hours": 11
+  },
+  {
+    "sender": "user5455@example.com",
+    "subject": "Demo Subject 261",
+    "status": "ERROR",
+    "category": "Product Inquiry",
+    "details": "Generated demo data",
+    "days_ago": 162,
+    "hours": 12
+  },
+  {
+    "sender": "user3367@example.com",
+    "subject": "Demo Subject 839",
+    "status": "RESPONDED",
+    "category": "Cold Outreach",
+    "details": "Generated demo data",
+    "days_ago": 163,
+    "hours": 14
+  },
+  {
+    "sender": "user1922@example.com",
+    "subject": "Demo Subject 697",
+    "status": "IGNORED",
+    "category": "Feature Request",
+    "details": "Generated demo data",
+    "days_ago": 163,
+    "hours": 15
+  },
+  {
+    "sender": "user6750@example.com",
+    "subject": "Demo Subject 945",
+    "status": "RESPONDED",
+    "category": "Product Inquiry",
+    "details": "Generated demo data",
+    "days_ago": 164,
+    "hours": 14
+  },
+  {
+    "sender": "user8307@example.com",
+    "subject": "Demo Subject 594",
+    "status": "RESPONDED",
+    "category": "Survey",
+    "details": "Generated demo data",
+    "days_ago": 166,
+    "hours": 15
+  },
+  {
+    "sender": "user9511@example.com",
+    "subject": "Demo Subject 328",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 167,
+    "hours": 13
+  },
+  {
+    "sender": "user2940@example.com",
+    "subject": "Demo Subject 546",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 171,
+    "hours": 9
+  },
+  {
+    "sender": "user5291@example.com",
+    "subject": "Demo Subject 840",
+    "status": "RESPONDED",
+    "category": "Notification",
+    "details": "Generated demo data",
+    "days_ago": 171,
+    "hours": 16
+  },
+  {
+    "sender": "user9156@example.com",
+    "subject": "Demo Subject 793",
+    "status": "RESPONDED",
+    "category": "Cold Outreach",
+    "details": "Generated demo data",
+    "days_ago": 172,
+    "hours": 14
+  },
+  {
+    "sender": "user1302@example.com",
+    "subject": "Demo Subject 542",
+    "status": "ERROR",
+    "category": "Newsletter",
+    "details": "Generated demo data",
+    "days_ago": 173,
+    "hours": 12
+  },
+  {
+    "sender": "user1958@example.com",
+    "subject": "Demo Subject 735",
+    "status": "RESPONDED",
+    "category": "Security",
+    "details": "Generated demo data",
+    "days_ago": 174,
+    "hours": 12
+  },
+  {
+    "sender": "user1623@example.com",
+    "subject": "Demo Subject 961",
+    "status": "RESPONDED",
+    "category": "Recruitment",
+    "details": "Generated demo data",
+    "days_ago": 176,
+    "hours": 11
+  },
+  {
+    "sender": "user3383@example.com",
+    "subject": "Demo Subject 970",
+    "status": "RESPONDED",
+    "category": "Newsletter",
+    "details": "Generated demo data",
+    "days_ago": 177,
+    "hours": 15
+  },
+  {
+    "sender": "user5242@example.com",
+    "subject": "Demo Subject 188",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 177,
+    "hours": 9
+  },
+  {
+    "sender": "user4915@example.com",
+    "subject": "Demo Subject 518",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 180,
+    "hours": 16
+  },
+  {
+    "sender": "user1164@example.com",
+    "subject": "Demo Subject 216",
+    "status": "IGNORED",
+    "category": "Partnership",
+    "details": "Generated demo data",
+    "days_ago": 185,
+    "hours": 10
+  },
+  {
+    "sender": "user4329@example.com",
+    "subject": "Demo Subject 170",
+    "status": "RESPONDED",
+    "category": "Pricing",
+    "details": "Generated demo data",
+    "days_ago": 187,
+    "hours": 10
+  },
+  {
+    "sender": "user6458@example.com",
+    "subject": "Demo Subject 182",
+    "status": "RESPONDED",
+    "category": "Newsletter",
+    "details": "Generated demo data",
+    "days_ago": 191,
+    "hours": 9
+  },
+  {
+    "sender": "user9248@example.com",
+    "subject": "Demo Subject 721",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 192,
+    "hours": 12
+  },
+  {
+    "sender": "user7153@example.com",
+    "subject": "Demo Subject 548",
+    "status": "IGNORED",
+    "category": "Promotional",
+    "details": "Generated demo data",
+    "days_ago": 193,
+    "hours": 9
+  },
+  {
+    "sender": "user8554@example.com",
+    "subject": "Demo Subject 788",
+    "status": "RESPONDED",
+    "category": "Billing",
+    "details": "Generated demo data",
+    "days_ago": 196,
+    "hours": 10
+  },
+  {
+    "sender": "user9630@example.com",
+    "subject": "Demo Subject 748",
+    "status": "RESPONDED",
+    "category": "Account",
+    "details": "Generated demo data",
+    "days_ago": 200,
+    "hours": 15
+  },
+  {
+    "sender": "user1724@example.com",
+    "subject": "Demo Subject 842",
+    "status": "RESPONDED",
+    "category": "Newsletter",
+    "details": "Generated demo data",
+    "days_ago": 203,
+    "hours": 13
+  },
+  {
+    "sender": "user5189@example.com",
+    "subject": "Demo Subject 140",
+    "status": "RESPONDED",
+    "category": "Product Inquiry",
+    "details": "Generated demo data",
+    "days_ago": 204,
+    "hours": 9
+  },
+  {
+    "sender": "user6098@example.com",
+    "subject": "Demo Subject 477",
+    "status": "IGNORED",
+    "category": "Security",
+    "details": "Generated demo data",
+    "days_ago": 209,
+    "hours": 15
+  },
+  {
+    "sender": "user4288@example.com",
+    "subject": "Demo Subject 920",
+    "status": "IGNORED",
+    "category": "Technical Support",
+    "details": "Generated demo data",
+    "days_ago": 213,
+    "hours": 15
+  },
+  {
+    "sender": "user1785@example.com",
+    "subject": "Demo Subject 996",
+    "status": "RESPONDED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 214,
+    "hours": 12
+  },
+  {
+    "sender": "user2792@example.com",
+    "subject": "Demo Subject 143",
+    "status": "RESPONDED",
+    "category": "Partnership",
+    "details": "Generated demo data",
+    "days_ago": 217,
+    "hours": 17
+  },
+  {
+    "sender": "user3901@example.com",
+    "subject": "Demo Subject 730",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 222,
+    "hours": 11
+  },
+  {
+    "sender": "user9640@example.com",
+    "subject": "Demo Subject 665",
+    "status": "RESPONDED",
+    "category": "Security",
+    "details": "Generated demo data",
+    "days_ago": 224,
+    "hours": 15
+  },
+  {
+    "sender": "user5651@example.com",
+    "subject": "Demo Subject 611",
+    "status": "ERROR",
+    "category": "Partnership",
+    "details": "Generated demo data",
+    "days_ago": 227,
+    "hours": 10
+  },
+  {
+    "sender": "user5825@example.com",
+    "subject": "Demo Subject 767",
+    "status": "RESPONDED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 231,
+    "hours": 16
+  },
+  {
+    "sender": "user1604@example.com",
+    "subject": "Demo Subject 591",
+    "status": "RESPONDED",
+    "category": "Account",
+    "details": "Generated demo data",
+    "days_ago": 234,
+    "hours": 16
+  },
+  {
+    "sender": "user6732@example.com",
+    "subject": "Demo Subject 473",
+    "status": "RESPONDED",
+    "category": "Technical Support",
+    "details": "Generated demo data",
+    "days_ago": 235,
+    "hours": 10
+  },
+  {
+    "sender": "user1918@example.com",
+    "subject": "Demo Subject 405",
+    "status": "IGNORED",
+    "category": "Promotional",
+    "details": "Generated demo data",
+    "days_ago": 241,
+    "hours": 12
+  },
+  {
+    "sender": "user1384@example.com",
+    "subject": "Demo Subject 81",
+    "status": "RESPONDED",
+    "category": "Product Inquiry",
+    "details": "Generated demo data",
+    "days_ago": 246,
+    "hours": 11
+  },
+  {
+    "sender": "user5699@example.com",
+    "subject": "Demo Subject 381",
+    "status": "IGNORED",
+    "category": "Security",
+    "details": "Generated demo data",
+    "days_ago": 247,
+    "hours": 15
+  },
+  {
+    "sender": "user4463@example.com",
+    "subject": "Demo Subject 467",
+    "status": "RESPONDED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 252,
+    "hours": 16
+  },
+  {
+    "sender": "user4873@example.com",
+    "subject": "Demo Subject 754",
+    "status": "RESPONDED",
+    "category": "Account",
+    "details": "Generated demo data",
+    "days_ago": 260,
+    "hours": 17
+  },
+  {
+    "sender": "user7971@example.com",
+    "subject": "Demo Subject 963",
+    "status": "RESPONDED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 261,
+    "hours": 14
+  },
+  {
+    "sender": "user7803@example.com",
+    "subject": "Demo Subject 750",
+    "status": "RESPONDED",
+    "category": "Promotional",
+    "details": "Generated demo data",
+    "days_ago": 262,
+    "hours": 17
+  },
+  {
+    "sender": "user5840@example.com",
+    "subject": "Demo Subject 376",
+    "status": "RESPONDED",
+    "category": "Feature Request",
+    "details": "Generated demo data",
+    "days_ago": 263,
+    "hours": 11
+  },
+  {
+    "sender": "user7955@example.com",
+    "subject": "Demo Subject 563",
+    "status": "RESPONDED",
+    "category": "Migration",
+    "details": "Generated demo data",
+    "days_ago": 265,
+    "hours": 11
+  },
+  {
+    "sender": "user7219@example.com",
+    "subject": "Demo Subject 854",
+    "status": "RESPONDED",
+    "category": "Pricing",
+    "details": "Generated demo data",
+    "days_ago": 267,
+    "hours": 9
+  },
+  {
+    "sender": "user4985@example.com",
+    "subject": "Demo Subject 157",
+    "status": "RESPONDED",
+    "category": "Integration",
+    "details": "Generated demo data",
+    "days_ago": 268,
+    "hours": 9
+  },
+  {
+    "sender": "user4581@example.com",
+    "subject": "Demo Subject 897",
+    "status": "RESPONDED",
+    "category": "Technical Support",
+    "details": "Generated demo data",
+    "days_ago": 270,
+    "hours": 12
+  },
+  {
+    "sender": "user2338@example.com",
+    "subject": "Demo Subject 341",
+    "status": "RESPONDED",
+    "category": "Pricing",
+    "details": "Generated demo data",
+    "days_ago": 276,
+    "hours": 10
+  },
+  {
+    "sender": "user2163@example.com",
+    "subject": "Demo Subject 19",
+    "status": "RESPONDED",
+    "category": "Pricing",
+    "details": "Generated demo data",
+    "days_ago": 277,
+    "hours": 10
+  },
+  {
+    "sender": "user1723@example.com",
+    "subject": "Demo Subject 403",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 278,
+    "hours": 13
+  },
+  {
+    "sender": "user3365@example.com",
+    "subject": "Demo Subject 84",
+    "status": "IGNORED",
+    "category": "Recruitment",
+    "details": "Generated demo data",
+    "days_ago": 279,
+    "hours": 15
+  },
+  {
+    "sender": "user3534@example.com",
+    "subject": "Demo Subject 288",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 280,
+    "hours": 12
+  },
+  {
+    "sender": "user7442@example.com",
+    "subject": "Demo Subject 471",
+    "status": "RESPONDED",
+    "category": "Billing",
+    "details": "Generated demo data",
+    "days_ago": 281,
+    "hours": 15
+  },
+  {
+    "sender": "user6875@example.com",
+    "subject": "Demo Subject 761",
+    "status": "RESPONDED",
+    "category": "Integration",
+    "details": "Generated demo data",
+    "days_ago": 286,
+    "hours": 10
+  },
+  {
+    "sender": "user1445@example.com",
+    "subject": "Demo Subject 526",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 287,
+    "hours": 16
+  },
+  {
+    "sender": "user3422@example.com",
+    "subject": "Demo Subject 819",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 289,
+    "hours": 10
+  },
+  {
+    "sender": "user9679@example.com",
+    "subject": "Demo Subject 64",
+    "status": "RESPONDED",
+    "category": "Promotional",
+    "details": "Generated demo data",
+    "days_ago": 291,
+    "hours": 9
+  },
+  {
+    "sender": "user4786@example.com",
+    "subject": "Demo Subject 146",
+    "status": "RESPONDED",
+    "category": "Migration",
+    "details": "Generated demo data",
+    "days_ago": 293,
+    "hours": 13
+  },
+  {
+    "sender": "user2744@example.com",
+    "subject": "Demo Subject 343",
+    "status": "RESPONDED",
+    "category": "Partnership",
+    "details": "Generated demo data",
+    "days_ago": 294,
+    "hours": 16
+  },
+  {
+    "sender": "user7900@example.com",
+    "subject": "Demo Subject 877",
+    "status": "RESPONDED",
+    "category": "Recruitment",
+    "details": "Generated demo data",
+    "days_ago": 298,
+    "hours": 17
+  },
+  {
+    "sender": "user2003@example.com",
+    "subject": "Demo Subject 782",
+    "status": "IGNORED",
+    "category": "Account",
+    "details": "Generated demo data",
+    "days_ago": 300,
+    "hours": 10
+  },
+  {
+    "sender": "user4789@example.com",
+    "subject": "Demo Subject 623",
+    "status": "IGNORED",
+    "category": "Partnership",
+    "details": "Generated demo data",
+    "days_ago": 302,
+    "hours": 12
+  },
+  {
+    "sender": "user2814@example.com",
+    "subject": "Demo Subject 429",
+    "status": "RESPONDED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 308,
+    "hours": 9
+  },
+  {
+    "sender": "user5823@example.com",
+    "subject": "Demo Subject 747",
+    "status": "RESPONDED",
+    "category": "Newsletter",
+    "details": "Generated demo data",
+    "days_ago": 311,
+    "hours": 17
+  },
+  {
+    "sender": "user9008@example.com",
+    "subject": "Demo Subject 824",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 312,
+    "hours": 16
+  },
+  {
+    "sender": "user5506@example.com",
+    "subject": "Demo Subject 60",
+    "status": "IGNORED",
+    "category": "Cold Outreach",
+    "details": "Generated demo data",
+    "days_ago": 315,
+    "hours": 12
+  },
+  {
+    "sender": "user2087@example.com",
+    "subject": "Demo Subject 946",
+    "status": "RESPONDED",
+    "category": "Product Inquiry",
+    "details": "Generated demo data",
+    "days_ago": 316,
+    "hours": 17
+  },
+  {
+    "sender": "user3988@example.com",
+    "subject": "Demo Subject 926",
+    "status": "RESPONDED",
+    "category": "Product Inquiry",
+    "details": "Generated demo data",
+    "days_ago": 318,
+    "hours": 15
+  },
+  {
+    "sender": "user8321@example.com",
+    "subject": "Demo Subject 206",
+    "status": "RESPONDED",
+    "category": "Event",
+    "details": "Generated demo data",
+    "days_ago": 321,
+    "hours": 11
+  },
+  {
+    "sender": "user4412@example.com",
+    "subject": "Demo Subject 177",
+    "status": "RESPONDED",
+    "category": "Newsletter",
+    "details": "Generated demo data",
+    "days_ago": 322,
+    "hours": 14
+  },
+  {
+    "sender": "user2823@example.com",
+    "subject": "Demo Subject 481",
+    "status": "RESPONDED",
+    "category": "Partnership",
+    "details": "Generated demo data",
+    "days_ago": 324,
+    "hours": 11
+  },
+  {
+    "sender": "user6271@example.com",
+    "subject": "Demo Subject 974",
+    "status": "IGNORED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 325,
+    "hours": 10
+  },
+  {
+    "sender": "user5466@example.com",
+    "subject": "Demo Subject 510",
+    "status": "RESPONDED",
+    "category": "Product Inquiry",
+    "details": "Generated demo data",
+    "days_ago": 326,
+    "hours": 9
+  },
+  {
+    "sender": "user1999@example.com",
+    "subject": "Demo Subject 339",
+    "status": "RESPONDED",
+    "category": "Security",
+    "details": "Generated demo data",
+    "days_ago": 329,
+    "hours": 16
+  },
+  {
+    "sender": "user5272@example.com",
+    "subject": "Demo Subject 289",
+    "status": "RESPONDED",
+    "category": "Cold Outreach",
+    "details": "Generated demo data",
+    "days_ago": 330,
+    "hours": 12
+  },
+  {
+    "sender": "user4691@example.com",
+    "subject": "Demo Subject 765",
+    "status": "RESPONDED",
+    "category": "Cold Outreach",
+    "details": "Generated demo data",
+    "days_ago": 338,
+    "hours": 14
+  },
+  {
+    "sender": "user3234@example.com",
+    "subject": "Demo Subject 453",
+    "status": "ERROR",
+    "category": "Promotional",
+    "details": "Generated demo data",
+    "days_ago": 342,
+    "hours": 10
+  },
+  {
+    "sender": "user7888@example.com",
+    "subject": "Demo Subject 664",
+    "status": "RESPONDED",
+    "category": "Spam",
+    "details": "Generated demo data",
+    "days_ago": 346,
+    "hours": 16
+  },
+  {
+    "sender": "user2286@example.com",
+    "subject": "Demo Subject 574",
+    "status": "RESPONDED",
+    "category": "Notification",
+    "details": "Generated demo data",
+    "days_ago": 349,
+    "hours": 16
+  },
+  {
+    "sender": "user3060@example.com",
+    "subject": "Demo Subject 913",
+    "status": "IGNORED",
+    "category": "Recruitment",
+    "details": "Generated demo data",
+    "days_ago": 352,
+    "hours": 14
+  },
+  {
+    "sender": "user8590@example.com",
+    "subject": "Demo Subject 66",
+    "status": "IGNORED",
+    "category": "Partnership",
+    "details": "Generated demo data",
+    "days_ago": 353,
+    "hours": 11
+  },
+  {
+    "sender": "user8357@example.com",
+    "subject": "Demo Subject 429",
+    "status": "IGNORED",
+    "category": "Notification",
+    "details": "Generated demo data",
+    "days_ago": 364,
+    "hours": 9
+  }
+]

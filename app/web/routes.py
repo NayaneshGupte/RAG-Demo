@@ -12,4 +12,14 @@ def index():
 @web_bp.route('/knowledge-base')
 def knowledge_base():
     """Render knowledge base viewer."""
-    return render_template('knowledge_base.html')
+    return render_template('knowledge-base.html')
+
+@web_bp.route('/recent-activity')
+def recent_activity():
+    """Render recent activity page."""
+    return render_template('recent-activity.html')
+
+@web_bp.route('/how-it-works')
+def how_it_works():
+    """Render how it works page."""
+    return render_template('how-it-works.html')

@@ -17,9 +17,10 @@ Body: {body}
    - Newsletters, marketing, or promotional emails.
    - Job applications or HR-related inquiries.
    - Vendor pitches or sales outreach.
-   - Meeting invitations or calendar updates.
+   - Meeting invitations, calendar updates, or event confirmations.
+   - Confirmation emails (e.g., registration confirmations, ticket confirmations, booking confirmations).
    - Internal company communications (unless explicitly asking for support).
-   - Automated notifications (e.g., "Out of Office", "Delivery Status").
+   - Automated notifications (e.g., "Out of Office", "Delivery Status", system alerts).
    - Spam, phishing, or incoherent text.
    - Emails not related to "HighSpeed Data Sets" products or services.
    - Any email coming from @phonepe.com domain.

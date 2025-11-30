@@ -1,0 +1,119 @@
+/**
+ * Flux Design System - Core Variables
+ * Centralized design tokens for the Flux application
+ */
+
+:root {
+    /* ===== COLOR PALETTE ===== */
+
+    /* Dark Theme Background */
+    --flux-bg-primary: #0f172a;
+    --flux-bg-secondary: #1e293b;
+    --flux-bg-tertiary: #334155;
+
+    /* Glass Effects */
+    --flux-glass-bg: rgba(255, 255, 255, 0.03);
+    --flux-glass-border: rgba(255, 255, 255, 0.05);
+    --flux-glass-hover: rgba(255, 255, 255, 0.05);
+
+    /* Brand Colors */
+    --flux-primary: #6366f1;
+    --flux-primary-dark: #4f46e5;
+    --flux-accent: #F59E0B;
+
+    /* Gradient */
+    --flux-gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    --flux-gradient-text: linear-gradient(135deg, #818cf8 0%, #c084fc 100%);
+
+    /* Text Colors */
+    --flux-text-primary: #ffffff;
+    --flux-text-secondary: #94a3b8;
+    --flux-text-tertiary: #cbd5e1;
+    --flux-text-muted: #64748b;
+
+    /* Semantic Colors */
+    --flux-success: #10B981;
+    --flux-success-light: #D1FAE5;
+    --flux-warning: #F59E0B;
+    --flux-warning-light: #FEF3C7;
+    --flux-error: #EF4444;
+    --flux-error-light: #FEE2E2;
+    --flux-info: #3B82F6;
+
+    /* Chart Colors */
+    --flux-chart-1: #818cf8;
+    --flux-chart-2: #34d399;
+    --flux-chart-3: #fbbf24;
+    --flux-chart-4: #f472b6;
+    --flux-chart-5: #60a5fa;
+
+    /* ===== SPACING ===== */
+    --flux-space-xs: 4px;
+    --flux-space-sm: 8px;
+    --flux-space-md: 16px;
+    --flux-space-lg: 24px;
+    --flux-space-xl: 32px;
+    --flux-space-2xl: 48px;
+
+    /* ===== TYPOGRAPHY ===== */
+    --flux-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --flux-font-size-xs: 12px;
+    --flux-font-size-sm: 13px;
+    --flux-font-size-base: 14px;
+    --flux-font-size-md: 15px;
+    --flux-font-size-lg: 18px;
+    --flux-font-size-xl: 20px;
+    --flux-font-size-2xl: 24px;
+    --flux-font-size-3xl: 28px;
+    --flux-font-size-4xl: 36px;
+    --flux-font-size-5xl: 48px;
+    --flux-font-size-6xl: 64px;
+
+    --flux-font-weight-normal: 400;
+    --flux-font-weight-medium: 500;
+    --flux-font-weight-semibold: 600;
+    --flux-font-weight-bold: 700;
+    --flux-font-weight-extrabold: 800;
+
+    /* ===== BORDERS & RADIUS ===== */
+    --flux-radius-sm: 8px;
+    --flux-radius-md: 10px;
+    --flux-radius-lg: 12px;
+    --flux-radius-xl: 16px;
+    --flux-radius-2xl: 20px;
+    --flux-radius-full: 9999px;
+
+    --flux-border-width: 1px;
+
+    /* ===== SHADOWS ===== */
+    --flux-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --flux-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    --flux-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    --flux-shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+    --flux-shadow-glow: 0 0 30px rgba(99, 102, 241, 0.3);
+
+    /* ===== TRANSITIONS ===== */
+    --flux-transition-fast: 150ms ease;
+    --flux-transition-base: 200ms ease;
+    --flux-transition-slow: 300ms ease;
+
+    /* ===== Z-INDEX ===== */
+    --flux-z-dropdown: 1000;
+    --flux-z-modal: 2000;
+    --flux-z-tooltip: 3000;
+}
+
+/* ===== BASE RESETS ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--flux-font-family);
+    font-size: var(--flux-font-size-base);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}

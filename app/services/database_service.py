@@ -67,27 +67,45 @@ class DatabaseService:
         except Exception as e:
             logger.error(f"Error logging to database: {e}")
 
-    def get_logs(self, limit=50, exclude_ignored=False, agent_email=None):
-        """Get recent logs."""
+    def get_logs(self, limit=100, exclude_ignored=False, agent_email=None, start_date=None, end_date=None):
+        """Retrieve recent email logs with optional date filtering."""
         try:
             with self._get_connection() as conn:
-                query = "SELECT * FROM email_logs WHERE 1=1"
+                where_clauses = []
                 params = []
                 
-                if exclude_ignored:
-                    query += " AND status != 'IGNORED'"
-                
+                # Filter by agent_email
                 if agent_email:
-                    query += " AND (agent_email = ? OR agent_email IS NULL)"
+                    where_clauses.append("(agent_email = ? OR agent_email IS NULL)")
                     params.append(agent_email)
                 
-                query += " ORDER BY timestamp DESC LIMIT ?"
+                # Filter by date range (using email_timestamp if available, else timestamp)
+                if start_date:
+                    where_clauses.append("DATE(COALESCE(email_timestamp, timestamp)) >= ?")
+                    params.append(start_date)
+                
+                if end_date:
+                    where_clauses.append("DATE(COALESCE(email_timestamp, timestamp)) <= ?")
+                    params.append(end_date)
+                
+                # Exclude ignored emails
+                if exclude_ignored:
+                    where_clauses.append("status != 'IGNORED'")
+                
+                where_clause = "WHERE " + " AND ".join(where_clauses) if where_clauses else ""
+               
                 params.append(limit)
                 
-                cursor = conn.execute(query, tuple(params))
+                cursor = conn.execute(f"""
+                    SELECT * FROM email_logs
+                    {where_clause}
+                    ORDER BY timestamp DESC
+                    LIMIT ?
+                """, tuple(params))
+                
                 return [dict(row) for row in cursor.fetchall()]
         except Exception as e:
-            logger.error(f"Error fetching logs: {e}")
+            logger.error(f"Error retrieving logs: {e}")
             return []
 
     def get_stats(self, agent_email=None):
@@ -116,3 +134,101 @@ class DatabaseService:
         except Exception as e:
             logger.error(f"Error fetching stats: {e}")
             return {"total": 0, "responded": 0, "ignored": 0}
+    
+    def get_email_volume_by_day(self, days=7, start_date=None, interval='day', agent_email=None):
+        """
+        Get email volume grouped by day or month for the specified date range.
+        interval: 'day' or 'month'
+        """
+        try:
+            with self._get_connection() as conn:
+                # Determine date format and grouping based on interval
+                # Use email_timestamp if available (for backdated/demo data), otherwise timestamp
+                ts_col = "COALESCE(email_timestamp, timestamp)"
+                
+                if interval == 'month':
+                    date_format = '%Y-%m'
+                    date_col = f"strftime('%Y-%m', {ts_col})"
+                elif interval == 'week':
+                    # Group by year and week number
+                    date_format = '%Y-W%W'
+                    date_col = f"strftime('%Y-W%W', {ts_col})"
+                else:
+                    date_format = '%Y-%m-%d'
+                    date_col = f"DATE({ts_col})"
+
+                where_clause = ""
+                params = []
+
+                if start_date:
+                    where_clause = f"WHERE {date_col} >= ?"
+                    params.append(start_date)
+                else:
+                    where_clause = f"WHERE {ts_col} >= DATE('now', '-' || ? || ' days')"
+                    params.append(days)
+                
+                # Add agent_email filter
+                if agent_email:
+                    where_clause += " AND (agent_email = ? OR agent_email IS NULL)"
+                    params.append(agent_email)
+
+                query = f"""
+                    SELECT 
+                        {date_col} as date,
+                        COUNT(*) as total,
+                        SUM(CASE WHEN status='RESPONDED' THEN 1 ELSE 0 END) as responded,
+                        SUM(CASE WHEN status='IGNORED' THEN 1 ELSE 0 END) as ignored,
+                        SUM(CASE WHEN status='ERROR' THEN 1 ELSE 0 END) as failed
+                    FROM email_logs
+                    {where_clause}
+                    GROUP BY {date_col}
+                    ORDER BY date ASC
+                """
+                
+                print(f"DEBUG: Executing query: {query}")
+                print(f"DEBUG: Params: {params}")
+                logger.info(f"Executing query: {query} with params: {params}")
+                cursor = conn.execute(query, tuple(params))
+                
+                results = [dict(row) for row in cursor.fetchall()]
+                print(f"DEBUG: Query returned {len(results)} rows")
+                if len(results) > 0:
+                    print(f"DEBUG: First row: {results[0]}")
+                    print(f"DEBUG: Last row: {results[-1]}")
+                
+                logger.info(f"Query returned {len(results)} rows")
+                return results
+        except Exception as e:
+            logger.error(f"Error fetching email volume data: {e}")
+            return []
+    
+    def get_category_breakdown(self, agent_email=None):
+        """Get count of emails by category."""
+        try:
+            with self._get_connection() as conn:
+                where_clause = "WHERE category IS NOT NULL AND category != '' AND category != 'Unknown'"
+                params = []
+                
+                if agent_email:
+                    where_clause += " AND (agent_email = ? OR agent_email IS NULL)"
+                    params.append(agent_email)
+
+                query = f"""
+                    SELECT 
+                        category,
+                        COUNT(*) as count
+                    FROM email_logs
+                    {where_clause}
+                    GROUP BY category
+                    ORDER BY count DESC
+                    LIMIT 10
+                """
+                print(f"DEBUG: Category Query: {query}")
+                print(f"DEBUG: Category Params: {params}")
+                cursor = conn.execute(query, tuple(params))
+                results = [dict(row) for row in cursor.fetchall()]
+                print(f"DEBUG: Category Results: {len(results)}")
+                return results
+        except Exception as e:
+            logger.error(f"Error fetching category breakdown: {e}")
+            return []

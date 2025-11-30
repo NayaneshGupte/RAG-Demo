@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recent Activity - Flux</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/design-system.css') }}?v={{ version }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base/base.css') }}?v={{ version }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components.css') }}?v={{ version }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/dashboard.css') }}?v={{ version }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sidebar.css') }}?v={{ version }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="activity-content" style="display: none;">
+        <div class="kb-container" style="max-width: 1400px; margin: 0 auto; padding: 24px 32px;">
+            <!-- Header with Hamburger, Title, and Date Picker -->
+            <div class="kb-header"
+                style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 32px; gap: 16px; flex-wrap: wrap;">
+
+                <!-- Left: Hamburger + Title -->
+                <div style="display: flex; align-items: center; gap: 12px; flex: 1; min-width: 250px;">
+                    <button class="hamburger-btn" onclick="toggleSidebar()" aria-label="Toggle menu" style="margin: 0;">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <div class="kb-title-group">
+                        <h1 style="margin: 0;">Recent Activity <span style="color: var(--flux-accent);">📊</span></h1>
+                        <p class="kb-subtitle"
+                            style="color: var(--flux-text-secondary); font-size: var(--flux-font-size-md); margin-top: 4px; margin-bottom: 0;">
+                            Email processing logs and activity history</p>
+                    </div>
+                </div>
+
+                <!-- Right: Date Range Selector -->
+                <div class="date-range-selector" style="margin-top: 8px;">
+                    <select id="dateRangeDropdown" class="date-range-dropdown" onchange="handleDateRangeChange()">
+                        <option value="today">Today</option>
+                        <option value="7d" selected>Last 7 Days</option>
+                        <option value="1m">Last 1 Month</option>
+                        <option value="3m">Last 3 Months</option>
+                        <option value="6m">Last 6 Months</option>
+                        <option value="12m">Last 12 Months</option>
+                        <option value="custom">Custom Range</option>
+                    </select>
+                    <div id="customDateRange" class="custom-date-range" style="display: none;">
+                        <input type="text" id="customDatePicker" class="custom-date-input"
+                            placeholder="Select date range" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="flux-grid flux-grid-3" style="margin-bottom: 32px;">
+                <div class="flux-metric-card">
+                    <div class="flux-metric-label">Total Processed</div>
+                    <div class="flux-metric-value" id="total-emails">0</div>
+                </div>
+                <div class="flux-metric-card">
+                    <div class="flux-metric-label" style="color: var(--flux-success);">Responded</div>
+                    <div class="flux-metric-value" id="responded-emails">0</div>
+                </div>
+                <div class="flux-metric-card">
+                    <div class="flux-metric-label" style="color: var(--flux-warning);">Ignored</div>
+                    <div class="flux-metric-value" id="ignored-emails">0</div>
+                </div>
+            </div>
+
+            <!-- Logs Table -->
+            <div class="logs-card">
+                <div class="card-header">
+                    <h2 class="card-title">Activity Logs</h2>
+                    <div style="display: flex; gap: 16px; align-items: center;">
+                        <div style="font-size: 12px; color: var(--flux-text-secondary);">
+                            Updated: <span id="last-updated">Just now</span>
+                        </div>
+                        <button class="refresh-btn" onclick="fetchData()">Refresh Data</button>
+                    </div>
+                </div>
+
+                <div class="tabs">
+                    <div class="tab active" onclick="setTab('all')">All</div>
+                    <div class="tab" onclick="setTab('responded')">Responded</div>
+                    <div class="tab" onclick="setTab('ignored')">Ignored</div>
+                    <div class="tab" onclick="setTab('failed')">Failed</div>
+                </div>
+
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Email Time</th>
+                                <th>Response Time</th>
+                                <th>Status</th>
+                                <th>Customer (Replied To)</th>
+                                <th>Subject</th>
+                                <th>Category</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody id="logs-body">
+                            <!-- Logs will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination Controls -->
+                <div id="pagination-controls" class="pagination-controls"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar Menu (same as dashboard) -->
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>Menu</h2>
+            <button class="sidebar-close" onclick="toggleSidebar()" aria-label="Close menu">×</button>
+        </div>
+
+        <!-- Dashboard Link -->
+        <div class="sidebar-section">
+            <a href="/" class="sidebar-link">
+                <span>📈 Dashboard</span>
+                <span>→</span>
+            </a>
+        </div>
+
+        <!-- Recent Activity Link -->
+        <div class="sidebar-section">
+            <a href="/recent-activity" class="sidebar-link">
+                <span>📊 Recent Activity</span>
+                <span>→</span>
+            </a>
+        </div>
+
+        <!-- Knowledge Base Link -->
+        <div class="sidebar-section">
+            <a href="/knowledge-base" class="sidebar-link">
+                <span>📚 Knowledge Base</span>
+                <span>→</span>
+            </a>
+        </div>
+
+        <!-- Settings -->
+        <div class="sidebar-section">
+            <h3 class="sidebar-section-title">Settings</h3>
+            <div class="theme-toggle">
+                <label for="theme-select">Theme</label>
+                <select id="theme-select" onchange="switchTheme(this.value)">
+                    <option value="dark">Dark</option>
+                    <option value="light">Light</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- User Info (Moved to bottom) -->
+        <div class="sidebar-footer">
+            <div class="user-info-sidebar">
+                <span class="user-email" id="user-email-sidebar">user@example.com</span>
+                <button class="btn-logout-sidebar" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Flatpickr for Date Picker -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <script src="{{ url_for('static', filename='js/auth.js') }}?v={{ version }}"></script>
+    <script src="{{ url_for('static', filename='js/sidebar.js') }}?v={{ version }}"></script>
+    <script src="{{ url_for('static', filename='js/date-range-manager.js') }}?v={{ version }}"></script>
+    <script src="{{ url_for('static', filename='js/recent-activity.js') }}?v={{ version }}"></script>
+    <script>
+        // Show activity content once authenticated
+        document.addEventListener('DOMContentLoaded', () => {
+            const activityContent = document.getElementById('activity-content');
+            if (activityContent) {
+                activityContent.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+
+</html>
