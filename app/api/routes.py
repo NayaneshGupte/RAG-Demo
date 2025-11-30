@@ -222,3 +222,15 @@ def get_kb_stats():
         })
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+@api_bp.route('/metrics/summary')
+def get_summary_metrics():
+    """Get summary statistics (total, responded, ignored)."""
+    try:
+        db_service = DatabaseService()
+        current_user = session.get('user_email')
+        
+        stats = db_service.get_stats(agent_email=current_user)
+        
+        return jsonify(stats)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500

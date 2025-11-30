@@ -4,7 +4,7 @@
 
 /* ===== DASHBOARD CONTENT ===== */
 #dashboard-content {
-    display: none;
+    /* display: none; Removed - handled by routing */
     background: var(--flux-bg-primary);
     min-height: 100vh;
     color: var(--flux-text-primary);

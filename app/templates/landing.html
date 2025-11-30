@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flux - AI Email Automation</title>
+    <!-- Design System -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/design-system.css') }}?v={{ version }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base/base.css') }}?v={{ version }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components.css') }}?v={{ version }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/landing.css') }}?v={{ version }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Landing Page -->
+    <div id="landing-page" class="landing-container">
+        <nav class="landing-nav">
+            <div class="logo">Flux <span class="logo-bolt">⚡</span></div>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="/how-it-works">How it works</a>
+            </div>
+        </nav>
+
+        <header class="hero-section">
+            <div class="hero-content">
+                <div class="badge">New: AI Agent 2.0</div>
+                <h1>Process email at <br><span class="gradient-text">warp speed</span></h1>
+                <p class="hero-sub">The AI-powered automation engine for your inbox. Handle support tickets, inquiries,
+                    and workflows instantly with sub-second latency.</p>
+                <div class="cta-group">
+                    <button class="btn-primary btn-lg pulse-animation" onclick="loginWithGmail()">
+                        Connect Gmail
+                    </button>
+                    <span class="secure-note"><i class="fas fa-shield-alt"></i> Enterprise Grade Security</span>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="abstract-shape shape-1"></div>
+                <div class="abstract-shape shape-2"></div>
+                <div class="staggered-grid">
+                    <div class="grid-item item-1">
+                        <img src="{{ url_for('static', filename='images/screenshot-dashboard.png') }}"
+                            alt="Dashboard Overview">
+                    </div>
+                    <div class="grid-item item-2">
+                        <img src="{{ url_for('static', filename='images/screenshot-activity.png') }}"
+                            alt="Activity Logs">
+                    </div>
+                    <div class="grid-item item-3">
+                        <img src="{{ url_for('static', filename='images/screenshot-charts.png') }}"
+                            alt="Analytics Charts">
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section id="features" class="features-grid">
+            <div class="feature-card">
+                <div class="icon-wrapper">🤖</div>
+                <h3>AI Powered</h3>
+                <p>Advanced RAG technology understands context and drafts perfect replies automatically.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon-wrapper">⚡</div>
+                <h3>Instant Sync</h3>
+                <p>Real-time processing engine that handles thousands of emails with zero lag.</p>
+            </div>
+            <div class="feature-card">
+                <div class="icon-wrapper">🛡️</div>
+                <h3>Secure by Design</h3>
+                <p>Bank-grade encryption and OAuth 2.0 ensuring your data never leaves the secure enclave.</p>
+            </div>
+        </section>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/auth.js') }}?v={{ version }}"></script>
+</body>
+
+</html>

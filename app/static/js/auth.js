@@ -7,9 +7,9 @@
 window.addEventListener('DOMContentLoaded', async () => {
     await checkAuthStatus();
 
-    // Check agent status if authenticated
-    const isAuth = document.getElementById('dashboard-content')?.style.display !== 'none';
-    if (isAuth) {
+    // Check agent status if on dashboard
+    const isDashboard = !!document.getElementById('dashboard-content');
+    if (isDashboard) {
         await fetchAgentStatus();
         // Poll agent status every 10 seconds
         setInterval(fetchAgentStatus, 10000);
@@ -19,58 +19,67 @@ window.addEventListener('DOMContentLoaded', async () => {
 /**
  * Check if user is authenticated
  */
+/**
+ * Check if user is authenticated and handle redirects
+ */
 async function checkAuthStatus() {
     try {
         const response = await fetch('/auth/status');
         const data = await response.json();
+        const currentPath = window.location.pathname;
+        const urlParams = new URLSearchParams(window.location.search);
+        const showLanding = urlParams.get('show_landing') === 'true';
 
         if (data.authenticated && data.user_email) {
-            showDashboard(data.user_email);
+            // User is authenticated
+            if ((currentPath === '/' || currentPath === '/index.html') && !showLanding) {
+                window.location.href = '/dashboard';
+            } else {
+                // Already on dashboard or other protected page, initialize UI
+                if (currentPath !== '/' && currentPath !== '/index.html') {
+                    initializeDashboard(data.user_email);
+                }
+            }
         } else {
-            showAuthRequired();
+            // User is NOT authenticated
+            // Allow access to public pages: /, /how-it-works, /auth/*
+            const publicPages = ['/', '/index.html', '/how-it-works'];
+            const isPublicPage = publicPages.includes(currentPath) || currentPath.startsWith('/auth/');
+
+            if (!isPublicPage) {
+                // Redirect to landing page if trying to access protected route
+                window.location.href = '/';
+            }
         }
     } catch (error) {
         console.error('Error checking auth status:', error);
-        showAuthRequired();
-    }
-}
-
-/**
- * Show dashboard for authenticated user
- */
-/**
- * Show dashboard for authenticated user
- */
-function showDashboard(userEmail) {
-    const landingPage = document.getElementById('landing-page');
-    const dashboardSection = document.getElementById('dashboard-content');
-
-    if (landingPage) landingPage.style.display = 'none';
-    if (dashboardSection) {
-        dashboardSection.style.display = 'block';
-
-        // Update user email display
-        const userEmailEl = document.getElementById('user-email-sidebar');
-        if (userEmailEl) {
-            userEmailEl.textContent = userEmail;
-        }
-
-        // Store demo flag if it's a demo user
-        if (userEmail === 'demo@example.com') {
-            sessionStorage.setItem('is_demo', 'true');
+        if (window.location.pathname !== '/') {
+            window.location.href = '/';
         }
     }
 }
 
 /**
- * Show auth required screen (Landing Page)
+ * Initialize dashboard UI for authenticated user
+ */
+function initializeDashboard(userEmail) {
+    // Update user email display
+    const userEmailEl = document.getElementById('user-email-sidebar');
+    if (userEmailEl) {
+        userEmailEl.textContent = userEmail;
+    }
+
+    // Store demo flag if it's a demo user
+    if (userEmail === 'demo@example.com') {
+        sessionStorage.setItem('is_demo', 'true');
+    }
+}
+
+/**
+ * Show auth required screen (Deprecated - handled by redirect)
  */
 function showAuthRequired() {
-    const landingPage = document.getElementById('landing-page');
-    const dashboardSection = document.getElementById('dashboard-content');
-
-    if (landingPage) landingPage.style.display = 'block';
-    if (dashboardSection) dashboardSection.style.display = 'none';
+    // No-op
 }
 
 /**

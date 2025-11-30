@@ -5,8 +5,12 @@ from app.web import web_bp
 
 @web_bp.route('/')
 def index():
-    """Render dashboard home."""
-    # Just render the template - auth.js will check auth status and show appropriate UI
+    """Render landing page."""
+    return render_template('landing.html')
+
+@web_bp.route('/dashboard')
+def dashboard():
+    """Render dashboard."""
     return render_template('dashboard.html')
 
 @web_bp.route('/knowledge-base')
