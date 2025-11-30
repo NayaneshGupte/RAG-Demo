@@ -37,9 +37,9 @@ class Config:
     PINECONE_REGION = os.getenv("PINECONE_REGION", "us-east-1")
     
     # Prompt Files
-    AGENT_SYSTEM_PROMPT_FILE = os.getenv("AGENT_SYSTEM_PROMPT_FILE", "prompts/agent_system_prompt.txt")
-    RETRIEVER_TOOL_DESC_FILE = os.getenv("RETRIEVER_TOOL_DESC_FILE", "prompts/retriever_tool_description.txt")
-    EMAIL_CLASSIFICATION_PROMPT_FILE = os.getenv("EMAIL_CLASSIFICATION_PROMPT_FILE", "prompts/email_classification_prompt.txt")
+    AGENT_SYSTEM_PROMPT_FILE = os.getenv("AGENT_SYSTEM_PROMPT_FILE", "docs/prompts/agent_system_prompt.txt")
+    RETRIEVER_TOOL_DESC_FILE = os.getenv("RETRIEVER_TOOL_DESC_FILE", "docs/prompts/retriever_tool_description.txt")
+    EMAIL_CLASSIFICATION_PROMPT_FILE = os.getenv("EMAIL_CLASSIFICATION_PROMPT_FILE", "docs/prompts/email_classification_prompt.txt")
     
     # LLM Provider Settings
     LLM_PRIMARY_PROVIDER = os.getenv("LLM_PRIMARY_PROVIDER", "gemini").lower()
@@ -63,6 +63,13 @@ class Config:
     # Logging
     LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
     LOG_FILE = os.getenv("LOG_FILE", "logs/app.log")
+    
+    # OAuth Configuration
+    OAUTH_REDIRECT_URI = os.getenv("OAUTH_REDIRECT_URI", "http://localhost:5001/auth/gmail/callback")
+    SECRET_KEY = os.getenv("SECRET_KEY", os.urandom(24).hex())
+    
+    # Agent Settings
+    AGENT_POLL_INTERVAL = int(os.getenv("AGENT_POLL_INTERVAL", "60"))  # seconds
 
     @staticmethod
     def validate():

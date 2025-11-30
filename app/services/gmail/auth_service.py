@@ -39,6 +39,7 @@ class GmailAuthService:
             
         Raises:
             FileNotFoundError: If credentials file not found
+            PermissionError: If authentication required (no valid credentials)
         """
         if self.service is not None:
             return self.service
@@ -48,17 +49,17 @@ class GmailAuthService:
         if not creds or not creds.valid:
             if creds and creds.expired and creds.refresh_token:
                 logger.info("Refreshing Gmail credentials")
-                creds = self._refresh_credentials(creds)
+                try:
+                    creds = self._refresh_credentials(creds)
+                    self._save_credentials(creds)
+                except Exception as e:
+                    logger.error(f"Failed to refresh credentials: {e}")
+                    # Don't auto-trigger OAuth - let user click button
+                    raise PermissionError("Authentication required. Please authenticate via dashboard.")
             else:
-                if not os.path.exists(self.credentials_file):
-                    raise FileNotFoundError(
-                        f"Gmail credentials file not found: {self.credentials_file}"
-                    )
-                
-                logger.info("Starting Gmail OAuth flow")
-                creds = self._start_oauth_flow()
-            
-            self._save_credentials(creds)
+                # Don't auto-trigger OAuth flow - require user to click "Connect Gmail" button
+                logger.info("No valid credentials found - user must authenticate via dashboard")
+                raise PermissionError("Authentication required. Please authenticate via dashboard.")
         
         self.service = build('gmail', 'v1', credentials=creds)
         logger.info("Gmail service authenticated successfully")

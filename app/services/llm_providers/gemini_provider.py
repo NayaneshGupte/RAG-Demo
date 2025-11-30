@@ -2,7 +2,12 @@
 Google Gemini LLM provider implementation.
 """
 import logging
-import google.generativeai as genai
+try:
+    import google.generativeai as genai
+    GENAI_AVAILABLE = True
+except ImportError:
+    genai = None
+    GENAI_AVAILABLE = False
 from app.services.llm_providers.base import LLMProvider, LLMResponse
 from app.config import Config
 
@@ -29,7 +34,11 @@ class GeminiProvider(LLMProvider):
             self._initialize_model()
     
     def validate_credentials(self) -> bool:
-        """Validate that the Google API key is set."""
+        """Validate that the Google API key is set and module is available."""
+        if not GENAI_AVAILABLE:
+            logger.error("google-generativeai module not installed. Install with 'pip install google-generativeai'")
+            return False
+            
         if not self.api_key:
             logger.error("GOOGLE_API_KEY not configured")
             return False
@@ -37,6 +46,9 @@ class GeminiProvider(LLMProvider):
     
     def _initialize_model(self) -> None:
         """Initialize the Gemini model."""
+        if not GENAI_AVAILABLE:
+            return
+            
         try:
             genai.configure(api_key=self.api_key)
             self.model = genai.GenerativeModel(self.model_name)

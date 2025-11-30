@@ -10,4 +10,5 @@ pypdf
 python-dotenv
 tiktoken
 flask
+flask-cors
 anthropic

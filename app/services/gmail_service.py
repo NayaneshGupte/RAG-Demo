@@ -4,6 +4,7 @@ Provides unified interface to all Gmail functionality while maintaining backward
 """
 import logging
 from typing import Optional, Dict, List
+from app.config import Config
 from app.services.gmail.auth_service import GmailAuthService
 from app.services.gmail.email_reader import GmailEmailReader
 from app.services.gmail.email_composer import GmailEmailComposer
@@ -23,9 +24,13 @@ class GmailService:
     """
     
     def __init__(self):
-        """Initialize all Gmail services."""
+        """Initialize Gmail Service as facade."""
         try:
-            self.auth_service = GmailAuthService()
+            # Initialize auth service with proper credentials
+            self.auth_service = GmailAuthService(
+                Config.GMAIL_CREDENTIALS_FILE,
+                Config.GMAIL_TOKEN_FILE
+            )
             self.service = self.auth_service.get_service()
             
             self.reader = GmailEmailReader(self.service)

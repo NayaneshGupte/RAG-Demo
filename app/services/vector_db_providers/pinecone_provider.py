@@ -72,9 +72,9 @@ class PineconeProvider(VectorDBProvider):
         self.pc_client = None
         self.embeddings = None
         self.index_manager = None
-    self.document_manager = None
-    self._initialized = False
-    logger.info("PineconeProvider initialized")
+        self.document_manager = None
+        self._initialized = False
+        logger.info("PineconeProvider initialized")
     
     def validate_credentials(self) -> bool:
         """Validate Pinecone credentials."""

@@ -3,7 +3,12 @@ Anthropic Claude LLM provider implementation.
 """
 import logging
 import os
-from anthropic import Anthropic
+try:
+    from anthropic import Anthropic
+    ANTHROPIC_AVAILABLE = True
+except ImportError:
+    Anthropic = None
+    ANTHROPIC_AVAILABLE = False
 from app.services.llm_providers.base import LLMProvider, LLMResponse
 
 logger = logging.getLogger(__name__)
@@ -28,7 +33,11 @@ class ClaudeProvider(LLMProvider):
             self._initialize_client()
     
     def validate_credentials(self) -> bool:
-        """Validate that the Anthropic API key is set."""
+        """Validate that the Anthropic API key is set and module is available."""
+        if not ANTHROPIC_AVAILABLE:
+            logger.warning("Anthropic module not installed. Install with 'pip install anthropic'")
+            return False
+            
         if not self.api_key:
             logger.warning("ANTHROPIC_API_KEY not configured")
             return False
@@ -36,6 +45,9 @@ class ClaudeProvider(LLMProvider):
     
     def _initialize_client(self) -> None:
         """Initialize the Anthropic client."""
+        if not ANTHROPIC_AVAILABLE:
+            return
+            
         try:
             self.client = Anthropic(api_key=self.api_key)
             logger.info(f"Claude provider initialized with model '{self.model_name}'")

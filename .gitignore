@@ -53,3 +53,5 @@ uploaded_image*
 # Old structure
 src/
 main.py
+agent_status.json
+flask_session/
